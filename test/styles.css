@@ -31,6 +31,9 @@ body {
 .image { 
    position: relative; 
    opacity: 0.8;
+   padding-top: 6px;
+   padding-left: 3px;
+   padding-right: 3px;
    width: 100%; /* for IE 6 */
 }
 
