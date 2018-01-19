@@ -1,0 +1,15 @@
+docs_list_title: Contents
+docs:
+
+- title: Home
+  url: index.html
+
+- title: Publications
+  url: publications.html
+
+- title: Speaking
+  url: presentations.html
+
+- title: Research
+  url: research.html
+
