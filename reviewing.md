@@ -115,25 +115,27 @@ Note: there is no guarantee that the links to the conferences and workshops stil
 | [Workshop on the Mobile Social Web](http://thesocialmobileweb.org/index.html) |
 
 
-<!-- 2009 -->
-        http://ir.ii.uam.es/hetrec2010/index.html">2010 Workshop on Information Heterogeneity and Fusion in Recommender Systems
-	http://www.cwi.ugent.be/isda2009/index.php">2009 Soft Computing for Recommender Systems at <a href="http://cig.iet.unipi.it/isda09/">ISDA
-	http://www.wsdm2009.org/">2009 ACM Conference on Web Search and Data Mining (Late-breaking)
-	http://cse.stfx.ca/~socialcom09/">2009 IEEE Conference on Social Computing
-	http://www.trustcomp.org/treck/proceedings09.htm">2009 ACM Symposium on Applied Computing
-	http://www.dirf.org/diwt2009/">2009 IEEE Conference on the Applications of Digital Information and Web Technologies
-	http://www.iaria.org/conferences2009/SELFTRUST.html">2009 Computational Trust for Self-Adaptive Systems at <a href="http://www.iaria.org/conferences2009/ADAPTIVE09.html">IARIA
-</ul>
-<ul>
-<!-- 2008 -->
-	http://www.dirf.org/diwt2008/">2008 IEEE Conference on the Applications of Digital Information and Web Technologies
-	http://time08.cs.ucl.ac.uk">2008 Trust in Mobile Environments at <a href="http://www.ntnu.no/videre/konferanse/IFIPTM08/">IFIPTM	
-	http://www.secoval.org/">2008 The Value of Security through Collaboration at <a href="http://www.securecomm.org/">ACM SecureComm
-</ul>
-<ul>
-<!-- Journals -->
-	http://www.computer.org/tkde/">IEEE Transactions on Knowledge and Data Engineering
-	http://www.springer.com/computer/database+management+&+information+retrieval/journal/11280">World Wide Web Journal
-	http://www.computer.org/web/computingnow/pervasivecomputing">IEEE Pervasive Computing
-	http://www.elsevier.com/wps/find/journaldescription.cws_home/704220/description#description">Elsevier Pervasive and Mobile Computing Journal
-</ul> 
+| 2009 |
+| ------------- |
+| [ACM Conference on Web Search and Data Mining](http://www.wsdm2009.org/) (Late-breaking) |
+| [ACM Symposium on Applied Computing](http://www.trustcomp.org/treck/proceedings09.htm) |
+| [IEEE Conference on Social Computing](http://cse.stfx.ca/~socialcom09/) |
+| [IEEE Conference on the Applications of Digital Information and Web Technologies](http://www.dirf.org/diwt2009/) |
+| [Workshop on Computational Trust for Self-Adaptive Systems](http://www.iaria.org/conferences2009/SELFTRUST.html) |
+| [Workshop on Soft Computing for Recommender Systems](http://www.cwi.ugent.be/isda2009/index.php) |
+| [Workshop on Information Heterogeneity and Fusion in Recommender Systems](http://ir.ii.uam.es/hetrec2010/index.html) |
+
+| 2008 |
+| ------------- |
+| [IEEE Conference on the Applications of Digital Information and Web Technologies](http://www.dirf.org/diwt2008/) |
+| [Workshop on Trust in Mobile Environments](http://time08.cs.ucl.ac.uk) |
+| [Workshop on The Value of Security through Collaboration](http://www.secoval.org/) |
+
+
+| Journals |
+| ------------- |
+| [IEEE Transactions on Knowledge and Data Engineering](http://www.computer.org/tkde/) |
+| [World Wide Web Journal](http://www.springer.com/computer/database+management+&+information+retrieval/journal/11280) |
+| [IEEE Pervasive Computing](http://www.computer.org/web/computingnow/pervasivecomputing) |
+| [Elsevier Pervasive and Mobile Computing Journal](http://www.elsevier.com/wps/find/journaldescription.cws_home/704220/description#description) |
+

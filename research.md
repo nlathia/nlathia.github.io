@@ -12,7 +12,7 @@ I review research broadly related to recommender systems, web technologies, info
 
 | 2018       | 
 | ------------- |
-| [ACM Recommender Systems](https://recsys.acm.org/recsys18/) | 
+| [ACM Recommender Systems](https://recsys.acm.org/recsys18/) (Senior Programme Committee) | 
 | [ACM Conference on Knowledge Discovery and Data Mining](http://www.kdd.org/kdd2018/)   | 
 | [Conference on User Modeling, Adaptation and Personalization](http://www.um.org/umap2018/) |
 | [World Wide Web Conference](https://www2018.thewebconf.org/) (Posters) |
