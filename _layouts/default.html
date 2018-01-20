@@ -18,12 +18,10 @@
         <a href="{{ site.github.url }}"> <h1>{{ site.title | default: site.github.repository_name }}</h1> </a>
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
-	<p><b>{{ site.data.nav-internal.docs_list_title }}</b>
 	{% for item in site.data.nav-internal.docs %}
       		<br/><a href="{{ item.url }}" alt="{{ item.title }}">{{ item.title }}</a>
    	{% endfor %}</p>
 
-	<p><b>{{ site.data.nav-external.docs_list_title }}</b>
 	{% for item in site.data.nav-external.docs %}
       		<br/><a href="{{ item.url }}" alt="{{ item.title }}">{{ item.title }}</a>
    	{% endfor %}</p>

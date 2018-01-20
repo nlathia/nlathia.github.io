@@ -1,9 +1,10 @@
 ---
 title: PC Archive
-theme: jekyll-theme-cayman
 ---
 
 ## Archive of programme committees
+
+Note: there is no guarantee that the links to the conferences and workshops still exist.
 
 | 2017 |
 | ------------- |
@@ -95,7 +96,7 @@ theme: jekyll-theme-cayman
 | 2011 |
 | ------------- |
 | [Joint Conference on Artificial Intelligence](http://ijcai-11.iiia.csic.es/) |
-| [ACM Conference on Research and Development in Information Retrieval]http://www.sigir2011.org/) (Posters) |
+| [ACM Conference on Research and Development in Information Retrieval](http://www.sigir2011.org/) (Posters) |
 | [ACM Conference on Pervasive and Ubiquitous Computing](http://www.ubicomp.org/ubicomp2011/) (External) |
 | [Workshop on Trust and Privacy in Distributed Information Sharing](http://sites.google.com/site/tpdis2011/) |
 | [Workshop on Novelty and Diversity in Recommender Systems](http://ir.ii.uam.es/divers2011/) |
@@ -104,20 +105,16 @@ theme: jekyll-theme-cayman
 | [Challenge on Context-Aware Movie Recommendation](http://2011.camrachallenge.com/) |
 | [Workshop on Personalization in Mobile Applications](http://pema2011.cs.ucl.ac.uk) (co-organiser) |
 
- 
-<!-- 2011 -->
-	">2011  at <a href="http://www.ifiptm.org/IFIPTM11/IFIPTM.html">IFIPTM
-</ul>
-<ul>
-<!-- 2010 -->
-	http://womrad.org/">2010 Workshop on Music Recommendation and Discovery
-	http://labs.brainsins.com/events/smuc2010/">2010 Workshop on Search and Mining User-Generated Contents
-	http://www.sigir2010.org/">2010 ACM Annual SIGIR Conference
-	http://iisocialcom.org/conference/socialcom2010/index.html">2010 IEEE Conference on Social Computing
-	http://www.trustcomp.org/treck/">2010 ACM Symposium on Applied Computing
-	http://thesocialmobileweb.org/index.html">2010 Workshop on the Mobile Social Web at <a href="http://thesocialmobileweb.org/smw10/index.html">MobileHCI
-</ul>
-<ul>
+| 2010 |
+| ------------- |
+| [ACM Conference on Research and Development in Information Retrieval](http://www.sigir2010.org/) |
+| [ACM Symposium on Applied Computing](http://www.trustcomp.org/treck/) |
+| [IEEE Conference on Social Computing](http://iisocialcom.org/conference/socialcom2010/index.html) |
+| [Workshop on Music Recommendation and Discovery](http://womrad.org/) |
+| [Workshop on Search and Mining User-Generated Contents](http://labs.brainsins.com/events/smuc2010/) | 
+| [Workshop on the Mobile Social Web](http://thesocialmobileweb.org/index.html) |
+
+
 <!-- 2009 -->
         http://ir.ii.uam.es/hetrec2010/index.html">2010 Workshop on Information Heterogeneity and Fusion in Recommender Systems
 	http://www.cwi.ugent.be/isda2009/index.php">2009 Soft Computing for Recommender Systems at <a href="http://cig.iet.unipi.it/isda09/">ISDA
