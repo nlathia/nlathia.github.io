@@ -2,9 +2,7 @@
 title: PC Archive
 ---
 
-## Archive of programme committees
-
-Note: there is no guarantee that the links to the conferences and workshops still exist.
+## Archive of Programme Committees
 
 | 2017 |
 | ------------- |

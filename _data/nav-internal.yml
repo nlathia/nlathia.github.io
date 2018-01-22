@@ -2,27 +2,14 @@ docs_list_title: Contents
 docs:
 
 - title: Home
-  url: index.html
+  url: /index.html
 
 - title: Publications
-  url: publications.html
-  subfolderitems:
-    - title: PhD Thesis
-      url: publications.html#phd-research
-    - title: Conferences & Journals
-      url: publications.html#research-publications
-    - title: Book Chapters
-      url: publications.html#book-chapters
-    - title: Workshops
-      url: publications.html#workshop-publications
-    - title: Posters, Abstracts, Other
-      url: publications.html#posters-abstracts-demos-proceedings
+  url: /publications.html
 
-- title: Speaking
-  url: presentations.html
+- title: Press & Speaking
+  url: /public.html
 
 - title: Research
-  url: research.html
-  subfolderitems:
-    - title: PC Archive
-      url: index.html
+  url: /research.html
+

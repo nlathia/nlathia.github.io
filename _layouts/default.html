@@ -23,12 +23,6 @@
 			<br />
 		{% endif %}
       		<a href="{{ item.url }}" alt="{{ item.title }}">{{ item.title }}</a>
-		{% assign x = '/' | append: item.url %}
-		{% if page.url == x %}
-			{% for entry in item.subfolderitems %}
-				<br />&rarr; <a href="{{ entry.url }}">{{ entry.title }}</a>
-			{% endfor %}	
-		{% endif %}
    	{% endfor %}
 
  	<p><hr />
