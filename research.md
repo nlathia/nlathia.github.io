@@ -4,7 +4,7 @@ title: Neal Lathia's research.
 
 ## Note
 
-As of 2016, I am no longer actively conducting academic research. I still review for a variety of conferences, listed below.
+As of 2016, I am no longer actively conducting academic research, and no longer open for data science consultancy opportunities. I still review for a variety of conferences, listed below. Past projects can be found on [this archive page](archive/projects.html).
 
 ## Programme Committees
 
@@ -19,6 +19,4 @@ I review research broadly related to recommender systems, web technologies, info
 | [Workshop on Online Recommender Systems and User Modeling: continuous learning from web data](http://webesitix.inesctec.pt/orsum2018/index.php) |
 
 For conferences prior to 2018, please see the full list [here](archive/reviewing.md).
-
-## Research Projects
 
