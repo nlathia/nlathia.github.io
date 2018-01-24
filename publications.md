@@ -11,7 +11,7 @@ title: Neal Lathia's publications.
 ## Research Publications
 
 [Effectiveness of providing university students with a mindfulness-based intervention to increase resilience to stress: a pragmatic randomised controlled trial.]()
-<br /> J. Galante, G. Dufour, M. Vainre, A. Wagner, J. Stochl, A. Benton, N. Lathia, E. Howarth, P. Jones. In The Lancet Public Health. Accepted November 2017.
+<br /> J. Galante, G. Dufour, M. Vainre, A. Wagner, J. Stochl, A. Benton, N. Lathia, E. Howarth, P. Jones. In The Lancet Public Health. Accepted November 2017. [[The Guardian](https://www.theguardian.com/lifeandstyle/2017/dec/18/mindfulness-boosts-student-mental-health-during-exams-cambridge-university-study-finds), [The Daily Mail](http://www.dailymail.co.uk/health/article-5193703/Mindfulness-reduces-stress-students-exam-times.html), [Punjab Tribune](http://www.punjabtribune.com/news/49860-mindfulness-can-lower-stress-boost-academic-success.aspx)]
 
 [When User Experience Designers Partner with Data Scientists](http://aaai.org/ocs/index.php/SSS/SSS17/paper/view/15364/14570)
 <br />F. Girardin, N. Lathia. In AAAI Spring Symposium on Designing the User Experience of Machine Learning Systems. Palo Alto, CA, USA. March 2017.
