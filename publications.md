@@ -4,13 +4,13 @@ title: Neal Lathia's publications.
 
 ## PhD Research
 
-[Evaluating Collaborative Filtering Over Time]()
+[Evaluating Collaborative Filtering Over Time](papers/lathia_ucl_thesis10.pdf)
 <br />N. Lathia. Department of Computer Science, University College London. June 2010.
 <br />Supervisors: [Prof. Stephen Hailes](http://www0.cs.ucl.ac.uk/staff/s.hailes/), [Prof. Licia Capra](http://www0.cs.ucl.ac.uk/staff/l.capra/)
 
 ## Research Publications
 
-[Effectiveness of providing university students with a mindfulness-based intervention to increase resilience to stress: a pragmatic randomised controlled trial.]()
+[Effectiveness of providing university students with a mindfulness-based intervention to increase resilience to stress: a pragmatic randomised controlled trial.](http://www.thelancet.com/journals/lanpub/article/PIIS2468-2667(17)30231-1/fulltext?elsca1=tlxpr)
 <br /> J. Galante, G. Dufour, M. Vainre, A. Wagner, J. Stochl, A. Benton, N. Lathia, E. Howarth, P. Jones. In The Lancet Public Health. Accepted November 2017. [[The Guardian](https://www.theguardian.com/lifeandstyle/2017/dec/18/mindfulness-boosts-student-mental-health-during-exams-cambridge-university-study-finds), [The Daily Mail](http://www.dailymail.co.uk/health/article-5193703/Mindfulness-reduces-stress-students-exam-times.html), [Punjab Tribune](http://www.punjabtribune.com/news/49860-mindfulness-can-lower-stress-boost-academic-success.aspx)]
 
 [When User Experience Designers Partner with Data Scientists](http://aaai.org/ocs/index.php/SSS/SSS17/paper/view/15364/14570)
