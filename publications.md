@@ -112,7 +112,7 @@ title: Neal Lathia's publications.
 ## Book Chapters
 
 [Location Recommendation with Social Media Data]()
-<br />C. Bothorel, N. Lathia, R. Picot-Clemente, A. Noulas. Chapter in Brusilovsky, P., He, D. (eds.) Social Information Access (in press). June 2017.
+<br />C. Bothorel, N. Lathia, R. Picot-Clemente, A. Noulas. Chapter 16 in Brusilovsky, P., He, D. (eds.) [Social Information Access](https://www.springer.com/us/book/9783319900919). May 2018.
 
 [The Anatomy of Mobile Location-Based Recommender Systems](papers/lathia_recsysHB14.pdf)
 <br />N. Lathia. In the [Recommender Systems Handbook](http://www.springer.com/gb/book/9780387858197) (2nd Edition).
