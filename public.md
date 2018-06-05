@@ -4,7 +4,7 @@ title: Neal Lathia's presentations.
 
 ## Recent Presentations
 
-**TBD**
+**Building a Bank with Data**
 <br />June 2018, [EGG Conference: Towards Data Science at Scale](https://pages.dataiku.com/egg-uk-2018). London.
 
 **AI for a More Personalised Experience**
