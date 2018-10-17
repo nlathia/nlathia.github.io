@@ -3,13 +3,14 @@ title: Neal Lathia's home page.
 ---
 
 ## About
-I am currently a Senior Data Scientist at [Monzo](https://monzo.com/) in London.
+Hi, I'm Neal - I'm a Data Scientist, currently working at [Monzo](https://monzo.com/) in London, where I focus on building machine learning systems that optimise the app and help the company scale.
 
-My work has always focused on applications that use machine learning; this journey has spanned digital health monitoring, smartphone sensors and applications, urban computing, recommender systems, travel information systems, and financial transactions.
+Before joining Monzo, I was a Data Scientist at [Skyscanner](http://skyscanner.net/), where I built recommender and ranking systems to [improve travel information in the app](https://medium.com/@neal_lathia/five-lessons-from-building-machine-learning-systems-d703162846ad). 
 
-Previously, I was an Senior Data Scientist at [Skyscanner](https://www.skyscanner.net), an entrepreneur in [Accelerate Cambridge](https://www.jbs.cam.ac.uk/faculty-research/centres/accelerate-cambridge/) at the Judge Business School, University of Cambridge, a Senior Research Associate in the [Computer Laboratory](http://www.cl.cam.ac.uk/) at the University of Cambridge, a Research Associate in the [Department of Computer Science](http://www.cs.ucl.ac.uk/) at University College London, and a visiting researcher at [Telefonica Research](http://www.tid.es/). In between, I've worked as a Data Science consultant.
+Before Skyscanner, I was a Senior Research Associate in the [Computer Lab](https://www.cl.cam.ac.uk/research/srg/netos/people/) at the [University of Cambridge](https://www.cam.ac.uk/), working on healthcare applications that use smartphone sensors. I spun out this research into a startup that was part of [Accelerate Cambridge](https://www.jbs.cam.ac.uk/entrepreneurship/programmes/accelerate-cambridge/) in the Judge Business School.
 
-I have a PhD and MSci in Computer Science, both from [University College London](http://www.ucl.ac.uk/): my PhD research introduced methods for evaluating [collaborative filtering algorithms](ttps://en.wikipedia.org/wiki/Collaborative_filtering) over time.
+I did my MSci, PhD, and first postdoctoral research position in the [Department of Computer Science](http://www.cs.ucl.ac.uk/home/) at [University College London](https://www.ucl.ac.uk/), where I am still an Honorary Research Associate. My PhD focussed on methods for evaluating collaborative filtering algorithms over time. While at UCL, I also spent time as a visiting researcher at [Telefonica Research](http://www.tid.es/), Barcelona and worked as a Data Science consultant.
 
-Connect with me on [LinkedIn](https://uk.linkedin.com/in/nlathia) for details.
- 
+My work has always focused on applications that use machine learning - this has taken me from recommender systems to urban computing and travel information systems, digital health monitoring, smartphone sensors, and banking.
+
+You can read more about my work and research in the [Press & Speaking](http://nlathia.github.io/public.html) and [Publications](http://nlathia.github.io/publications.html) sections. 
