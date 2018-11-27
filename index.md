@@ -3,7 +3,7 @@ title: Neal Lathia's home page.
 ---
 
 ## About
-Hi, I'm Neal - I'm a Data Scientist, currently working at [Monzo](https://monzo.com/) in London, where I focus on building machine learning systems that optimise the app and help the company scale.
+Hi, I'm Neal - I'm a Data Scientist, currently the Machine Learning Lead at [Monzo](https://monzo.com/) in London, where I focus on building machine learning systems that optimise the app and help the company scale.
 
 Before joining Monzo, I was a Data Scientist at [Skyscanner](http://skyscanner.net/), where I built recommender and ranking systems to [improve travel information in the app](https://medium.com/@neal_lathia/five-lessons-from-building-machine-learning-systems-d703162846ad). 
 
