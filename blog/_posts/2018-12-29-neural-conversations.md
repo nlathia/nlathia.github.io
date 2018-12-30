@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Neural Approaches to Conversational AI"
+title:  "Neural Approaches to Conversational AI: Question Answering, Task-Oriented Dialogues and Social Chatbots"
 author: Gao, Galley, Li
 tags: [paper]
 categories: [Notes on Research Papers]
@@ -27,6 +27,21 @@ The unified view casts dialog as an *optimal (hierarchical) decision making* pro
 A common metric to use as a reward function is CPS: **Conversation-turns Per Session**. There are two views on this metric: it sometimes needs to be minimised (complete a task quickly) and other times needs to be maximised (engage in long/meaningful conversations). The can be combined by reasoning over multiple sessions: being able to complete a task quickly (small short-term CPS) means that users will find the dialog system useful and will use it often (large long-term CPS).
 
 Neural-based NLP tasks are usually performed in three steps: (1) encoding user input (words) into vectors, (2) reasoning in the vector space to generate a response, (3) decoding the response into a symbolic space (back to words). End-to-end training of neural nets results in a tighter coupling between the architecture and the application -- the focus shifts away from having the right components for language processing (e.g., parsing, context reasoning, etc.) towards having the right architecture.
+
+## Machine Learning Background
+
+This chapter is an overview of ML. I'm only going to write notes about bits that are specific to conversational systems.
+
+Widely used neural network layers for text classification:
+
+* Embedding layers: mapping each word to an m-dimensional vector.
+* Fully connected layers: performing linear projections
+* Convolutional-pooling layers: forms a local feature vector of a word and its adjacent words (within a fixed sized window).
+* Recurrent layers: map the text to a dense/low dimensional vector by sequentially and recurrently processing each word.
+
+Two examples: [Deep Structured Semantic Model](https://www.microsoft.com/en-us/research/project/dssm/) and [Seq2Seq](https://google.github.io/seq2seq/).
+
+
 
 
 
