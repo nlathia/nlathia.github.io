@@ -8,6 +8,8 @@ categories: [Notes on Research Papers]
 
 Available: [https://arxiv.org/pdf/1809.08267.pdf](https://arxiv.org/pdf/1809.08267.pdf)
 
+This is not really a "paper" -- it is a a six chapter review! It alternates between giving overview-level information for specific areas of conversational AI, and diving into details of deep or reinforcement-based learning algorithms as applied to conversational settings.
+
 ## Chapter 1. Introduction
 
 Intelligent dialogue systems are on the rise thanks to breakthroughs in deep and reinforcement learning. The research field is growing too, attracting folk from the NLP, IR, and ML communities. A number of tutorials and surveys have been published - this chapter is another survey, based on tutorials given at SIGIR and ACL 2018 - that hopes to provide a unified view of conversational / dialog systems.
@@ -106,6 +108,14 @@ Supervised learning in end to end conversation training is hard because human-hu
 
 Researchers have tried using social media data (e.g., twitter or reddit) to train these systems. They usually need to reconstruct dialogues from the posts, and sometimes run into trouble with API limits. Evaluation is just as challenging as previous sections -- it's common to use human raters, alongside metrics like BLEU, ROUGE, and METEOR. There is research that shows that human ratings and these metrics do not correlate.
 
+## Chapter 6. Conversational AI in Industry
 
+Gives a number of examples, e.g. Bing QA, Siri, Google Assistance, Alexa, Cortana, etc.
 
+Most notably, this section highlights differences between research and application:
+* Scale and quality of text
+* Latency
+* User experience
+
+Many of the actual chatbot examples do not use any AI at all, and fully rely on handcrafted rules.
 
