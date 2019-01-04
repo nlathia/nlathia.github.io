@@ -10,6 +10,8 @@ Available: [https://arxiv.org/pdf/1809.08267.pdf](https://arxiv.org/pdf/1809.082
 
 This is not really a "paper" -- it is a a six chapter review! It alternates between giving overview-level information for specific areas of conversational AI, and diving into details of deep or reinforcement-based learning algorithms as applied to conversational settings.
 
+The stand-out points (for me) were about problem formulation (e.g., single vs multi turn dialog) and that nearly all sections discussed that robust evaluation is a core problem in dialog systems: we don't have generalised, automated, scalable, robust ways to determine that a conversation with a computer has gone well.
+
 ## Chapter 1. Introduction
 
 Intelligent dialogue systems are on the rise thanks to breakthroughs in deep and reinforcement learning. The research field is growing too, attracting folk from the NLP, IR, and ML communities. A number of tutorials and surveys have been published - this chapter is another survey, based on tutorials given at SIGIR and ACL 2018 - that hopes to provide a unified view of conversational / dialog systems.
