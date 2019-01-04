@@ -88,4 +88,24 @@ Beyond slot-filling dialogue:
 * Mixed initiative and negotiation
 * Multiple-parties
 
+## Chapter 5. Fully Data-Driven Conversation Models and Social Bots
+
+End to end systems do not rely on expert knowledge and do not have the traditional components described in the previous chapter. These are used more often for chit chat scenarios rather than task completion. Many of these systems are inspired by statistical machine translation.
+
+Early systems represented the data as query/response pairs, which limited the context of the responses. Researchers have since explored RNN/LSTM based approaches that exploited a longer context. Other approaches such as the Hierarchical Recurrent Encoder-Decoder (HRED) aim to exploit longer-term context. Attention based models allow for conditioning on parts of the sentence that are relevant for prediction.
+
+Challenges in these systems:
+* Response blandness - responses are often bland, deflective, uninformative (e.g. "I don't know"). A variety of methods, including GANs, have been explored to increase the diversity of responses.
+* Speaker consistency - responses are incoherent, where the system contradicts itself. This is often a result of a one-to-many of examples in training data (e.g., there are many answers to "how old are you?").
+* Word repetitions - since it is not clear how often a specific word or phrase should be repeated in the output.
+* Response appropriateness - struggling to produce names and facts that has appropriate semantic content.
+
+Grounded conversation models aim to help to effectively converse about a user's environment, by factoring in additional information (e.g. using images from the environment).
+
+Supervised learning in end to end conversation training is hard because human-human conversation training data is very different from online human-computer scenarios. These approaches also optimise for an immediate reward rather than a long-term one. Reinforcement learning in this domain is hard because of the difficulty of coming up with the right reward function.
+
+Researchers have tried using social media data (e.g., twitter or reddit) to train these systems. They usually need to reconstruct dialogues from the posts, and sometimes run into trouble with API limits. Evaluation is just as challenging as previous sections -- it's common to use human raters, alongside metrics like BLEU, ROUGE, and METEOR. There is research that shows that human ratings and these metrics do not correlate.
+
+
+
 
