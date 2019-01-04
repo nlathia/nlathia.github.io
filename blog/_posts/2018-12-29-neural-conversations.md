@@ -60,6 +60,32 @@ Machine Reading Comprehension is the task of answering questions given a set of 
 
 Many of these systems are developed as single-turn. To make this conversational, the system also needs to include (encode) the conversation history.
 
+## Chapter 4. Task-oriented Dialogue Systems
 
+Completing a task is different from question answering -- they are typically domain dependent (e.g., book a hotel room). There are a variety of types, including slot-filling dialogue: where the machine needs to collect information from the user in order to complete the task.
+
+The interaction between a dialog agent and a user mirrors the interaction between an RL agent and the environment. An appropriate reward function in this domain would give a high reward for completing the task and a small penalty for each required intermediate turn. In practice, reward functions are often a linear combination of a subset of the following:
+* Task completion success
+* Time elapsed (number of turns)
+* Coherence, diversity, personal style(s)
+
+For RL, researchers have developed user simulators for RL agents to converse with -- since conversing with real users is expensive. The simulators could be based on a user agenda or based on models/data. Ultimately, many evaluations rely on recruited users (small scale) or A/B tests.
+
+Slot filling problems also rely on dialogue state tracking -- containing all information about what the user is looking for at the current turn of the conversation. This is the input information to the dialogue policy which decides what action to take next. For example, see [this challenge](https://www.microsoft.com/en-us/research/event/dialog-state-tracking-challenge/). 
+
+An example dialogue policy is DQN, which takes as input an encoding of the current dialogue state. It outputs a vector who entries correspond to all the possible dialogue-act/slot pairs that can be chosen by the system. Learning the policy from scratch takes a lot of data, but can be sped up by using expert-generated dialogues, imitation learning, or replay buffer spiking (warm start). In online settings, an agent has to balance between exploit (maximise reward) and explore (discover better alternatives) -- exploration when neural nets are used is an active research topic. This is made even more challenging when needing to extend the agent's domain while serving users (adding more intents/slots).
+
+Dialog can often be decomposed into a sequence of related sub-dialogues that each focus on a single topic. For example: booking a flight, hotel and car rental for a single trip. These are referred to as composite-task dialogues, where subtasks may have interdependencies. On the other hand, if a dialog can have more than one broad subject matter (e.g., hotels and restaurants), this is referred to as multi-domain dialogue.
+
+Natural Language Generation (NLG) aims to convert a communication goal into natural language form. Rule and template based approaches are the most common ways to achieve this. Newer approaches (corpus-based) aim to optimise generation from a corpora of text. There are a number of LSTM based approaches that have been explored here.
+
+All of these modules in a dialog system are often optimised separately. If all of them are differentiable, then the whole system can be optimised by backprop. Supervised and reinforcement learning have both been applied to this scenario.
+
+Beyond slot-filling dialogue:
+* Information seeking dialog
+* Navigation dialogue
+* Multimodal dialogue with non-verbal inputs
+* Mixed initiative and negotiation
+* Multiple-parties
 
 
