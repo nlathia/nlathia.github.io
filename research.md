@@ -8,7 +8,12 @@ As of 2015/2016, I am no longer actively conducting academic research, and no lo
 
 ## Programme Committees
 
-I review research broadly related to recommender systems, web technologies, information retrieval, ubiquitous computing, and data mining/artificial intelligence.
+I review research broadly related to recommender systems, web technologies, information retrieval, ubiquitous computing, and data mining/machine learning/artificial intelligence.
+
+| 2019       | 
+| ------------- |
+| [International Joint Conference on Artificial Intelligence](https://ijcai19.org/) | 
+
 
 | 2018       | 
 | ------------- |
