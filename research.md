@@ -13,6 +13,7 @@ I review research broadly related to recommender systems, web technologies, info
 | 2019       | 
 | ------------- |
 | [International Joint Conference on Artificial Intelligence](https://ijcai19.org/) | 
+| [ACM Recommender Systems](https://recsys.acm.org/recsys19/) (Senior Programme Committee) | 
 
 
 | 2018       | 
