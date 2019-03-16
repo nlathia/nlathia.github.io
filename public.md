@@ -2,7 +2,16 @@
 title: Neal Lathia's presentations.
 ---
 
-## Recent Presentations
+## Recent & Upcoming Presentations
+
+**Enabling Better Decisions, Faster**
+<br />April 2019, [Looker: Join the Tour](https://looker.com/events/join-the-tour/london). London.
+
+**Speeding up Machine Learning Development**
+<br />April 2019, Xcede Data Science Networking Event. London.
+
+**Using Deep Learning to Support Customer Operations**
+<br />March 2019, [EGG Conference: Towards Data Science at Scale](https://www.re-work.co/events/deep-learning-in-finance-summit-london-2019). London.
 
 **Building a Bank with Data**
 <br />June 2018, [EGG Conference: Towards Data Science at Scale](https://pages.dataiku.com/egg-uk-2018). London.
