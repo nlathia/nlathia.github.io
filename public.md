@@ -31,7 +31,8 @@ For presentations prior to 2017, please see an archive list [here](archive/prese
 
 ## Press
 
-This is a selection of various occasions that research I was involved in has appeared in the press.
+[Machine learning and data are powering Monzo's fintech disruption](https://www.thedrum.com/news/2019/04/11/machine-learning-and-data-are-powering-monzos-fintech-disruption)
+<br />The Drum. April 2019.
 
 [Get Up and Move. It May Make You Happier](https://www.nytimes.com/2017/01/25/well/move/get-up-and-move-it-may-make-you-happier.html)
 <br />New York Times. January 2017.
