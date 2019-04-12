@@ -31,8 +31,14 @@ For presentations prior to 2017, please see an archive list [here](archive/prese
 
 ## Press
 
+[Interview at the Deep Learning in Finance Summit](https://www.youtube.com/watch?v=xFjZu5Envdg)
+<br />ReWork Deep Learning in Finance. London, April 2019.
+
 [Machine learning and data are powering Monzo's fintech disruption](https://www.thedrum.com/news/2019/04/11/machine-learning-and-data-are-powering-monzos-fintech-disruption)
 <br />The Drum. April 2019.
+
+[How Monzo data management team aims to enable better internal decisions](https://www.compelo.com/banking/analysis/monzo-data-management/)
+<br />Compelo. April 2019.
 
 [Get Up and Move. It May Make You Happier](https://www.nytimes.com/2017/01/25/well/move/get-up-and-move-it-may-make-you-happier.html)
 <br />New York Times. January 2017.
