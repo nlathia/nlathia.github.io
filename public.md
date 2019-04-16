@@ -14,7 +14,7 @@ title: Neal Lathia's presentations.
 <br />March 30 2019, [ReWork Deep Learning in Finance Summit](https://www.re-work.co/events/deep-learning-in-finance-summit-london-2019). London.
 
 **Building a Bank with Data**
-<br />June 2018, [EGG Conference: Towards Data Science at Scale](https://pages.dataiku.com/egg-uk-2018). London.
+<br />June 2018, [EGG Conference: Towards Data Science at Scale](https://pages.dataiku.com/egg-uk-2018). London [YouTube](https://www.youtube.com/watch?v=hbNRxVR8LHA).
 
 **AI for a More Personalised Experience**
 <br />November 2017. Keynote, [AI Tech World: The Business of Artificial Intelligence](http://www.aitechworld.net/). London. 
