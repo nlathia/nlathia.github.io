@@ -4,7 +4,7 @@ title: Presentation Archive
 
 ## Archive of Presentations
 
-Conference/research paper presentations are not listed. You can find all of my slides on [slide share](https://www.slideshare.net/neal.lathia/presentations).
+I've omitted a number of academic conference presentations. You can find all of my slides on [slide share](https://www.slideshare.net/neal.lathia/presentations).
 
 **AI for a More Personalised Experience**
 <br />November 2017. Keynote, [AI Tech World: The Business of Artificial Intelligence](http://www.aitechworld.net/). London. 
