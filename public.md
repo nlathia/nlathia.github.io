@@ -19,18 +19,7 @@ title: Neal Lathia's presentations.
 **Building a Bank with Data**
 <br />June 2018, [EGG Conference: Towards Data Science at Scale](https://pages.dataiku.com/egg-uk-2018). London [YouTube](https://www.youtube.com/watch?v=hbNRxVR8LHA).
 
-**AI for a More Personalised Experience**
-<br />November 2017. Keynote, [AI Tech World: The Business of Artificial Intelligence](http://www.aitechworld.net/). London. 
-
-**Opportunities & Challenges in Personalised Travel**
-<br />August 2017. Keynote, [Workshop on Recommenders in Tourism](https://recsys.acm.org/recsys17/rectour/). ACM RecSyS 2017, Como.
-
-**Bootstrapping a Destination Recommender System**
-<br />August 2017. [ACM RecSyS 2017 (Industry Track)](https://recsys.acm.org/recsys17/), Como.
-<br />June 2017. [4th Global Machine Intelligence Summit](https://www.re-work.co/events/machine-intelligence-summit-amsterdam-2017), Amsterdam.
-<br />April 2017. [Data Science Festival](https://www.meetup.com/Data-Science-Festival-London/events/238489850/), London. 
-
-For presentations prior to 2017, please see an archive list [here](archive/presentations.md) or have a look at [my slide share page](http://www.slideshare.net/neal.lathia).
+For presentations prior to 2018, please see an archive list [here](archive/presentations.md) or have a look at [my slide share page](http://www.slideshare.net/neal.lathia).
 
 ## Press
 
