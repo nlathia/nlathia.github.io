@@ -5,13 +5,16 @@ title: Neal Lathia's presentations.
 ## Recent & Upcoming Presentations
 
 **Enabling Better Decisions, Faster**
-<br />April 9 2019, [Looker: Join the Tour](https://looker.com/events/join-the-tour/london). London.
+<br />April 9 2019, [Looker: Join the Tour](https://looker.com/events/join-the-tour/london). London. [Slides](https://www.slideshare.net/neal.lathia/making-better-decisions-faster-141562897).
 
 **Speeding up Machine Learning Development**
-<br />April 4 2019, Xcede Data Science Networking Event. London.
+<br />April 4 2019, Xcede Data Science Networking Event. London. [Slides](https://www.slideshare.net/neal.lathia/machine-learning-faster).
 
 **Using Deep Learning to Support Customer Operations**
 <br />March 30 2019, [ReWork Deep Learning in Finance Summit](https://www.re-work.co/events/deep-learning-in-finance-summit-london-2019). London.
+
+**Data @ Monzo**
+<br />February 2019, Lloyd's Bank Data Team Offsite (Invited). London.
 
 **Building a Bank with Data**
 <br />June 2018, [EGG Conference: Towards Data Science at Scale](https://pages.dataiku.com/egg-uk-2018). London [YouTube](https://www.youtube.com/watch?v=hbNRxVR8LHA).
