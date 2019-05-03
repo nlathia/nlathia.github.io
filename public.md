@@ -23,6 +23,9 @@ For presentations prior to 2018, please see an archive list [here](archive/prese
 
 ## Press
 
+[Data driven smartphone banking with Monzo](https://www.dataiq.co.uk/articles/data-driven-smartphone-banking-with-monzo)
+<br />DataIQ. April 2019.
+
 [Interview at the Deep Learning in Finance Summit](https://www.youtube.com/watch?v=xFjZu5Envdg)
 <br />ReWork Deep Learning in Finance. London, April 2019.
 
