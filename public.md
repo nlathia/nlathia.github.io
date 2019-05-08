@@ -5,7 +5,7 @@ title: Neal Lathia's presentations.
 ## Recent & Upcoming Presentations
 
 **Enabling Better Decisions, Faster**
-<br />April 9 2019, [Looker: Join the Tour](https://looker.com/events/join-the-tour/london). London. [Slides](https://www.slideshare.net/neal.lathia/making-better-decisions-faster-141562897).
+<br />April 9 2019, [Looker: Join the Tour](https://looker.com/events/join-the-tour/london). London. [Slides](https://www.slideshare.net/neal.lathia/making-better-decisions-faster-141562897) [YouTube](https://youtu.be/k7a3SHkMblI).
 
 **Speeding up Machine Learning Development**
 <br />April 4 2019, Xcede Data Science Networking Event. London. [Slides](https://www.slideshare.net/neal.lathia/machine-learning-faster).
