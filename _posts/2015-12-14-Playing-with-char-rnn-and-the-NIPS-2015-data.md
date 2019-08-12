@@ -20,7 +20,7 @@ The text data (extracted from the PDFs using the tool [pdftotext](https://en.wik
 pβ T xpiq ´ β T y pjq q2 Mij “ max<br>min β T WM β<br>(3)<br>βPB<br>||β||0 ďk
 {% endhighlight %}
 
-This text was “generated” by a human. For this experiment*, I was looking to train using _full sentences_, which are actually a rarity in technical/algorithmic papers. They tend to (from my experience) be found in the Abstract, Introduction, Related Work, Discussion/Conclusion sections. I therefore filtered each paper — manually removing everything after the introduction and before the conclusion (but this varied between papers*)— and yes, in case you were wondering, this was a huge pain and wasn’t done perfectly.
+This text was “generated” by a human. For this experiment, I was looking to train using _full sentences_, which are actually a rarity in technical/algorithmic papers. They tend to (from my experience) be found in the Abstract, Introduction, Related Work, Discussion/Conclusion sections. I therefore filtered each paper — manually removing everything after the introduction and before the conclusion (but this varied between papers)— and yes, in case you were wondering, this was a huge pain and wasn’t done perfectly.
 
 Note: I did try a bunch of regexs first (and used some to remove things like references), but could only get so far: there was a lot of variance in section headings, and in general too many cases/outliers/exceptions to automate this sensibly.
 
