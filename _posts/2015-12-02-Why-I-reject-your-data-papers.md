@@ -21,4 +21,4 @@ And some minor issues to keep in mind:
 * As a reader, I will skip your “the rest of this paper is organized as follows” paragraph. I don’t care much about knowing how your paper is structured; I would much rather you spend the time/space telling me about what you have found and its implications.
 * While I know that some people feel very strongly about this, I don’t care if your related work is Section 2, or Section [Conclusion -1] as long as it is readable _where it is_. Are you discussing related work results compared to yours? That should come after you have presented your results. Are you discussing related work as a motivation for yours? Perhaps that should appear after the Introduction.<
 
-Update: [here](https://www.brainpickings.org/2014/03/28/daniel-dennett-rapoport-rules-criticism/) is an interesting suggested code of conduct for reviewing (and criticizing) research.</p></div></div></section>
+Update: [here](https://www.brainpickings.org/2014/03/28/daniel-dennett-rapoport-rules-criticism/) is an interesting suggested code of conduct for reviewing (and criticizing) research.
