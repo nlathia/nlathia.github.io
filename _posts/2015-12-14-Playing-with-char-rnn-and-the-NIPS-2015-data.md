@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Playing with char-rnn and the NIPS 2015 data"
-tags: [data]
+tags: [data, tools]
 excerpt_separator: <!--more-->
 ---
 
