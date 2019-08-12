@@ -27,7 +27,7 @@ The most surprising result, however, was how little of the thousands of hours of
 
 The final point contains the real $1M question: how can data scientists work (offline) on an algorithm and measure improvements that will correlate with improvements in online experiments? It’s hard but an answer to this could speed up a lot of experimentation!
 
-<figure name="72f8" id="72f8" class="graf graf--figure graf-after--p"><div class="aspectRatioPlaceholder is-locked" style="max-width: 700px; max-height: 437px;"><div class="aspectRatioPlaceholder-fill" style="padding-bottom: 62.4%;"></div><img class="graf-image" data-image-id="0*DfG6mdH6aPmyh51e." data-width="1137" data-height="710" src="https://cdn-images-1.medium.com/max/800/0*DfG6mdH6aPmyh51e."></div></figure>
+![about](/images/posts/NetflixPrizePaper.png)
 
 ### Key Takeaways
 In the current Netflix system, everything that you see has been, to some extent, tailored to “your” tastes (Netflix deals with households of customers, so they tailor to a group at a time). This includes the rows of films you see, the ordering of the rows, and the ordering of the films inside each row.
