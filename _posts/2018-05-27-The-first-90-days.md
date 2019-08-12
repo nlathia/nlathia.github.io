@@ -5,11 +5,9 @@ tags: [book]
 excerpt_separator: <!--more-->
 ---
 
-
 ...being systematic about how you work, not just what you work on.
 
 <!--more-->
-<hr />
 
 Most of the blog posts that I read about tech show how thorough typical workflows are: we take a systematic approach when trying to solve problems in software development, data science, and product management. So why not be _just as systematic_ when thinking about _how we work_ within our team and company?
 
