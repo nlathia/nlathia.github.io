@@ -7,8 +7,8 @@ excerpt_separator: <!--more-->
 ---
 
 This is a a six chapter review! It alternates between giving overview-level information for specific areas of conversational AI, and diving into details of deep or reinforcement-based learning algorithms as applied to conversational settings.
+
 <!--more-->
-<hr />
 
 Available: [https://arxiv.org/pdf/1809.08267.pdf](https://arxiv.org/pdf/1809.08267.pdf)
 
