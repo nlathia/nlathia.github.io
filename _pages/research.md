@@ -3,8 +3,6 @@ layout: page
 title: 🔍 Research
 ---
 
-### Note
-
 As of 2015/2016, I am no longer actively conducting academic research, and no longer open for data science consultancy opportunities. I still review for a variety of conferences, listed below. Past projects can be found on [this archive page](archive/projects.html).
 
 ### Programme Committees
