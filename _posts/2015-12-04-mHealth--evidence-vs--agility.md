@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "mHealth: Evidence vs. Agility"
+title:  "mHealth: evidence vs. agility"
 tags: [opinion, research]
 excerpt_separator: <!--more-->
 ---

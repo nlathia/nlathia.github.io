@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Solving the Continuous Cold Start Problem"
+title:  "Solving the continuous cold start problem"
 tags: [recsys, paper]
 excerpt_separator: <!--more-->
 ---

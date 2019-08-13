@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "The Machine Learning Behind Farecast"
+title:  "The machine learning behind farecast"
 tags: [recsys, paper]
 excerpt_separator: <!--more-->
 ---

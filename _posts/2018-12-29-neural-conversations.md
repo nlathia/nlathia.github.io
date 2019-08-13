@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Neural Approaches to Conversational AI: Question Answering, Task-Oriented Dialogues and Social Chatbots"
+title:  "Neural approaches to conversational AI"
 author: Gao, Galley, Li
 tags: [paper, chatbot]
 excerpt_separator: <!--more-->
