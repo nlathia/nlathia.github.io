@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Neural approaches to conversational AI"
-author: Gao, Galley, Li
 tags: [paper, chatbot]
 excerpt_separator: <!--more-->
 ---
