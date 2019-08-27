@@ -22,6 +22,9 @@ For presentations prior to 2018, please see an archive list [here](archive/prese
 
 ### Press
 
+[Monzo: how the bank of the future uses AI](https://tbtech.co/monzo-how-the-bank-of-the-future-uses-ai/)
+<br />Top Business Tech. August 2019.
+
 [Data driven smartphone banking with Monzo](https://www.dataiq.co.uk/articles/data-driven-smartphone-banking-with-monzo)
 <br />DataIQ. April 2019.
 
