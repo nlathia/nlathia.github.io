@@ -23,7 +23,7 @@ The basic premise is that if we had data about items that users think of as rele
 
 Defining relevance in any context is tricky. Many systems rely on measuring this implicitly, by looking at what items users are clicking on. In the Skyscanner app, though, clicking on a search result is not a very strong signal that users have found what they are looking for — you may simply be clicking on the itinerary to find out a little bit more. A much stronger signal of relevance is the commitment click through to the airline/travel agent’s website to purchase it, which requires multiple actions from the user.
 
-[image]
+<img data-width="1600" data-height="1320" src="https://hackernoon.com/hn-images/1*B0PUwKY2H4mq2nCsUrjYKg.png">
 
 There were a few stages in the journey from the idea of ranking flight search results with machine learning to experiments. We tackled these with two streams of work — offline and online experiments.
 
@@ -47,7 +47,7 @@ One way to evaluate this approach in an A/B test would be to completely replace 
 
 In the end, we ran an experiment comparing users who were given recommendations using machine learning, users who were given recommendations using aheuristic that only took price and duration into account, and users who were not given any recommendations at all.
 
-[image]
+<img data-width="1600" data-height="1320" src="https://hackernoon.com/hn-images/1*pXW8FoSqpNAPWnpMECi8kQ.png">
 
 ### Our First Results: Search Effort and Conversion
 
