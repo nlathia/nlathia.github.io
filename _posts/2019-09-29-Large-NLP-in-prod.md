@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Large NLP models in production"
+title:  "When is a neural net too big for production?"
 tags: [opinion, monzo]
 excerpt_separator: <!--more-->
 ---
@@ -53,7 +53,7 @@ In cron job settings, inference time is usually not such a big deal - prediction
 
 In the other two patterns, things become even more application specific. Consider, for example, the system I mentioned above that is consuming chat events to decide to push saved response recommendations to our agents. In this case, the time the system needs to generate those recommendations should be (broadly) less than the time that it takes an agent to read through what has been written so far - this use case is measured in the order of multiple seconds; i.e., nearly an eternity for computers.
 
-Finally, we have services that we are experimenting with to try and [improve the app help screen](https://monzo.com/blog/2018/08/01/data-help) - some of these are using BERT. In our first experiment, we saw that some of these services were struggling under the load they were receiving - but the first port of call is to [scale them horizontally](https://github.com/vaquarkhan/vaquarkhan/wiki/Difference-between-scaling-horizontally-and-vertically) rather than pull the handbrake and not deploy them at all.
+Finally, we have services that we are experimenting with to try and [improve the app help screen](https://monzo.com/blog/2018/08/01/data-help) - some of these are using BERT. In our first experiment, we saw that some of these services were struggling under the load they were receiving - but the first port of call is to [scale them horizontally](https://github.com/vaquarkhan/vaquarkhan/wiki/Difference-between-scaling-horizontally-and-vertically) rather than pull the handbrake and not deploy them at all. This means that we are trading off between how many instances we need (or want) to spin up and the performance we want to achieve, much like what happens when these same models are trained on large clusters.
 
 ## 🤗 Example: serving BERT predictions
 
@@ -75,7 +75,9 @@ def load_model(model_dir: str, num_labels: int):
     )
     model.eval()
     return model
-``` 
+```
+
+I did a small test on my own laptop using [this approach](https://stackoverflow.com/questions/938733/total-memory-used-by-python-process) which uses `psutil` to measure the "Resident Set Size" memory usage (is this the right way? 🤷‍♂️). Before loading the model, memory usage was about 79 MB: after the call to `load_model()`, it shot up to just over 957. A huge jump, yes (and 100s of times bigger than what you would expect in non-machine learning services) - but still well below what decent cloud instances provide. 
 
 Once these steps have finished, the service will start serving requests. Each of these services will have an endpoint (or [Sanic route](https://sanic.readthedocs.io/en/latest/sanic/routing.html)) to get the model's predictions for a given input - it broadly looks like this:
 
@@ -101,9 +103,9 @@ The `model_predict()` runs model predictions with `torch.no_grad()`: this ensure
 
 There was one tiny trick that two folks on the team discovered which helped us to make these types of services _even faster_. They discovered the issue that it seems [others have also found](https://twitter.com/MarkNeumannnn/status/1067926695338926080) regarding threading performance and the `OMP_NUM_THREADS` and `MKL_NUM_THREADS` environment variables; the one difference was that they also had to factor in how all of this plays with Sanic [worker threads](https://sanic.readthedocs.io/en/latest/sanic/deploying.html#workers).
 
-## 🔍 Closing thoughts
+## 🔍 Reflections
 
-The main disclaimer that I'll add to the above is that we are currently in the stage of development where we're iterating on and validating new product features, and not squeezing performance gains out of existing ones. Perhaps, once we reach that stage (where every microsecond matters), I'll change my mind about BERT being suitable for production 😊.
+The main disclaimer that I'll add to the above is that we are currently in the stage of development where we're iterating on and validating new product features, and not squeezing performance gains out of existing ones. Perhaps, once we reach that stage (where every megabyte of memory, instance we spin up, and microsecond matters), I'll change my mind about BERT being suitable for production 😊.
 
 So, after writing an entire blog post about how we can (and do) but large models like BERT into production, I'll close with two thoughts.
 
