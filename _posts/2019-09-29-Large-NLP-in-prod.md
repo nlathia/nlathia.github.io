@@ -7,10 +7,10 @@ excerpt_separator: <!--more-->
 
 Here are some thoughts on the recent discussions around NLP transformer models being too big to put into production, and a dive into how we have shipped them at Monzo using the [HuggingFace library](https://huggingface.co/).
 <!--more-->
+
 <hr />
 
-## 💬 Background
-
+### 💬 Background
 Over the last couple of years, there have been a ton of exciting developments in natural language processing (NLP). In case you haven't been working in this area, here's the crash course: the development of [deep pre-trained language models](http://ruder.io/nlp-imagenet/) has taken the field by storm. In particular, [transformer architectures](https://arxiv.org/abs/1706.03762) are everywhere, and were popularised by Google's release of the [**B**idirectional **E**ncoder **R**epresentations from **T**ransformers](https://arxiv.org/abs/1810.04805) (BERT) model, OpenAI's release of the [GPT(-2) models](https://openai.com/blog/better-language-models/), and other similar releases.
 
 Various research teams are continuing to compete to train better language models; if you look at the [General Language Understanding Evaluation (GLUE)](https://gluebenchmark.com/leaderboard) benchmark leaderboard, you'll find a host of other approaches (many of them also named BERT: ALBERT, RoBERTa, etc.). The overarching trend in this research has been to train **bigger** models with **more data** - growing to the extent that researchers [have investigated](https://arxiv.org/abs/1906.02243) the costly carbon footprint of training these large networks.
@@ -21,8 +21,7 @@ For practicioners, the main selling point of pre-trained language models is that
 
 Unfortunately, it looks like this talk [was not recorded](https://twitter.com/honnibal/status/1157592067712966657), and so all of the context around this claim was lost. In light of that, this post gives an overview of how these models _can_ and _have been_ put into production.
 
-## 🚢 Patterns for models in production
-
+### 🚢 Patterns for models in production
 Let's begin with a very pragmatic question: **what is "production?"**
 
 For our purposes, production is the environment where we put software that we have written (and models we have trained) so that it can enable features in a product to work without any manual intervention. By this definition, we exclude any code that we use for analytics or ad-hoc purposes, even though there may be potential applications of NLP in those domains (e.g., sentiment analysis on historical data).
@@ -39,8 +38,7 @@ There are three main ways that models can be used in production:
 
 In practice, building an end-to-end system is likely to involve more than one of the above. I've already mentioned the system which gives our agents response recommendations: this system has a cron job (to encode all of the response text), a consumer service (which decides when recommendations should be triggered), and a RESTful service (which is, effectively, a k-Nearest Neighbour between the encoded customer text and the encoded responses).  
 
-## 🙅‍♂️ When is a model too big?
-
+### 🙅‍♂️ When is a model too big?
 Now that I've described three generic ways that models are shipped, let's tackle the main question: when is a model too big? There are two scenarios to consider: (1) a model is too big _to ship at all_, and (2) a model's size is making it inefficient.
 
 **Too big to ship at all?** The main question that may prevent shipping a model at all is about reconciling the hardware (where you want to run a model) with the size of the model. In practice, current models' sizes are not a big problem in cloud-based backend systems, which have a variety of different instance sizes available - the hardware we have in the cloud _can_ ship a model like BERT. It may eat up a ton of memory - but it will _work_. 
@@ -55,8 +53,7 @@ In the other two patterns, things become even more application specific. Conside
 
 Finally, we have services that we are experimenting with to try and [improve the app help screen](https://monzo.com/blog/2018/08/01/data-help) - some of these are using BERT. In our first experiment, we saw that some of these services were struggling under the load they were receiving - but the first port of call is to [scale them horizontally](https://github.com/vaquarkhan/vaquarkhan/wiki/Difference-between-scaling-horizontally-and-vertically) rather than pull the handbrake and not deploy them at all. This means that we are trading off between how many instances we need (or want) to spin up and the performance we want to achieve, much like what happens when these same models are trained on large clusters.
 
-## 🤗 Example: serving BERT predictions
-
+### 🤗 Example: serving BERT predictions
 How does this look in practice?
 
 At Monzo, we have decided for our Python microservices to be as lightweight as possible: they are effectively a nice wrapper around a model's `predict()` function, and we write the rest in [Go](https://golang.org/) - the main language that is used throughout the Monzo backend.
@@ -103,8 +100,7 @@ The `model_predict()` runs model predictions with `torch.no_grad()`: this ensure
 
 There was one tiny trick that two folks on the team discovered which helped us to make these types of services _even faster_. They discovered the issue that it seems [others have also found](https://twitter.com/MarkNeumannnn/status/1067926695338926080) regarding threading performance and the `OMP_NUM_THREADS` and `MKL_NUM_THREADS` environment variables; the one difference was that they also had to factor in how all of this plays with Sanic [worker threads](https://sanic.readthedocs.io/en/latest/sanic/deploying.html#workers).
 
-## 🔍 Reflections
-
+### 🔍 Reflections
 The main disclaimer that I'll add to the above is that we are currently in the stage of development where we're iterating on and validating new product features, and not squeezing performance gains out of existing ones. Perhaps, once we reach that stage (where every megabyte of memory, instance we spin up, and microsecond matters), I'll change my mind about BERT being suitable for production 😊. 
 
 So, after writing an entire blog post about how we can (and do) but large models like BERT into production, I'll close with two thoughts.
