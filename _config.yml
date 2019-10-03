@@ -8,7 +8,7 @@
 # Site settings
 title:       Neal Lathia
 email:       'neal.lathia@gmail.com'
-description: 'Neal homepage'
+description: 'My homepage'
 baseurl:     '' # The subpath of your site, e.g. /blog
 url:         'http://nlathia.github.io/' 
 twitter:     'neal_lathia'
@@ -16,7 +16,7 @@ github:      'nlathia'
 
 markdown:  kramdown
 permalink: pretty
-paginate:  60
+paginate:  10
 
 sass:
   style: compressed

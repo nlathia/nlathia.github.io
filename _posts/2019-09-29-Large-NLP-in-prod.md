@@ -54,47 +54,17 @@ In the other two patterns, things become even more application specific. Conside
 Finally, we have services that we are experimenting with to try and [improve the app help screen](https://monzo.com/blog/2018/08/01/data-help) - some of these are using BERT. In our first experiment, we saw that some of these services were struggling under the load they were receiving - but the first port of call is to [scale them horizontally](https://github.com/vaquarkhan/vaquarkhan/wiki/Difference-between-scaling-horizontally-and-vertically) rather than pull the handbrake and not deploy them at all. This means that we are trading off between how many instances we need (or want) to spin up and the performance we want to achieve, much like what happens when these same models are trained on large clusters.
 
 ### 🤗 Example: serving BERT predictions
-How does this look in practice?
-
 At Monzo, we have decided for our Python microservices to be as lightweight as possible: they are effectively a nice wrapper around a model's `predict()` function, and we write the rest in [Go](https://golang.org/) - the main language that is used throughout the Monzo backend.
 
 We have built a [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/) Python microservice template that uses [Sanic](https://github.com/huge-success/sanic). When one of these services is starting up, it needs to do two, fairly slow, things: (1) find and retrieve the model that it wants to serve (I'll blog about that problem separately), and (2) load the model (in `eval()` mode) and the tokenizer as `global` variables in memory. 
 
-Part of the latter is something along the lines of:
-
-```python
-from pytorch_pretrained_bert import BertForSequenceClassification
-
-def load_model(model_dir: str, num_labels: int):
-    model = BertForSequenceClassification.from_pretrained(
-        model_dir,
-        num_labels=num_labels
-    )
-    model.eval()
-    return model
-```
+(Side note: I originally intended to share some code snippets here, but this jekyll theme stubbornly refused to be mobile friendly. So I've removed it - but it's not far off from the available examples online.)
 
 I did a small test on my own laptop using [this approach](https://stackoverflow.com/questions/938733/total-memory-used-by-python-process) which uses `psutil` to measure the "Resident Set Size" memory usage (is this the right way? 🤷‍♂️). Before loading the model, memory usage was about 79 MB: after the call to `load_model()`, it shot up to just over 957. A huge jump, yes (and 100s of times bigger than what you would expect in non-machine learning services) - but still well below what decent cloud instances provide. 
 
-Once these steps have finished, the service will start serving requests. Each of these services will have an endpoint (or [Sanic route](https://sanic.readthedocs.io/en/latest/sanic/routing.html)) to get the model's predictions for a given input - it broadly looks like this:
+Once these steps have finished, the service will start serving requests. Each of these services will have an endpoint (or [Sanic route](https://sanic.readthedocs.io/en/latest/sanic/routing.html)) to get the model's predictions for a given input.
 
-```python
-@app.route("/predict/", methods=['POST'])
-async def predict(request):
-    text = request.json["text"]
-    # Run some validations or do other checks
-    label, probability = await model_predict(text)
-    return response.json(
-        {
-            "label": label,
-            "probability": probability,
-            # And some other fields
-        },
-        status=200
-    )
-```
-
-The `async` and `await` syntax is the key here: handlers are an [async co-routine](https://docs.python.org/3/library/asyncio-task.html), and all model predictions are run in the `asyncio` event loop, rather than as blocking functions. There are many blog posts that describe the details of the Python event loop and the `async / await` syntax much better than I ever could; if you're interested, I'd recommend searching for this topic ([here's one](https://stackabuse.com/python-async-await-tutorial/)).
+The `async` and `await` syntax in Sanic routes is the key here: handlers are an [async co-routine](https://docs.python.org/3/library/asyncio-task.html), and all model predictions are run in the `asyncio` event loop, rather than as blocking functions. There are many blog posts that describe the details of the Python event loop and the `async / await` syntax much better than I ever could; if you're interested, I'd recommend searching for this topic ([here's one](https://stackabuse.com/python-async-await-tutorial/)).
 
 The `model_predict()` runs model predictions with `torch.no_grad()`: this ensures that the autograd engine is not used. According to [this thread](https://discuss.pytorch.org/t/model-eval-vs-with-torch-no-grad/19615), this reduces memory usage and speeds up computation. Naturally, you can't then backpropagate (needing to do so while serving is an entirely different type of problem!).
 
