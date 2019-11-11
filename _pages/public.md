@@ -4,7 +4,7 @@ title: 📹  Presentations & 🗞 Press
 ---
 
 **Deploying machine learning to improve customer support**
-<br />November 5 2019, [PyTorch London](https://www.meetup.com/London-PyTorch-Meetup/events/265564747/) Meetup.
+<br />November 5 2019, [PyTorch London](https://www.meetup.com/London-PyTorch-Meetup/events/265564747/) Meetup. [Slides](https://www.slideshare.net/neal.lathia/using-language-models-to-supercharge-monzos-customer-support).
 <br />October 8 2019, Imperial College. London.
 
 **Enabling Better Decisions, Faster**
