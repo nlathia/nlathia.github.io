@@ -23,7 +23,7 @@ I've omitted a number of academic conference presentations. You can find all of 
 <br />April 2017. [Data Science Festival](https://www.meetup.com/Data-Science-Festival-London/events/238489850/), London. 
 
 **Mining Smartphone Sensor Data with Python**
-<br />May, 2016. [PyData London 2016](http://pydata.org/london2016/schedule/presentation/40/). London. [Slides & Code](https://github.com/nlathia/pydata_2016).
+<br />May, 2016. [PyData London 2016](http://pydata.org/london2016/schedule/presentation/40/). London. [Slides & Code](https://github.com/nlathia/pydata_2016), [YouTube](https://www.youtube.com/watch?v=BidI8_1ikiQ).
 
 **Happier and Healthier with Smartphone Data**
 <br />March 7, 2016. [Cambridge Science Festival](http://www.sciencefestival.cam.ac.uk/events/happier-and-healthier-smartphone-data). Cambridge.
