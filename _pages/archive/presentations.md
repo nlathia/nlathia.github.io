@@ -19,7 +19,7 @@ I've omitted a number of academic conference presentations. You can find all of 
 
 **Bootstrapping a Destination Recommender System**
 <br />August 2017. [ACM RecSyS 2017 (Industry Track)](https://recsys.acm.org/recsys17/), Como.
-<br />June 2017. [4th Global Machine Intelligence Summit](https://www.re-work.co/events/machine-intelligence-summit-amsterdam-2017), Amsterdam.
+<br />June 2017. [4th Global Machine Intelligence Summit](https://www.re-work.co/events/machine-intelligence-summit-amsterdam-2017), Amsterdam. [Video](https://www.pscp.tv/teamrework/1rmGPPgjgMgGN)
 <br />April 2017. [Data Science Festival](https://www.meetup.com/Data-Science-Festival-London/events/238489850/), London. 
 
 **Mining Smartphone Sensor Data with Python**
