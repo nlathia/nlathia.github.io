@@ -14,6 +14,9 @@ I've omitted a number of academic conference presentations. You can find all of 
 **Opportunities & Challenges in Personalised Travel**
 <br />August 2017. Keynote, [Workshop on Recommenders in Tourism](https://recsys.acm.org/recsys17/rectour/). ACM RecSyS 2017, Como.
 
+**Panel Discussion: Machine Vs. Man: Is the Data Future in Tech or People?**
+<br />May 2017. [Eye for Travel Conference](https://www.eyefortravel.com/distribution-strategies/video-only/panel-discussion-machine-vs-man-data-future-tech-or-people)
+
 **Bootstrapping a Destination Recommender System**
 <br />August 2017. [ACM RecSyS 2017 (Industry Track)](https://recsys.acm.org/recsys17/), Como.
 <br />June 2017. [4th Global Machine Intelligence Summit](https://www.re-work.co/events/machine-intelligence-summit-amsterdam-2017), Amsterdam.
