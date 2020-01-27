@@ -16,7 +16,7 @@ github:      'nlathia'
 
 markdown:  kramdown
 permalink: pretty
-paginate:  10
+paginate:  100
 
 sass:
   style: compressed
