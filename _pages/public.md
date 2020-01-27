@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 📹  Presentations & 🗞 Press
+title: 📹  Presentations & Press
 ---
 
 **Deploying machine learning to improve customer support**
