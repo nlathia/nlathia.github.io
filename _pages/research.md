@@ -9,6 +9,11 @@ As of 2015/2016, I am no longer actively conducting academic research, and no lo
 
 I review research broadly related to recommender systems, web technologies, information retrieval, ubiquitous computing, and data mining/machine learning/artificial intelligence.
 
+| 2020       | 
+| ------------- |
+| [ACM Recommender Systems](https://recsys.acm.org/recsys20/) (Senior Programme Committee) | 
+
+
 | 2019       | 
 | ------------- |
 | [International Joint Conference on Artificial Intelligence](https://ijcai19.org/) | 
