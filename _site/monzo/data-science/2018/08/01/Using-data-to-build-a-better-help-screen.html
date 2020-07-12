@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Using data to build a better help screen | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Using data to build a better help screen" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="At Monzo, we use data to help our customers find their own answers faster." />
+<meta property="og:description" content="At Monzo, we use data to help our customers find their own answers faster." />
+<link rel="canonical" href="http://0.0.0.0:4000/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-08-01T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"At Monzo, we use data to help our customers find their own answers faster.","headline":"Using data to build a better help screen","dateModified":"2018-08-01T00:00:00-05:00","datePublished":"2018-08-01T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen.html"},"url":"http://0.0.0.0:4000/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Using data to build a better help screen | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Using data to build a better help screen" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="At Monzo, we use data to help our customers find their own answers faster." />
+<meta property="og:description" content="At Monzo, we use data to help our customers find their own answers faster." />
+<link rel="canonical" href="http://0.0.0.0:4000/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-08-01T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"At Monzo, we use data to help our customers find their own answers faster.","headline":"Using data to build a better help screen","dateModified":"2018-08-01T00:00:00-05:00","datePublished":"2018-08-01T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen.html"},"url":"http://0.0.0.0:4000/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Neal Lathia</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/research/">Research</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Using data to build a better help screen</h1><p class="page-description">At Monzo, we use data to help our customers find their own answers faster.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2018-08-01T00:00:00-05:00" itemprop="datePublished">
+        Aug 1, 2018
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      7 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#monzo">monzo</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#data-science">data-science</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Originally published on <a href="https://monzo.com/blog/2018/08/01/data-help/">monzo.com</a>.</p>
+
+<p>Our customer support team are always on hand if you need to chat with a human, but that isn’t the only way to find answers: the help screen now has over 400 pages that answer common questions, from activating your card to travelling abroad.</p>
+
+<p>As we work to make sure we can keep giving you world-class support as we scale, we’ve been using data to make changes to the help screen so you can find your own answers faster.</p>
+
+<h3 id="measuring-how-helpful-weare">Measuring how helpful we are</h3>
+<p>If you scroll to the bottom of any page in the help screen, you’ll see a button that says ‘I can’t find what I’m looking for.’ If the page you’re reading didn’t have the right answer, clicking it will put you in touch with someone from our customer support team.</p>
+
+<p>When you do that, it also gives us a powerful signal that the page you were reading wasn’t good enough to answer your question. If you don’t click the button, that’s another useful signal, that maybe you did find all the information that you needed.</p>
+
+<p>We use these signals to prioritise the help pages we need to improve: if lots of people have to start a chat after reading a certain article, we know we need to make it clearer or add some extra information. We’ve set up a dashboard that tracks each page’s performance in terms of ‘conversion to chat,’ which lets us quickly identify pages that we need to improve, and measure any changes after we update a page.</p>
+
+<p>We also measure how people behave when they use the help screen. We call a set of interactions with the help screen a ‘session,’ and each one can include one or more of the following actions: searching, seeing a suggested help page, navigating the categories, and starting a conversation through in-app chat.</p>
+
+<p>From tracking this data, we found:</p>
+<ul>
+  <li>Customers who used our search functionality were much less likely to get in touch with customer support.</li>
+  <li>If people opened an article but didn’t find what they needed, they were very unlikely to go back and search again. Most people opted to chat to someone in our customer support team straight away.</li>
+</ul>
+
+<p>These insights told us that searching and navigating help pages isn’t as seamless as it should be. So we’ve been using them to make the help screen better!</p>
+
+<h3 id="easier-navigation-with-relatedarticles">Easier navigation with related articles</h3>
+<p>Many of our help pages are about very similar topics, but each one’s relevant in a slightly different scenario. For example, we have separate articles for “I forgot my PIN,” “My PIN is blocked,” “I don’t know my PIN,” and “I want to change my PIN.” But if you search for “PIN,” we’ll show you most of these results.</p>
+
+<p>In the past, if you clicked on one of these search results but didn’t find the answer you were looking for, you’d need to go back into your search results to browse the other answers, or return to the help screen and start all over again.</p>
+
+<p>Because this process wasn’t easy, people were more likely to tap ‘I can’t find what I’m looking for’ and get in touch with customer support instead.</p>
+
+<h4 id="what-we-built">What we built</h4>
+<p>So, to make it easier to find the right answer after landing on the wrong search result, we’ve added ‘Related articles.’ We now list other pages that are semantically related to the one you’re currently reading.</p>
+
+<p><img data-width="1600" data-height="1320" src="https://cdn-images-1.medium.com/max/800/0*EA_E54jnSAHFPWq1.png" /></p>
+
+<p>To work out whether two pages should be related, we’ve built a system that makes it easy for us to run A/B tests. It means we can show different customers related articles that had been computed in different ways, and work out which method is most successful.</p>
+
+<p>So far, we’ve tried some relatively simple methods:</p>
+<ul>
+  <li>Manually categorising articles: We tried relating articles using the categories we set manually when we write content for the help screen. Two articles are related if they also appear in the same categories that you can navigate in the help screen.</li>
+  <li>Using machine learning: We also tried relating articles using an open source machine learning model that was trained on millions of words from a Google News dataset.</li>
+</ul>
+
+<h4 id="does-it-work">Does it work?</h4>
+<p>In a short series of experiments, we learned that showing customers related articles significantly lowered conversion to chat across the board: people were able to find the answer they needed, even if they landed on the wrong one at first, without needing to chat with someone in customer support.</p>
+
+<p>Interestingly, using machine learning showed no significant improvement compared to grouping articles manually by category. There are a couple of reasons why this may be the case. First, we invested a lot of time to make sure that pages were grouped together properly. Second, we used an open source machine learning model to compute related articles, rather than using our own data. We think training them on our own data might produce better results.</p>
+
+<h3 id="integrating-search-throughout-the-helpscreen">Integrating search throughout the help screen</h3>
+<p>Our analysis of help screen sessions also showed that customers who use search were approximately 20% more likely to find the answer that they needed, without having to get in touch with customer support.</p>
+
+<p>Because search seems to be the most effective way for people to find the answers that they need, we decided to find out how we could help customers benefit from our search results, without forcing them to actually search.</p>
+
+<h3 id="what-we-built-1">What we built</h3>
+<p>We’ve been running some experiments and making changes to the help screen, like putting the search bar at the centre to make searching more prominent.</p>
+
+<p>We also ran an experiment that showed you search results as you typed a message to our customer support team. For example, if your started telling us that you forgot your PIN, we’d suggest a series of relevant articles. Under the hood, these suggestions use the same machine learning service that powers search on the help screen. And we didn’t add any additional friction to the process of getting in touch, so you’d still be able to start a new conversation.</p>
+
+<p><img data-width="1600" data-height="1320" src="https://cdn-images-1.medium.com/max/800/0*1xYnSQp4-QEGJ9QB.png" /></p>
+
+<h3 id="does-it-work-1">Does it work?</h3>
+<p>We found that suggesting relevant articles as you typed helped you find the answer you needed as effectively as searching yourself, so we added the feature to the apps!</p>
+
+<h2 id="whats-next">What’s next?</h2>
+
+<h3 id="understanding-what-you-talk-to-us-about">Understanding what you talk to us about</h3>
+<p>We’ve recently begun another round of analysis, to find out what customers talk to us about when the help screen hasn’t been helpful. We’ll use this analysis to help us identify areas that the help screen doesn’t cover at all, and understand how we can improve specific help pages even more.</p>
+
+<h3 id="more-nuanced-machine-learning">More nuanced machine learning</h3>
+<p>We’ve started prototyping various ways that we can use the data we collect to tweak the existing machine learning features on the help screen.</p>
+
+<p>Right now a lot of our machine learning focuses on the content of each page, and doesn’t factor in the implicit feedback that we get as you view and click on articles. The actions you take when you use our search results are powerful indicators of their quality.</p>
+
+<p>For example, imagine if every time a customer searched to find out what to do if they forgot their pin, they always ignored the first two results and picked the third answer on the list. This would tell us that we should promote the third result to the top of the list, so everyone could find it right away.</p>
+
+<h3 id="surfacing-other-kinds-of-content">Surfacing other kinds of content</h3>
+<p>Right now our help search algorithm surfaces help articles with text. But in the future, we want it to be able to show you other types of results as well. For example, if your question’s been answered by someone in the community, we’d like to link you to their post.</p>
+
+<h3 id="making-better-suggestions">Making better suggestions</h3>
+<p>We’re also looking to experiment with machine learning in other areas altogether. For example, the suggested articles on the help screen are currently computed using a number of rules, and we have a hunch that personalising these results with machine learning could help us provide better suggestions.</p>
+
+<h3 id="preempting-questions-about-specific-transactions">Preempting questions about specific transactions</h3>
+<p>We’ve noticed that lots of conversations with customer support are about specific transactions, which is why the help screen now shows your last three transactions.</p>
+
+<p>But we’ve also started to explore how we can identify which transactions you’re likely to have questions about, and link them with useful answers.</p>
+
+<p>All week we’ll be sharing an insight into how we’re working to make sure Monzo’s ready to support one billion customers! Join the discussion on the community forum and keep an eye out on the <a href="https://monzo.com/blog/">blog</a> and <a href="https://twitter.com/monzo?lang=en">Twitter</a> for updates 👀.</p>
+
+  </div><a class="u-url" href="/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p></p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nlathia" title="nlathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/neal_lathia" title="neal_lathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>A review of the ACM RecSys 2017 keynote on the economics of information | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="A review of the ACM RecSys 2017 keynote on the economics of information" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Four areas of research related to how we interact with information, and how that links to recommender systems." />
+<meta property="og:description" content="Four areas of research related to how we interact with information, and how that links to recommender systems." />
+<link rel="canonical" href="http://0.0.0.0:4000/conference/2017/09/19/A-review-of-the-ACM-RecSys-2017-keynote-on-the-economics-of-information.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/conference/2017/09/19/A-review-of-the-ACM-RecSys-2017-keynote-on-the-economics-of-information.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-09-19T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Four areas of research related to how we interact with information, and how that links to recommender systems.","headline":"A review of the ACM RecSys 2017 keynote on the economics of information","dateModified":"2017-09-19T00:00:00-05:00","datePublished":"2017-09-19T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/conference/2017/09/19/A-review-of-the-ACM-RecSys-2017-keynote-on-the-economics-of-information.html"},"url":"http://0.0.0.0:4000/conference/2017/09/19/A-review-of-the-ACM-RecSys-2017-keynote-on-the-economics-of-information.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>A review of the ACM RecSys 2017 keynote on the economics of information | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="A review of the ACM RecSys 2017 keynote on the economics of information" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Four areas of research related to how we interact with information, and how that links to recommender systems." />
+<meta property="og:description" content="Four areas of research related to how we interact with information, and how that links to recommender systems." />
+<link rel="canonical" href="http://0.0.0.0:4000/conference/2017/09/19/A-review-of-the-ACM-RecSys-2017-keynote-on-the-economics-of-information.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/conference/2017/09/19/A-review-of-the-ACM-RecSys-2017-keynote-on-the-economics-of-information.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-09-19T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Four areas of research related to how we interact with information, and how that links to recommender systems.","headline":"A review of the ACM RecSys 2017 keynote on the economics of information","dateModified":"2017-09-19T00:00:00-05:00","datePublished":"2017-09-19T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/conference/2017/09/19/A-review-of-the-ACM-RecSys-2017-keynote-on-the-economics-of-information.html"},"url":"http://0.0.0.0:4000/conference/2017/09/19/A-review-of-the-ACM-RecSys-2017-keynote-on-the-economics-of-information.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Neal Lathia</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/research/">Research</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">A review of the ACM RecSys 2017 keynote on the economics of information</h1><p class="page-description">Four areas of research related to how we interact with information, and how that links to recommender systems.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2017-09-19T00:00:00-05:00" itemprop="datePublished">
+        Sep 19, 2017
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#conference">conference</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>The first keynote at the 2017 <a href="https://recsys.acm.org/recsys17/keynotes/#content-tab-1-0-tab">ACM Conference on Recommender Systems</a> (RecSys) was by <a href="https://www.cmu.edu/dietrich/sds/people/faculty/george-loewenstein.html">Prof. George Loewenstein</a>.</p>
+
+<p>In this wonderful lecture, Prof. Loewenstein delved into the past and present of the <em>economics of information</em> - using behavioural economics to study how we interact with the information around us. In a conference like RecSys, where most of the focus tends to be on the systems (data, algorithms, interfaces) that we can build to help people navigate information, it was refreshing to hear from a different discipline, that focuses on the ‘other’ end of the spectrum: people.</p>
+
+<p>A number of weeks on, I’m revisiting the notes that I furiously typed throughout the session. Here they are, turned into sentences, with no guarantee that there are no mistakes, omissions, or misinterpretations.</p>
+
+<p>The keynote began with a simple observation: there are people online who <a href="https://www.amazon.co.uk/Toaster/b?ie=UTF8&amp;node=11716951">rate toasters</a>. Who are these people? Why are they sharing this information? It may sound commonplace to rate something online, but when is the last time that you have gone to read toaster reviews?</p>
+
+<p>What followed was a whirlwind tour of the history of this research. Starting as a counter to the ‘standard’ economic view of information gathering — i.e. that people are Bayesian, and rationally update their beliefs based on the information they have received — <a href="https://en.wikipedia.org/wiki/Behavioral_economics">behavioural economics</a> research takes the view that people are motivated to hold certain beliefs because they feel good or fit into the sense they have (already) made of the world. The so-called <em>new economics</em> of information introduced a variety of concepts such as <a href="href=&quot;https://en.wikipedia.org/wiki/Adverse_selection">adverse selection</a>, <a href="https://en.wikipedia.org/wiki/Signalling_%28economics%29">signalling</a>, and <a href="https://en.wikipedia.org/wiki/Screening_%28economics%29">screening</a>.</p>
+
+<p>The way we process information is biased: when faced with new information, rather than asking “should I believe this?” (is there valid evidence to support the information?) we tend to subconsciously ask “must I believe this?” (am I forced to change my beliefs) instead. We defend our beliefs in the same way that we defend possessions (<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1468-5914.1986.tb00078.x/full">Abelson, 1986</a>). Our beliefs are not just shaped by evidence: for example, one study (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2459057">Kahan 2015</a>) showed that believing in climate change was correlated with how ‘scientifically knowledgeable’ a person was. However, when the data was split by political affiliation, it showed an extreme result: those who were <em>more</em> scientifically knowledgeable but republican were <em>less</em> likely to say that there is solid evidence of recent global warming due to mostly human activity. So is the evidence driving the belief, or vice versa?</p>
+
+<p><img data-width="398" data-height="191" src="https://cdn-images-1.medium.com/max/800/1*CE-FzPxS69sOQUbLSKyYdg.png" /></p>
+
+<p>Screen shot from <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2459057">Kahan 2015</a>, page 12.</p>
+
+<p>One of the ways that Prof. Loewenstein proceeded to categorise <em>interaction with information</em> was via two axes: (1) whether we are <em>engaging</em> with (desiring) or <em>avoiding</em> the interaction, and (2) whether we are <em>obtaining</em> or <em>revealing</em> information. Combinations of these result in four areas of research:</p>
+
+<h2 id="1-desire-to-obtain-information-curiosity">1. Desire to Obtain Information (Curiosity)</h2>
+
+<p>Curiosity was broadly defined as the desire to obtain information. There’s an entire review of the field in <em>The Psychology of Curiosity</em> (<a href="https://www.cmu.edu/dietrich/sds/docs/loewenstein/PsychofCuriosity.pdf">Loewenstein, 1994</a>); broadly speaking, it’s the desire for information <em>for its own sake</em>, as opposed to as a means to achieve a goal. We can be captivated by an intense desire for information — so intense that we can even seek out information when we know that finding it will bring us misery (<a href="http://acrwebsite.org/volumes/1019134/volumes/v43/NA-43">Hsee &amp; Ruan, 2015</a>). People tend to become more curious when they feel they are getting closer to information, and are most curious about themselves.</p>
+
+<p>One item of discussion at the end of the talk was about how this research can speak to those designing systems: curiosity was pointed out as a factor that feels currently underutilised in the design of recommendation systems.</p>
+
+<h2 id="2-avoiding-to-obtain-information">2. Avoiding to Obtain Information</h2>
+
+<p>There are many cases where we actively engage in avoiding information, even when it is “useful, free, and independent of strategic considerations” (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2633226">Golman et al., 2016</a>). One reason cited for this is when we expect the information to be painful. For example, the paper states “if you know that your paper got rejected, you may still not want to read the reviewers’ comments.” That one brought back some memories for me!</p>
+
+<p>An interesting domain where information avoidance is of particular significance is in financial investments — where it is known as the <a href="https://en.wikipedia.org/wiki/Ostrich_effect">ostrich effect</a>. In <a href="http://www.cmu.edu/dietrich/sds/docs/loewenstein/FinancialAttention.pdf">Sicherman et al, 2016</a>, a study is reported that looks at how investors are (not) logging into a portfolio information system as the market fluctuates. When the market declines, the log in rate drops by 9.5%; similarly, when the market was up (even if it was closed, such as on weekends), logins were higher.</p>
+
+<p>This behaviour was also observed in a health domain: the higher a user’s <a href="https://www.vitalitygroup.com/insights/what%C2%92s-your-vitality-age/">Vitality age</a> in an app (relative to their actual age), the more likely they were to click the ‘hide’ button on their Vitality age, and Loewenstein also mentioned the book <a href="https://www.amazon.co.uk/Dont-Even-Think-About-Climate/dp/163286102X">Don’t Even Think About It</a>, as discussing information avoidance in the context of climate change.</p>
+
+<h2 id="3-desire-to-reveal-information">3. Desire to Reveal Information</h2>
+
+<p>Behaviours that seek to share information can be strange — we have websites where people can <a href="http://simplyconfess.com/">confess</a> and share secrets, and the example used at the beginning of the talk (reviewing toasters) is just one of the many ‘weird’ things that people commit time to sharing information about.</p>
+
+<p>Motivations to share information can be amazingly intense: it is no wonder that many metaphors (e.g. ‘bursting’ to tell someone) seem hydraulic in nature. One qualitative study of people who were ‘dying’ to share information (I missed the reference) reported that about half of them had something (mostly positive) to share about themselves, while the other half had something (mostly negative) to share about others.</p>
+
+<p>One question that Prof. Loewenstein asked: why do we share so much information that is obvious? As an example, telling someone that Lake Como, the location of the conference, is beautiful. What has been gained from that revelation?</p>
+
+<p>This line of research links directly into recommender systems that rely on crowdsourced information. Why are users providing reviews? Perhaps they are motivated by reciprocity with (or revenge on) providers, showing off their sophistication (bragging), they may want to influence others (e.g., based on how many people will see their review), or just want to be noticed (e.g., the prank on YouTube by the couple that wanted to boost their profile which <a href="http://www.telegraph.co.uk/news/2017/06/29/us-woman-shoots-boyfriend-dead-youtube-stunt-boost-online-profile/">ended up as a fatal shooting</a>). This matters because it determines selection bias — who is going to write the reviews — as well as providing effective strategies to solicit reviews.</p>
+
+<p>(Wait, why am I writing this blog post again? Oh yeah, for the <a href="https://help.medium.com/hc/en-us/articles/115011350967-Claps">claps</a> 👏!)</p>
+
+<h2 id="4-avoiding-revealing-information-privacy">4. Avoiding Revealing Information (Privacy)</h2>
+
+<p>Privacy, in the context of this talk, was defined as the desire to not share information.</p>
+
+<p><img data-width="398" data-height="191" src="https://cdn-images-1.medium.com/max/600/1*wvkG720g7pIpbtk9nymcPg.jpeg" /></p>
+
+<p>The ‘standard’ economic model of privacy tended to model this as an optimisation — weighing the costs vs. the benefits of revealing something. However, our preferences are often ill defined, as is our ability to navigate the cost/benefit of information disclosure in different contexts.</p>
+
+<p>While a large majority of people believe that privacy policies are put in place to protect them, users are often unaware as to the real implications. Case in point: <a href="https://spectrum.ieee.org/tech-talk/telecom/security/-users-sign-over-first-born-for-free-wifi">this study</a>, where users signed over their first born child when agreeing to the terms to join a free Wi-Fi network.</p>
+
+<p>Our willingness to share information depends on arbitrary cues from our current context (example: strangers on a plane) rather than the net benefits of sharing information (<a href="https://www.cmu.edu/dietrich/sds/docs/loewenstein/StrangersPlane.pdf">Acquisti et al., 2011</a>). People take cues about what to reveal from others and their own past experiences (<a href="http://repository.cmu.edu/heinzworks/342/">Acquisti et al., 2012</a>). More online control for privacy makes people more likely to reveal information about themselves (<a href="http://www.heinz.cmu.edu/~acquisti/papers/acquisti-SPPS.pdf">Brandimarte et al., 2013</a>); put another way, the more you can control your privacy online, the “more rope you have to hang yourself with.” People exhibit default default effects and loss aversion with respect to their privacy (<a href="https://www.cmu.edu/dietrich/sds/docs/loewenstein/WhatPrivacyWorth.pdf">Acquisti et al., 2013</a>).</p>
+
+<p>The main take-aways seemed to be: people don’t seem to care much about privacy, except when you ring alarm bells; privacy preferences are context-dependent, and there are a host of research questions that remain at the intersection of privacy and information disclosure (why do people review strip clubs? Or gastroenterologists? He gave examples of both!).</p>
+
+<h2 id="in-closing">In Closing</h2>
+
+<p>It looks like <a href="https://www.youtube.com/watch?v=o55GZt_sII4">this recorded talk of his is similar</a> if you want to dive in deeper. When announcing the <a href="https://recsys.acm.org/best-papers/">best paper award</a> this year, the award committee made a special point of calling out for more research (like this year’s best paper) that builds off of theories developed in other disciplines into practical impact in the recommender system domain.</p>
+
+<p>The same can be said for most disciplines — there are some wonderful things to be learned and explored if you step away from home from time to time. And this keynote was one of those times for me.</p>
+
+  </div><a class="u-url" href="/conference/2017/09/19/A-review-of-the-ACM-RecSys-2017-keynote-on-the-economics-of-information.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p></p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nlathia" title="nlathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/neal_lathia" title="neal_lathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
