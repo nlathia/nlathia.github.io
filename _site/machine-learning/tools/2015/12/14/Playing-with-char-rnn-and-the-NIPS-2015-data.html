@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Playing with char-rnn and the NIPS 2015 data | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Playing with char-rnn and the NIPS 2015 data" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Since samim published all those awesome and fun posts on using a Recurrent Neural Network to generate text (see: Zen-RNN, TED-RNN, Obama-RNN), I’ve been looking for an opportunity to try the char-nn library myself." />
+<meta property="og:description" content="Since samim published all those awesome and fun posts on using a Recurrent Neural Network to generate text (see: Zen-RNN, TED-RNN, Obama-RNN), I’ve been looking for an opportunity to try the char-nn library myself." />
+<link rel="canonical" href="http://0.0.0.0:4000/machine-learning/tools/2015/12/14/Playing-with-char-rnn-and-the-NIPS-2015-data.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/machine-learning/tools/2015/12/14/Playing-with-char-rnn-and-the-NIPS-2015-data.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-12-14T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"Since samim published all those awesome and fun posts on using a Recurrent Neural Network to generate text (see: Zen-RNN, TED-RNN, Obama-RNN), I’ve been looking for an opportunity to try the char-nn library myself.","headline":"Playing with char-rnn and the NIPS 2015 data","dateModified":"2015-12-14T00:00:00-06:00","datePublished":"2015-12-14T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/machine-learning/tools/2015/12/14/Playing-with-char-rnn-and-the-NIPS-2015-data.html"},"url":"http://0.0.0.0:4000/machine-learning/tools/2015/12/14/Playing-with-char-rnn-and-the-NIPS-2015-data.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Playing with char-rnn and the NIPS 2015 data | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Playing with char-rnn and the NIPS 2015 data" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Since samim published all those awesome and fun posts on using a Recurrent Neural Network to generate text (see: Zen-RNN, TED-RNN, Obama-RNN), I’ve been looking for an opportunity to try the char-nn library myself." />
+<meta property="og:description" content="Since samim published all those awesome and fun posts on using a Recurrent Neural Network to generate text (see: Zen-RNN, TED-RNN, Obama-RNN), I’ve been looking for an opportunity to try the char-nn library myself." />
+<link rel="canonical" href="http://0.0.0.0:4000/machine-learning/tools/2015/12/14/Playing-with-char-rnn-and-the-NIPS-2015-data.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/machine-learning/tools/2015/12/14/Playing-with-char-rnn-and-the-NIPS-2015-data.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-12-14T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"Since samim published all those awesome and fun posts on using a Recurrent Neural Network to generate text (see: Zen-RNN, TED-RNN, Obama-RNN), I’ve been looking for an opportunity to try the char-nn library myself.","headline":"Playing with char-rnn and the NIPS 2015 data","dateModified":"2015-12-14T00:00:00-06:00","datePublished":"2015-12-14T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/machine-learning/tools/2015/12/14/Playing-with-char-rnn-and-the-NIPS-2015-data.html"},"url":"http://0.0.0.0:4000/machine-learning/tools/2015/12/14/Playing-with-char-rnn-and-the-NIPS-2015-data.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Neal Lathia</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/research/">Research</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Playing with char-rnn and the NIPS 2015 data</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2015-12-14T00:00:00-06:00" itemprop="datePublished">
+        Dec 14, 2015
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#machine-learning">machine-learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#tools">tools</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Since <a href="https://medium.com/u/f3c8148878e1">samim</a> published all those awesome and fun posts on using a Recurrent Neural Network to generate text (see: <a href="https://medium.com/@samim/zen-rrnn-on-meditation-machines-bbeb92aa62d3#.vn9ox6zb8">Zen-RNN</a>, <a href="https://medium.com/@samim/ted-rnn-machine-generated-ted-talks-3dd682b894c0">TED-RNN</a>, <a href="https://medium.com/@samim/obama-rnn-machine-generated-political-speeches-c8abd18a2ea0">Obama-RNN</a>), I’ve been looking for an opportunity to try the <a href="https://github.com/karpathy/char-rnn">char-nn</a> library myself.</p>
+
+<p>An opportunity came up after all of the papers at this year’s Neural Information Processing Systems Conference (<a href="https://nips.cc/">NIPS</a> 2015) appeared online. What is more suitable to play around with* an RNN than a bunch of papers that talk a lot about RNNs?</p>
+
+<h3 id="the-nips-2015dataset">The NIPS 2015 dataset</h3>
+<p>The dataset was provided as part of this (kudos-only, curiosity-driven) <a href="https://www.kaggle.com/c/nips-2015-papers">kaggle competition</a>. It includes a CSV file that contains all of the papers’ text, extracted from the <a href="https://nips.cc/Conferences/2015/AcceptedPapers">papers accepted this year</a>.</p>
+
+<h3 id="preprocessing">Preprocessing</h3>
+<p>The text data (extracted from the PDFs using the tool <a href="https://en.wikipedia.org/wiki/Pdftotext">pdftotext</a>) is incredibly noisy: <code class="highlighter-rouge">pdftotext</code> does not extract page numbers, carriage-return broken words, equations, section headers, variables, figure captions, tables, footnotes, and all the other complexity the researchers can put together with various LaTeX commands into simple text. The result is text that we clearly do not want to train anything with. Here’s a relatively common looking example:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">p</span><span class="err">β</span> <span class="nx">T</span> <span class="nx">xpiq</span> <span class="err">´</span> <span class="err">β</span> <span class="nx">T</span> <span class="nx">y</span> <span class="nx">pjq</span> <span class="nx">q2</span> <span class="nx">Mij</span> <span class="err">“</span> <span class="nx">max</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">&gt;</span><span class="nx">min</span> <span class="err">β</span> <span class="nx">T</span> <span class="nx">WM</span> <span class="err">β</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">&gt;</span><span class="err">β</span><span class="nx">PB</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">&gt;||</span><span class="err">β</span><span class="o">||</span><span class="mi">0</span> <span class="err">ď</span><span class="nx">k</span></code></pre></figure>
+
+<p>This text was “generated” by a human. For this experiment, I was looking to train using <em>full sentences</em>, which are actually a rarity in technical/algorithmic papers. They tend to (from my experience) be found in the Abstract, Introduction, Related Work, Discussion/Conclusion sections. I therefore filtered each paper — manually removing everything after the introduction and before the conclusion (but this varied between papers)— and yes, in case you were wondering, this was a huge pain and wasn’t done perfectly.</p>
+
+<p>Note: I did try a bunch of regexs first (and used some to remove things like references), but could only get so far: there was a lot of variance in section headings, and in general too many cases/outliers/exceptions to automate this sensibly.</p>
+
+<h3 id="training">Training</h3>
+<p>The char-rnn library makes life very easy. Once Torch (etc.) has been installed, and all the papers have been put into a single <code class="highlighter-rouge">input.txt</code> file, training the model is one line of code away.</p>
+
+<p>I used the standard setting with a higher dropout value (0.5) to minimise overfitting — especially since the data remains quite noisy.</p>
+
+<h3 id="comparative-nonsenseresults">Comparative, Nonsense Results</h3>
+<p>So here are some results. Example human entries come from picking a random line out of the input data that contains the seed text; machine text is then generated with the same seed.</p>
+
+<p><strong>Seed: “The task we aim to solve”</strong></p>
+
+<blockquote>
+  <p>Example Human: “The task we aim to solve is to fill in gaps of multiple consecutive data points in high-dimensional binary time series data.”</p>
+</blockquote>
+
+<blockquote>
+  <p>Machine: “The task we aim to solve the proof of the inference learning problem provided by which and algorithms in the method methods are possible to the posterior and computationally of the state time to the demonstration are expected in constraints, in the local minimax.”</p>
+</blockquote>
+
+<p><strong>Seed: “In this paper, we”</strong></p>
+
+<blockquote>
+  <p>Example Human: “In this paper, we propose a novel parameter estimator for models on discrete space, which does not require calculation of the normalization constant.”</p>
+</blockquote>
+
+<blockquote>
+  <p>Machine: “In this paper, we propose the input information of f is increased for each prediction and the minimax method is better than the following distributions and can be robust to analyze the tree image mint discretization to the computational experiments of s vret and only possible to be the acceleration rime in the linear regret in the possible data size.”</p>
+</blockquote>
+
+<p><strong>Seed: “To conclude, ”</strong></p>
+
+<blockquote>
+  <p>Example Human: To conclude, we show a set of optimized pseudo-inputs Z in black in Figure 1. We also superimpose the marginal of any single point in the realization, which is available through the spectral decomposition of L here .”</p>
+</blockquote>
+
+<blockquote>
+  <p>Machine: “To conclude, the distribution constraints of each relative possible development decomposition of the submodular scale goal is the expected probability of the true of the recovery information in the prediction for parameters are step is the algorithm vore an analyzed method that this analysis after random nature by the wide procedure of maximum complexity sets.”</p>
+</blockquote>
+
+<h3 id="playful-seeds">Playful Seeds</h3>
+
+<p><strong>Seed: “The meaning of life is ”</strong></p>
+
+<blockquote>
+  <p>Machine: “The meaning of life is shown to extend both similar state of our linear expectation in a computer variance of the level of produced controlled distributed the minimum truanding eigenvalue.”</p>
+</blockquote>
+
+<p><strong>Seed: “Dinner tonight is ”</strong></p>
+
+<blockquote>
+  <p>Machine:  “Dinner tonight is shown to extend a learning interest of size point of a function because then one been respectively.”</p>
+</blockquote>
+
+<p><strong>Seed: “Machine learning research should ”</strong></p>
+
+<blockquote>
+  <p>“Machine learning research should be generalized in networks of the case of the only quadratic shared images.”</p>
+</blockquote>
+
+<p><strong>Seed: “My predictions are ”</strong></p>
+
+<blockquote>
+  <p>“My predictions are related to the prior of the linear and non-not gradient function both from the model is to also consider the MDM of the posterior and define the true of the state that with large optimal analysis defined as the computation p.”</p>
+</blockquote>
+
+<h3 id="some-thoughts">Some thoughts</h3>
+<p>Machines aren’t going to be taking over anytime soon!</p>
+
+<p>Extracting high-quality text from a PDF is harder than training an RNN (a.k.a. “machine learning,” as <a href="https://nips2015.sched.org/event/5QRj/hidden-technical-debt-in-machine-learning-systems">this NIPS paper</a> points out, is a small part of “machine learning systems.”).</p>
+
+<p>This is the first time that I play with the char-rnn library. It’s likely that people who know it a bit better could get better results. I was left wondering whether some further preprocessing could have made for a better training dataset. For example, some kind of clustering could have been used to identify papers that are similar (e.g., comparison over bags of words) — to then train only on one particular cluster.</p>
+
+<p>With thanks to:</p>
+<ul>
+  <li>Previous posts by <a href="https://medium.com/u/f3c8148878e1">samim</a>.</li>
+  <li>The authors and contributors of <a href="https://github.com/karpathy/char-rnn">char-nn on github</a></li>
+  <li>Kaggle, for the data, and for being a generally awesome place. Found <a href="https://www.kaggle.com/c/nips-2015-papers">here</a></li>
+</ul>
+
+<p>[*] This is <strong>not</strong> science.</p>
+
+  </div><a class="u-url" href="/machine-learning/tools/2015/12/14/Playing-with-char-rnn-and-the-NIPS-2015-data.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p></p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nlathia" title="nlathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/neal_lathia" title="neal_lathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

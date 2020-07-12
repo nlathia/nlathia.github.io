@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Crowdsourcing in the London underground with wifi data | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Crowdsourcing in the London underground with wifi data" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The story behind Tube Star, and future applications for data in transport networks." />
+<meta property="og:description" content="The story behind Tube Star, and future applications for data in transport networks." />
+<link rel="canonical" href="http://0.0.0.0:4000/research/2017/02/19/Crowdsourcing-in-the-London-Underground-with-Wifi-Data.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/research/2017/02/19/Crowdsourcing-in-the-London-Underground-with-Wifi-Data.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-02-19T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"The story behind Tube Star, and future applications for data in transport networks.","headline":"Crowdsourcing in the London underground with wifi data","dateModified":"2017-02-19T00:00:00-06:00","datePublished":"2017-02-19T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/research/2017/02/19/Crowdsourcing-in-the-London-Underground-with-Wifi-Data.html"},"url":"http://0.0.0.0:4000/research/2017/02/19/Crowdsourcing-in-the-London-Underground-with-Wifi-Data.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Crowdsourcing in the London underground with wifi data | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Crowdsourcing in the London underground with wifi data" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The story behind Tube Star, and future applications for data in transport networks." />
+<meta property="og:description" content="The story behind Tube Star, and future applications for data in transport networks." />
+<link rel="canonical" href="http://0.0.0.0:4000/research/2017/02/19/Crowdsourcing-in-the-London-Underground-with-Wifi-Data.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/research/2017/02/19/Crowdsourcing-in-the-London-Underground-with-Wifi-Data.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-02-19T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"The story behind Tube Star, and future applications for data in transport networks.","headline":"Crowdsourcing in the London underground with wifi data","dateModified":"2017-02-19T00:00:00-06:00","datePublished":"2017-02-19T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/research/2017/02/19/Crowdsourcing-in-the-London-Underground-with-Wifi-Data.html"},"url":"http://0.0.0.0:4000/research/2017/02/19/Crowdsourcing-in-the-London-Underground-with-Wifi-Data.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Neal Lathia</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/research/">Research</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Crowdsourcing in the London underground with wifi data</h1><p class="page-description">The story behind Tube Star, and future applications for data in transport networks.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2017-02-19T00:00:00-06:00" itemprop="datePublished">
+        Feb 19, 2017
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      7 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#research">research</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>In November 2016, <a href="https://medium.com/u/b3a1ef9bf0a5">Transport for London</a> (TfL) announced a 4-week trial where they would collect wifi connection data “in order to better understand how London Underground passengers move through stations and interchange between lines.”</p>
+
+<p><img data-image-id="1*r12Ve16SLX7vuU2UbC_Akg.png" data-width="1120" data-height="798" src="https://cdn-images-1.medium.com/max/600/1*r12Ve16SLX7vuU2UbC_Akg.png" /></p>
+
+<p>TfL discusses some of the details of the trial in <a href="https://www.whatdotheyknow.com/request/london_underground_wifi_data_tri#incoming-925338">this freedom of information request</a>. In particular:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The WiFi pilot is an internal initiative and has been developed by an in-house TfL team using our existing infrastructure. For the pilot we developed our own method and software for collecting data from our the access points. We store the pseudonymised and encrypted MAC addresses, the date and time of the connection, the device connection status and the individual access point they connected to, and therefore the London Underground station and location within a station where the device connected.
+</code></pre></div></div>
+
+<h2 id="previous-experiments-with-tubecrowds">Previous Experiments with Tube Crowds</h2>
+<p>Seeing TfL undertake this experiment is exciting, and probably a big step forward for the research field of <a href="https://en.wikipedia.org/wiki/Urban_computing">urban computing</a>. A number of years ago, when I was a postdoctoral researcher at UCL, I had been working on a project that was trying to do the same thing — using smartphones.</p>
+
+<iframe src="https://www.slideshare.net/slideshow/embed_code/key/o6wWTqRaPpwsct" width="525" height="438" frameborder="0" scrolling="no"></iframe>
+
+<p>The project started out with a focus on the Oyster card data. The most recurring frustration we had, when analysing the troves of data that TfL collects via its smartcard, was that we only saw entries/exits — and nothing in between. Was the trip good? Slow? Crowded? Disrupted? We could never really know.</p>
+
+<p>We therefore decided to run a small experiment where we would ask participants to crowd source that information for us. We started building an Android app. After a number of iterations, we settled on a simple interaction: passengers could rate the current tube line they were on, and leave an optional message about the experience they were having. I presented the slides on the left at a conference where we reported <a href="http://nlathia.github.io/papers/lathia_mobiquitous14.pdf">the results of the trial</a>.</p>
+
+<p>A thematic analysis of the data we received uncovered some cute results: (1) passengers reported on a variety of topics, ranging from temperature to seat availability, (2) the ratings that passengers gave were, on the whole, mostly positive, and (3) there were a few instances where the crowdsourced reports were more timely than disruptions announced via the official TfL update feeds.</p>
+
+<h2 id="from-crowdsourced-reports-to-wifidata">From Crowdsourced Reports to Wifi Data</h2>
+<p>The biggest problem with the first Tube Star study, though, was the small amount of data that we received. Getting an app into the hands of thousands of London tube passengers was a challenge that we simply did not have the resources to face, and was seen as the major limitation to any future public transport service that would rely on crowdsourced data.</p>
+
+<p>By this time, however, I had moved on to a new project that had a more distinct focus on smartphone sensors. As I learned about how to efficiently collect data from various sensors, I realised that wifi scans could be matched with known hotspot locations, and that this could be used to passively track passengers who were in the London Underground.</p>
+
+<p>My first step was to send a freedom of information request to TfL: I asked them to provide me with the locations and ids of all their wifi hotspots. With those in hand, I would have been able to automatically identify which station a user was in, given the wifi hotspots surrounding them. TfL did not release the ids I needed — citing security concerns: “In this instance the exemption has been applied as disclosure of the information requested would be likely to adversely affect the safety and security of TfL employees and members of the general public.”</p>
+
+<p>I decided to go ahead anyway. I updated the Tube Star app (and the ethical approval that it had originally received) to also collect <em>filtered</em> wifi traces: when Android phones with the app installed would scan for wifi connectivity, they would keep a record of any <em>Virgin Media WiFi</em> that they came across. I got around the missing data that matched hotspot ids to stations by going back to crowdsourcing. If a hotspot did not match any tube station known to my app, the app would ping the user and directly ask “‘where are you?” and allow them to select a station. I re-released the app, and watched the data start flowing in.</p>
+
+<iframe src="https://www.slideshare.net/slideshow/embed_code/key/BIHyLfjCZssRmA" width="525" height="438" frameborder="0" scrolling="no"></iframe>
+
+<p>The full results of this 2nd study have not been published to date; however, I did present them in a variety of conferences, including a workshop in 2015 that TfL hosted in its offices near Victoria.</p>
+
+<p>Case 1 in the slides on the left (slides 11–30) give an overview of these results. With only 34 users who updated and consented to the new data collection, the app collected over 100,000 wifi scans that matched the London Underground.</p>
+
+<p>I presented these results as a contrast between what the Oyster card tells us (entry and exit), what journey planning tools tell us <em>should</em> happen in between, and what we actually observe with wifi traces. There were some interesting highlights. For example, just 2% of the connection sequences that started at Pimlico and later appeared at Victoria had Green Park as an intermediary — the wrong direction of travel.</p>
+
+<h2 id="the-tfl-trial-results--future-advertising">The TfL trial results &amp; future advertising</h2>
+<p>The recent TfL trial was slightly different from this previous research — they collected data from the hotspot devices themselves, rather than relying on passengers to install data-collecting apps. Gizmodo <a href="http://www.gizmodo.co.uk/2017/02/heres-what-tfl-learned-from-tracking-your-phone-on-the-tube/">recently published a piece</a> covering TfL’s trial, using data obtained via a freedom of information request. I was thrilled to see that many of the behaviours that they have observed are in line with the smaller data that I collected with Tube Star. Their results are also likely to have much higher coverage and granularity than the study that I ran.</p>
+
+<p>However, one item that the piece focuses on is that this data could be used “[…] to inform advertising decisions on the Tube network”. While research by <a href="https://medium.com/u/fde9bc1b0463">@danielequercia</a> &amp; co (<a href="http://researchswinger.org/publications/trumper12ads.pdf">“Ads &amp; the City: Considering Geographic Distance Goes a Long Way”</a>) shows that, indeed, “ <em>knowing the kind of people who are willing to go to, say, certain restaurants or bars […] translates into low-cost marketing strategies for bars and restaurants that are willing to attract new crowds</em> ,” it is always a bit underwhelming to announce the creation of a new dataset that has huge potential, and then say that it will be used for advertising.</p>
+
+<h2 id="alternative-uses-of-tfl-wifidata">Alternative uses of TfL wifi data</h2>
+<p>While the TfL documents clearly show that they are going to use this data for analytic purposes (to help them understand how customers use the network), there are definitely future applications for this data that go beyond advertising — if they can not only collect the data, but also start building services that use it. What about…?</p>
+<ul>
+  <li><strong>Timely &amp; relevant alerting</strong>. If TfL knew I was 2 stops away from making a potential route choice, could it tell me which route is busier, and even perhaps nudge me to go one way or another (like the game for the underground <a href="https://twitter.com/chromaroma">chromaroma</a> did)? If TfL knows the routes that I regularly take, they’re likely to be able to predict when and where I travel. Could they use this to notify me about <em>relevant</em> disruptions, both planned and unplanned? Could TfL overcome all of the limitations that I had with the 1st Tube Star study, and also collect crowd-sourced passenger updates?</li>
+  <li><strong>Accessibility &amp; station design</strong>. Could TfL harness wifi detection and localisation to improve accessibility, like they are doing with the <a href="https://tfl.gov.uk/info-for/media/press-releases/2015/december/wayfindr-launches-with-major-london-underground-trial-at-euston">wayfindr project</a>? If they can detect crowding, could they use that to redesign stations to cater for easier walk-through routes?</li>
+  <li><strong>(No More) Penalty fares</strong>. Right now, if you don’t touch out, you may be subject to a penalty fare for <a href="https://tfl.gov.uk/fares-and-payments/oyster/using-oyster/incomplete-journeys">an incomplete journey</a> — and we regularly hear the reminder about touching in and out. If TfL has tracked my phone, couldn’t they figure out where I forgot to touch out?</li>
+  <li><strong>Better research into passengers’ experiences</strong>. If TfL can link phones, smartcards, and passenger surveys, and give that data to its academic partners, they would enable an entirely new field of research that has been inaccessible to date. <a href="https://www.slideshare.net/neal.lathia/how-smart-is-your-smart-card">Here is an example</a> where we only had two linked sources (Oyster cards and survey results).</li>
+</ul>
+
+<p>Maybe, one day, our phones will even replace the Oyster card altogether — doing away the need for gates at stations. In the mean time, I’m looking forward to seeing more results from this trial emerge, and for new and interesting ideas of how this data can be put to great use.</p>
+
+  </div><a class="u-url" href="/research/2017/02/19/Crowdsourcing-in-the-London-Underground-with-Wifi-Data.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p></p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nlathia" title="nlathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/neal_lathia" title="neal_lathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
