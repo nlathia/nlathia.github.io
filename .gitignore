@@ -1,9 +1,0 @@
-.DS_Store
-
-_site/
-
-Gemfile.lock
-
-local
-
-.sass-cache
