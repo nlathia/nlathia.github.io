@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Learning to rank for flight itinerary search | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Learning to rank for flight itinerary search" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Searching for the perfect flight is one of the core activities for Skyscanner app users. Similarly, thinking about ways to help our users book the ideal trip is one of the problems that we find ourselves discussing the most." />
+<meta property="og:description" content="Searching for the perfect flight is one of the core activities for Skyscanner app users. Similarly, thinking about ways to help our users book the ideal trip is one of the problems that we find ourselves discussing the most." />
+<link rel="canonical" href="http://0.0.0.0:4000/machine-learning/skyscanner/2017/09/26/Learning-to-rank-flights.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/machine-learning/skyscanner/2017/09/26/Learning-to-rank-flights.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-09-26T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Searching for the perfect flight is one of the core activities for Skyscanner app users. Similarly, thinking about ways to help our users book the ideal trip is one of the problems that we find ourselves discussing the most.","headline":"Learning to rank for flight itinerary search","dateModified":"2017-09-26T00:00:00-05:00","datePublished":"2017-09-26T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/machine-learning/skyscanner/2017/09/26/Learning-to-rank-flights.html"},"url":"http://0.0.0.0:4000/machine-learning/skyscanner/2017/09/26/Learning-to-rank-flights.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Learning to rank for flight itinerary search | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Learning to rank for flight itinerary search" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Searching for the perfect flight is one of the core activities for Skyscanner app users. Similarly, thinking about ways to help our users book the ideal trip is one of the problems that we find ourselves discussing the most." />
+<meta property="og:description" content="Searching for the perfect flight is one of the core activities for Skyscanner app users. Similarly, thinking about ways to help our users book the ideal trip is one of the problems that we find ourselves discussing the most." />
+<link rel="canonical" href="http://0.0.0.0:4000/machine-learning/skyscanner/2017/09/26/Learning-to-rank-flights.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/machine-learning/skyscanner/2017/09/26/Learning-to-rank-flights.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-09-26T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Searching for the perfect flight is one of the core activities for Skyscanner app users. Similarly, thinking about ways to help our users book the ideal trip is one of the problems that we find ourselves discussing the most.","headline":"Learning to rank for flight itinerary search","dateModified":"2017-09-26T00:00:00-05:00","datePublished":"2017-09-26T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/machine-learning/skyscanner/2017/09/26/Learning-to-rank-flights.html"},"url":"http://0.0.0.0:4000/machine-learning/skyscanner/2017/09/26/Learning-to-rank-flights.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Neal Lathia</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/research/">Research</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Learning to rank for flight itinerary search</h1><p class="page-description">Searching for the perfect flight is one of the core activities for Skyscanner app users. Similarly, thinking about ways to help our users book the ideal trip is one of the problems that we find ourselves discussing the most.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2017-09-26T00:00:00-05:00" itemprop="datePublished">
+        Sep 26, 2017
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#machine-learning">machine-learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#skyscanner">skyscanner</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Recently, at the Workshop on Recommenders in Tourism (part of ACM RecSys 2017), I had the opportunity to give a keynote where I shared some of our recent experiments in this domain — and particularly, on how we’re applying machine learning within this problem. In this post, I’ll expand on some of the thoughts that I shared there.</p>
+
+<h3 id="a-complex-search-problem">A Complex Search Problem</h3>
+
+<p>Many of us will have already experienced the pain of searching for an ideal flight — there are so many different factors that come into play. Is this too expensive? Could we get to the airport for this time? Should we stopover somewhere to save some money, or pay a bit more for a direct flight? Should we leave a day earlier and come back a day later? Depending on where you are flying from and trying to fly to, the possibilities may seem endless.</p>
+
+<p>In a recent post, <a href="https://medium.com/@SkyscannerEng/from-itineraries-to-widgets-9b89ca72fda4">Zsombor described</a> how the Skyscanner app’s flight search result page has evolved over time —it is now moving away from being an infinite list of price-sorted flights and towards being a set of tools (or widgets) that help users navigate the complexity of this choice. While there are many ideas and improvements that we can envisage that will surface information and control, one of the questions that we asked was: can we help users by immediately surfacing the ‘best’ flights?
+Learning to Rank</p>
+
+<p>In the research literature, sorting ‘items’ (in this case, flight itineraries) using some notion of ‘best’ or ‘relevant’ is known as learning to rank. Applying various forms of machine learning in this problem space has been studied extensively and is increasingly common across various products (e.g., <a href="https://slack.engineering/search-at-slack-431f8c80619e">Search at Slack</a>, <a href="https://engineering.foursquare.com/switching-to-a-probabilistic-model-for-venue-search-in-foursquare-d7535445c09c">Venue Search in Foursquare</a>, and <a href="https://blog.twitter.com/engineering/en_us/topics/insights/2017/using-deep-learning-at-scale-in-twitters-timelines.html">Ranking Twitter’s Feed</a>).</p>
+
+<p>The basic premise is that if we had data about items that users think of as relevant to their query — positive examples — and items that users think were not relevant to their query — negative examples — then we can use these to train a machine learning model that can predict the probability that a user will find a flight relevant to their query. In doing so, we have translated the problem of ranking items into a binary regression one (note: there are other methods, such as the pairwise approach to ranking which I do not cover here).</p>
+
+<p>Defining relevance in any context is tricky. Many systems rely on measuring this implicitly, by looking at what items users are clicking on. In the Skyscanner app, though, clicking on a search result is not a very strong signal that users have found what they are looking for — you may simply be clicking on the itinerary to find out a little bit more. A much stronger signal of relevance is the commitment click through to the airline/travel agent’s website to purchase it, which requires multiple actions from the user.</p>
+
+<p><img data-width="1600" data-height="1320" src="https://hackernoon.com/hn-images/1*B0PUwKY2H4mq2nCsUrjYKg.png" /></p>
+
+<p>There were a few stages in the journey from the idea of ranking flight search results with machine learning to experiments. We tackled these with two streams of work — offline and online experiments.</p>
+
+<h3 id="could-it-work-offline-experiments">Could it work? Offline Experiments</h3>
+
+<p>We first refined how we collected data about each user’s search experience; this data was then fed through a pipeline that took care of joining, transforming, and reshaping it into a set of features and a binary relevance score.</p>
+
+<p>Having this kind of historical data allows us to ask what-if kind of questions. What if we had sorted flights in a different way — would the flight that you picked appear closer to the top of your search result list?</p>
+
+<p>Formally, this means conducting a number of offline evaluations. We developed a toolkit to support this work — much like <a href="http://rival.recommenders.net/">similar open-source tools</a>, this toolkit took care of the basics of conducting a machine learning experiment: splitting the data into training/test and collecting a variety of metrics (e.g., Mean Average Precision and Mean Reciprocal Rank) during each test. We developed our own tool so that we could compare how any machine learning approach compares to a simple baseline: price sorting.</p>
+
+<p>Unsurprisingly, many of our initial experiments did not pay off. Our baseline was proving to be incredibly difficult to beat — perhaps given that all of our data was sourced from users viewing search results ranked this way. We kept on iterating here until we found one set of features that seemed to be doing better than price-sorting, using an incredibly simple model to begin with: logistic regression.</p>
+
+<h3 id="will-it-work-an-online-experiment">Will it work? An Online Experiment</h3>
+
+<p>An open challenge with offline machine learning experiments is understanding how offline metrics correlate with online performance. In other words, just because an algorithm seems to do better than the baseline on historical data, it doesn’t mean that it will do better for users. To validate this, we turned to an online experiment.</p>
+
+<p>To do so, we built all of the remaining parts we needed to run a production experiment. At Skyscanner, this means building components that interact with our data platform and a micro service to serve predictions.</p>
+
+<p>One way to evaluate this approach in an A/B test would be to completely replace the price-sorted list with a new, relevance sorted one. While this approach is being actively explored, the UI that we initially tested was a widget that recommended flights above the price-sorted list.</p>
+
+<p>In the end, we ran an experiment comparing users who were given recommendations using machine learning, users who were given recommendations using aheuristic that only took price and duration into account, and users who were not given any recommendations at all.</p>
+
+<p><img data-width="1600" data-height="1320" src="https://hackernoon.com/hn-images/1*pXW8FoSqpNAPWnpMECi8kQ.png" /></p>
+
+<h3 id="our-first-results-search-effort-and-conversion">Our First Results: Search Effort and Conversion</h3>
+
+<p>As above, we did not evaluate this by looking at clicks — we were not interested in users clicking on a widget. Instead, we first quantified search effort by looking at how often users would filter/resort/re-search for an itinerary in a single session, both when they received flight recommendations and when they didn’t. In this case, we didn’t find any significant differences.</p>
+
+<p>More broadly, though, we were interested in measuring conversion — how often users would purchase a flight that was recommended by the widget versus purchasing a flight that fell below it, in the ‘traditional’ result list. We found evidence of great promise — much to our surprise, this first ranking model drove more purchases into the widget than the rule-based variant.</p>
+
+<p>This experiment is one of many; a lot of the process was about laying the foundation so that we can explore the thousands of hypotheses that using machine learning for flight ranking offers — both offline and online.</p>
+
+<p>There is much more to come in this space at Skyscanner: experiments that focus on the UI, that go across platforms, that test new machine learning models, and on the various widgets that can be built using this approach.</p>
+
+  </div><a class="u-url" href="/machine-learning/skyscanner/2017/09/26/Learning-to-rank-flights.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p></p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nlathia" title="nlathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/neal_lathia" title="neal_lathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
