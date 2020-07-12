@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2020-07-12T08:24:55-05:00</updated><id>http://0.0.0.0:4000/feed.xml</id><title type="html">Neal Lathia</title><entry><title type="html">Shadow mode deployments: somewhere between “on” and “off”</title><link href="http://0.0.0.0:4000/data-science/tech-lead/2020/07/04/Shadow-mode-deployments.html" rel="alternate" type="text/html" title="Shadow mode deployments: somewhere between &quot;on&quot; and &quot;off&quot;" /><published>2020-07-04T00:00:00-05:00</published><updated>2020-07-04T00:00:00-05:00</updated><id>http://0.0.0.0:4000/data-science/tech-lead/2020/07/04/Shadow-mode-deployments</id><content type="html" xml:base="http://0.0.0.0:4000/data-science/tech-lead/2020/07/04/Shadow-mode-deployments.html">&lt;p&gt;Shipping changes to a system that makes a complex decision is rife with uncertainty. You may be adding a rule to a rule engine that already has 10s of rules, you may be changing a machine learning model that eats up 10s of features and spits out a probability, or (more likely) you may be doing a combination of both.&lt;/p&gt;
+
+&lt;p&gt;The reason this is often difficult is because the most pressing question that comes up is no longer just “will it work?” (as in, will the system make &lt;strong&gt;a&lt;/strong&gt; decision?) but, rather, “will it work well?” (i.e., will the system make &lt;strong&gt;a good&lt;/strong&gt; decision?).&lt;/p&gt;
+
+&lt;p&gt;I’ve seen these types of cases lead to a lot of worry and &lt;em&gt;analysis paralysis&lt;/em&gt;: teams do not ship because they are worried that their system will make &lt;em&gt;bad&lt;/em&gt; decisions, and instead opt to try and map out ‘what if’ scenarios on paper or reconstruct a lot of possible scenarios using historical data.&lt;/p&gt;
+
+&lt;p&gt;To get around this, I’m a vocal proponent of shipping systems in one of three states: off, on, and shadow mode. Shadow mode, specifically, is the best tool I’ve found to answer the ‘how good &lt;em&gt;could&lt;/em&gt; this system be?’ question. So, what are these three states?&lt;/p&gt;
+
+&lt;h3 id=&quot;-off&quot;&gt;❌ Off&lt;/h3&gt;
+
+&lt;p&gt;A system that is “off” doesn’t do anything &lt;em&gt;except for&lt;/em&gt; integrate well into the rest of the system. If called, it doesn’t execute anything and returns a default value without breaking.&lt;/p&gt;
+
+&lt;p&gt;It seems odd to think about shipping code that doesn’t do anything. As Stephen’s post on &lt;a href=&quot;https://highgrowthengineering.substack.com/p/writing-maintainable-code-at-speed&quot;&gt;High Growth Engineering&lt;/a&gt; explains, this is a useful way to define interfaces between different systems and enable each subsystem to be iterated on separately.&lt;/p&gt;
+
+&lt;p&gt;I’ve seen this approach used most often when wanting to ship a feature that impacts many teams and one team (or group of stakeholders) isn’t ready. Instead of waiting for them, ship it and turn it off for them! Having the ability to quickly flip the switch and turn things off is also a life saver if you are dealing with an incident.&lt;/p&gt;
+
+&lt;h3 id=&quot;-on&quot;&gt;✅ On&lt;/h3&gt;
+
+&lt;p&gt;Systems that are “on” are just that: when called, they do some work, they log some data, and they return a value.&lt;/p&gt;
+
+&lt;p&gt;It is common to add conditions here that quantify &lt;em&gt;how&lt;/em&gt; on some systems are. This could be for two reasons:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Staged roll out&lt;/strong&gt;: you may be unsure of the performance of a system, so you just turn it on for a small fraction of traffic (e.g., 5%). As nothing blows up, you continue to turn up the dial until you reach 100% and the system is generally available for all your customers.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Experiment&lt;/strong&gt;: you may want to compare two variants of a system, and so you redirect a percentage of traffic down one decision path, and the remainder goes down another. This is different from a staged roll out because it ends with the winning variant being turned on for everyone.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Both of these typically manifest in the same way–using flags of some sort in the code–but have very different intents and outcomes (safely scale up vs. compare and decide). One of my bugbears is when teams call something “an experiment,” when it’s actually a staged roll out (but I will leave that rant for another day).&lt;/p&gt;
+
+&lt;h3 id=&quot;️-shadow-mode&quot;&gt;⚠️ Shadow mode&lt;/h3&gt;
+
+&lt;p&gt;Finally, systems that are in “shadow mode” are somewhere in between: when called, they do some work, they log data about all of their decisions, and then return a default value &lt;em&gt;as if&lt;/em&gt; they were off. All of the work is done, but the decision is not acted on.&lt;/p&gt;
+
+&lt;p&gt;You end up with is a boat load of data that you can use to pragmatically answer the question: &lt;em&gt;what if this system had been on?&lt;/em&gt; (because, technically, it was on!) without requiring Data Scientists to try and reverse engineer answers to this out of historical data. Shadow mode balances between insight (you get all of the data) and risk (you don’t need to act on the outcomes); critically, it tests your system’s performance on real, recent examples.&lt;/p&gt;
+
+&lt;p&gt;Last year, we were shipping some text classifiers. We had trained them using historical data that had been manually tagged (and we knew the tags were &lt;em&gt;sometimes&lt;/em&gt; unreliable); we were unsure of how well classifiers trained on old data would perform on more recent conversations. Given that these classifiers were powering a system that sent automated answers to customers, we were not willing to turn them on without some reassurances that they would work well.&lt;/p&gt;
+
+&lt;p&gt;We had a couple of options: (1) wait and collect new data, and then manually evaluate the classifiers using it, or (2) ship the classifiers &lt;em&gt;in shadow mode&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;We did the latter; we shipped a system that would query the classifiers for their decision, log the result, and then &lt;em&gt;carry on as if it never had&lt;/em&gt;. In this case, the automated answer was not sent to customers &lt;em&gt;even when&lt;/em&gt; when the classifiers said that one should be sent. Instead, for a sample of these decisions, the system created validation tasks which would appear in our internal tooling. We used them to manually evaluate those decisions. The result? Within days, we had precision and recall values for the classifiers–based on the live data from production. This enabled us to make quicker decisions: to either confidently turn them on, or know that we needed to do more work and retrain the models.&lt;/p&gt;
+
+&lt;h3 id=&quot;-how-does-this-compare-to-ab-tests&quot;&gt;💭 How does this compare to A/B tests?&lt;/h3&gt;
+
+&lt;p&gt;The one bit that you may be thinking about is how &lt;em&gt;shadow mode&lt;/em&gt; compares to A/B testing. There are &lt;em&gt;different&lt;/em&gt; problems that shadow mode deployments enable solving: shadow mode allows you to know whether a system inherently works before you go ahead and experiment with whether it impacts a business metric.&lt;/p&gt;
+
+&lt;p&gt;For the text classifier example, above, we wanted to be sure that the system worked well (it gave precise answers) &lt;em&gt;before&lt;/em&gt; testing whether it impacted customer behaviour as we hoped it would (sending automated support answers would encourage self-service).&lt;/p&gt;
+
+&lt;p&gt;There are other scenarios where regulatory guidance may impede running A/B tests (I imagine this is the case with credit scoring models), or where you have low-volume/high-impact traffic (as is the case in fraud monitoring) where you may not &lt;em&gt;want&lt;/em&gt; to send a percentage of traffic down a path that you don’t know anything about.&lt;/p&gt;
+
+&lt;p&gt;I’m writing this post as it has become one of the most recurrent things that I’ve talked about with Engineers when we are shipping systems that make a decision. Many times, those decisions are powered by a machine learning model; but the principle applies equally if you remove machine learning from the equation.&lt;/p&gt;</content><author><name></name></author><summary type="html">Shipping changes to a system that makes a complex decision is rife with uncertainty. You may be adding a rule to a rule engine that already has 10s of rules, you may be changing a machine learning model that eats up 10s of features and spits out a probability, or (more likely) you may be doing a combination of both.</summary></entry><entry><title type="html">Customer service is full of machine learning problems</title><link href="http://0.0.0.0:4000/machine-learning/monzo/2020/06/27/Customer-service-machine-learning.html" rel="alternate" type="text/html" title="Customer service is full of machine learning problems" /><published>2020-06-27T00:00:00-05:00</published><updated>2020-06-27T00:00:00-05:00</updated><id>http://0.0.0.0:4000/machine-learning/monzo/2020/06/27/Customer-service-machine-learning</id><content type="html" xml:base="http://0.0.0.0:4000/machine-learning/monzo/2020/06/27/Customer-service-machine-learning.html">&lt;p&gt;For many folks, the words “customer service” do not bring to mind images of a high-tech problem space - it certainly was not the case for me. The only public discourse that I’d read about customer service and tech is about how bots were promised to replace human agents, but have mostly been disappointing - and limited to giving poor answers to simple questions.&lt;/p&gt;
+
+&lt;p&gt;After working closely with a bunch of customer service squads at Monzo, I’ve changed my perspective on this. I believe that building systems that enable and optimise customer service operations is going to become an entire industry soon - specifically, one that can be very profitable for companies that apply NLP and machine learning in their offerings to tackle the specific problems that prevent customer service functions from scaling.&lt;/p&gt;
+
+&lt;p&gt;What are these problems? I’ve written this post - echoing an internal document that I shared inside of Monzo over a year ago - to describe how much more there is to it than just bots. This post is broadly a list of ideas; it includes some things that my team has built and other ideas that have yet to be prioritised.&lt;/p&gt;
+
+&lt;h3 id=&quot;ℹ️-customer-service-as-information-asymmetry&quot;&gt;ℹ️ Customer service as information asymmetry&lt;/h3&gt;
+
+&lt;p&gt;To get us started and to give a little bit of background, here is a framing of the broad problem that customer service is trying to solve that I pitched.&lt;/p&gt;
+
+&lt;p&gt;Customer service can be thought of as a problem of information asymmetry: customers have questions and companies have answers. Questions and answers can be broken down further:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;There are &lt;strong&gt;two types of questions&lt;/strong&gt;: questions seeking information (“do you do refunds?”) and questions seeking an action (“may I have a refund?”).&lt;/li&gt;
+  &lt;li&gt;There are &lt;strong&gt;two types of answers&lt;/strong&gt;: answers that companies may be happy for customers to find by themselves (“here is our refund policy”), and the answers that they may want to control manually (“yes, I’ve initiated the refund”).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This creates a delicate balancing act for a business: providing excellent service is known to boost brand loyalty and makes customers happy, but maintaining an organisation where agents can reply instantly to everyone is inefficient and infeasibly expensive.&lt;/p&gt;
+
+&lt;p&gt;Machine learning systems have a great history of helping with problems that boil down to information relevance and discovery. With this lens, customer service can be broken down into two non-mutually exclusive systems: (1) systems that enable self-service and (2) systems that enable and support agent productivity.&lt;/p&gt;
+
+&lt;h3 id=&quot;-what-problems-could-machine-learning-help-with&quot;&gt;🔍 What problems could machine learning help with?&lt;/h3&gt;
+
+&lt;p&gt;With that background, let’s dive into the list. For each area, I’ve covered the &lt;em&gt;why?&lt;/em&gt; (the business problem), the &lt;em&gt;how&lt;/em&gt; (the ML problem formuation), and the &lt;em&gt;so what?&lt;/em&gt; (how having this type of system helps).&lt;/p&gt;
+
+&lt;h3 id=&quot;️️-helping-customers-discover-answers&quot;&gt;🕵️‍♀️ Helping customers discover answers&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt; Many companies manage a set of frequently asked questions (FAQ) pages for customers; these are broadly useless without having a way for customers to discover answers in them.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How?&lt;/strong&gt; Search is one of the most classic machine learning problems. In the customer service context, it translates to:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;How easily can customers find the right FAQ content?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This can either be framed as a &lt;strong&gt;ranking problem&lt;/strong&gt; (sort FAQ content from most to least relevant), a &lt;strong&gt;recommendation&lt;/strong&gt; problem (suggest articles that are relevant to what the custommer is currently doing) or as a &lt;strong&gt;question-answering problem&lt;/strong&gt; (find the content within FAQ pages that directly answers a question).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So what?&lt;/strong&gt; The best possible outcome - for the customer and the company - is for customers to not need to get in touch, because the information they need is readily available and discoverable.&lt;/p&gt;
+
+&lt;h3 id=&quot;-helping-companies-categorise-known-topics&quot;&gt;🏦 Helping companies categorise known topics&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt; From a macro-level, companies can use an understanding of what customers are talking about to decide how to react as the landscape of queries changes.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How?&lt;/strong&gt; Many companies tackle this by asking agents to manually categorise conversations, by using tags: &lt;em&gt;topic categorisation&lt;/em&gt; is the ML equivalent:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Given a new query from a customer, what is the customer asking about?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is a &lt;strong&gt;classification problem:&lt;/strong&gt; given a set of N topics (that have typically been defined by the business), we need a system that can accurately recognise whether a new query is about one of those topics.&lt;/p&gt;
+
+&lt;p&gt;Categorisation can go beyond &lt;strong&gt;query topics;&lt;/strong&gt; there are a whole host of non-topic based categorisations (e.g., urgency, sentiment, language detection) that could help.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So what?&lt;/strong&gt; Knowing what a customer is chatting about enables a host of analytics, reporting, and automation. If anything, having an agent &lt;em&gt;confirm&lt;/em&gt; a recommended tag rather than tag manually may save a lot of time!&lt;/p&gt;
+
+&lt;h3 id=&quot;-helping-companies-discover-unknown-topics&quot;&gt;🏦 Helping companies discover unknown topics&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt; When you build a product, there are likely to be many things you expect customers to ask you about (e.g., refunds, orders, faulty items, etc.). However, there are also a lot of unexpected topics. Discovering these early could enable the business to jump onto problems before they impact all customers.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How?&lt;/strong&gt; The main problem that &lt;em&gt;topic discovery&lt;/em&gt; could try to solve is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;What new (or unusual) topics are customers talking to us about?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is a &lt;strong&gt;unsupervised learning&lt;/strong&gt; problem: given a set of conversations that have occurred recently, can we discover new topics that are coming in at high volume that the company does not have a process to support?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So what?&lt;/strong&gt; One thing that wasn’t intuitive for me is how changes in customer service queries could have nothing to do with your business (or global affairs). For example, when &lt;a href=&quot;https://monzo.com/blog/2018/06/28/ticketmaster-breach&quot;&gt;Ticketmaster’s systems were breached&lt;/a&gt;, there was a rise in customer support queries at Monzo.&lt;/p&gt;
+
+&lt;h3 id=&quot;️-helping-agents-get-up-to-speed-quickly&quot;&gt;👮‍♀️ Helping agents get up to speed quickly&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt; When agents pick up a new support ticket, the first thing they probably need to do is to understand what is going on - what the customer is asking, who the customer is, what (if anything) has already happened or been done, and so on.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How?&lt;/strong&gt; The main problem that &lt;em&gt;case summarisation&lt;/em&gt; could try to solve is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;What is this relevant information about this case?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;For long conversations, this could be treated as a &lt;strong&gt;text summarisation&lt;/strong&gt; problem; it could also be framed as a &lt;strong&gt;question extraction&lt;/strong&gt; problem. Thinking about how to surface the customer information (what’s the status on which order? what segment of customer?) that is relevant to resolving the question at hand could be treated separately.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So what?&lt;/strong&gt; Many customer service experiences today are frustrating because the only way that agents have to get this information is to ask the customer (sometimes, more than once). By having ways for agents to see the most relevant information about a customer, they can get to work faster.&lt;/p&gt;
+
+&lt;h3 id=&quot;️-helping-agents-say--do-the-right-thing&quot;&gt;👮‍♀️ Helping agents say &amp;amp; do the right thing&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt; Companies will have policies and procedures that dictate how different cases should be handled - for example, refunding a customer may be a multi-step process. Many will also have responses with pre-formatted replies to specific types of questions. In some domains, there is a very limited set of actions that an agent could do (e.g., issue a refund). In others (&lt;em&gt;cough&lt;/em&gt; banking &lt;em&gt;cough&lt;/em&gt;), this range of actions can quickly become huge.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How?&lt;/strong&gt; The main problem that task-content matching is trying to solve is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Given a query from a customer, what content do we have that is similar?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is a &lt;strong&gt;ranking problem&lt;/strong&gt;: given a set of N pieces of content (e.g., stored responses or procedures), we need to build a system that can sort that content from most to least relevant, given the customer query.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So what?&lt;/strong&gt; Handling a customer query swiftly and effectively is the epitomy of good service: if agents need to spend majority of their time trawling through manuals and typing out every single word of a reply, their responses can be frustratingly slow.&lt;/p&gt;
+
+&lt;h3 id=&quot;️-helping-agents-to-be-productive&quot;&gt;👮‍♀️ Helping agents to be productive&lt;/h3&gt;
+
+&lt;p&gt;This is one of the ideas that my team worked on - with mixed success - and I will be blogging about it separately.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt; Context switching is a well-known productivity killer for engineers and data scientists. With customer support agents, it’s no different: if every single query they attend to is completely different from the last, they are likely to spend majority of their time context switching!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How?&lt;/strong&gt; The main problem that &lt;em&gt;task matching&lt;/em&gt; is trying to solve is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;When an agent needs a new task, which of the available ones should be assigned?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is a &lt;strong&gt;ranking problem&lt;/strong&gt;: given a set of N unassigned tasks that are waiting for an agent, and an agent (who may have specific skills and permissions) who needs a new task, a system that sorts the available tasks from “best match” to “worst match” can help to maintain the agent’s productivity throughout the day.&lt;/p&gt;
+
+&lt;p&gt;In this case, “best match” could be framed in many different ways, such as &lt;em&gt;similar to tasks that the agent has successfully resolved recently.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So what?&lt;/strong&gt; The traditional formulation of support systems is that customers create or submit “tickets” which need to be “routed” to agents. Switching to a ranking mindset can spare the organisation from building and maintaining specialist teams that work needs to be “sent” to.&lt;/p&gt;
+
+&lt;h3 id=&quot;️️-spreading-knowledge-across-agents&quot;&gt;👮‍♀️👮‍♀️ Spreading knowledge across agents&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt; Expert knowledge in customer service is typically manually curated (in processes and knowledge management systems) or inbuilt into the company hierarchy (which manifests as “I’m going to escalate your query to a specialist team/to my manager”). However, the questions that customers ask are rarely unique: it is very likely that a similar query from another customer has been resolved before.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How?&lt;/strong&gt; The main problem that &lt;em&gt;case similarity&lt;/em&gt; could try to solve is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Given a chat case, what (resolved) cases are the most similar?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is a &lt;strong&gt;ranking problem:&lt;/strong&gt; given a case that has just been assigned to an agent, sort the resolved cases (perhaps with some conditions, e.g.: resolved quickly and with a high customer satisfaction) from “best match” to “worst match” and show the agent the top-3 most similar cases.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So what?&lt;/strong&gt; I believe that this approach could be useful to help agents see how other cases have been solved by others — potentially increasing knowledge discovery and reducing the need to escalate things to other teams.&lt;/p&gt;
+
+&lt;h3 id=&quot;-monitoring-outcomes-as-they-happen&quot;&gt;🏦 Monitoring outcomes as they happen&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt; There are two common ways that companies track the quality of their customer support: by asking customers (with a customer satisfaction survey) or by reviewing cases (using a quality assurance team). Both of these are lagging metrics that only happen after-the-fact.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How?&lt;/strong&gt; The main problem that &lt;em&gt;case monitoring&lt;/em&gt; could try to solve is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Given a case that is ongoing, what outcome is likely to happen?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This could cover a variety of &lt;strong&gt;regression problems:&lt;/strong&gt; given a case, we could try to predict how long it will take to handle, what the likelihood of complaint is, what the customer’s satisfaction rating will be, etc.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So what?&lt;/strong&gt; This approach could be useful if we wanted to intervene in specific cases (e.g., detect that a conversation is likely to end up in a complaint so that we can do something about it earlier).&lt;/p&gt;
+
+&lt;h2 id=&quot;-the-end&quot;&gt;📜 The end!&lt;/h2&gt;
+
+&lt;p&gt;This list of ideas switches customer service from “this will be replaced in its entirety by bots” towards “automation can help human service scale.”&lt;/p&gt;</content><author><name></name></author><summary type="html">For many folks, the words “customer service” do not bring to mind images of a high-tech problem space - it certainly was not the case for me. The only public discourse that I’d read about customer service and tech is about how bots were promised to replace human agents, but have mostly been disappointing - and limited to giving poor answers to simple questions.</summary></entry><entry><title type="html">How to over engineer a sound classifier</title><link href="http://0.0.0.0:4000/machine-learning/2020/04/02/How-to-overengineer-a-sound-classifier.html" rel="alternate" type="text/html" title="How to over engineer a sound classifier" /><published>2020-04-02T00:00:00-05:00</published><updated>2020-04-02T00:00:00-05:00</updated><id>http://0.0.0.0:4000/machine-learning/2020/04/02/How-to-overengineer-a-sound-classifier</id><content type="html" xml:base="http://0.0.0.0:4000/machine-learning/2020/04/02/How-to-overengineer-a-sound-classifier.html">&lt;h3 id=&quot;-hack-day-idea&quot;&gt;🏡 Hack day idea&lt;/h3&gt;
+
+&lt;p&gt;I recently moved our washing machine out to the garage, which meant that I couldn’t hear it beep when it was finished. I would have some “false positive” trips out there (through the drizzly British rain!) when timers went off, only to find that the thing was still going. How horrendous.&lt;/p&gt;
+
+&lt;p&gt;It had also been a while since I wrote some code just for the sake of building something and I had never done anything with software and sound (recording, cleaning, classification). So, solving this first world problem for myself became my small 💡 idea for a  hack project I could work on as the world slowly started locking itself down.&lt;/p&gt;
+
+&lt;p&gt;This post is an overview of what I built. It does not cover the day that I spent dusting off the old laptop and generally waiting for all of the updates to download (goodbye, Python 2.7!). It also does not give appropriate credit to the infinite StackOverflow posts that I read along the way.&lt;/p&gt;
+
+&lt;p&gt;All of the code for this is on Github in my &lt;a href=&quot;https://github.com/nlathia/sound-detection&quot;&gt;sound-detection&lt;/a&gt; repo.&lt;/p&gt;
+
+&lt;h3 id=&quot;-collecting-training-data&quot;&gt;🎧 Collecting training data&lt;/h3&gt;
+
+&lt;p&gt;The first thing I needed was some data: I used the &lt;a href=&quot;https://people.csail.mit.edu/hubert/pyaudio/docs/&quot;&gt;PyAudio library&lt;/a&gt; for this.&lt;/p&gt;
+
+&lt;p&gt;PyAudio is a library that allows you to record audio by reading from a stream, in a similar way that you would read from a file. There was a bit of faff with figuring out sampling and frame rates - I ended up using default values that I found on different examples.&lt;/p&gt;
+
+&lt;p&gt;I ended up with the function below that I used to record 3-second long samples of audio. The function returns as a list of arrays - in case you’re wondering, &lt;a href=&quot;https://www.pythoncentral.io/the-difference-between-a-list-and-an-array/&quot;&gt;here’s a post about the difference&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Critically, I also added a counter that would tell me (approximately) what percentage of the sample was “silent.” All I did was check what the max value of each array was; if it was less than a totally arbitrary value of 300, I counted it as silent. I tested this by recording a few samples and shouting at my computer.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;record_sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NUM_SECONDS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;frames&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;count_silent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NUM_FRAMES&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NUM_SECONDS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sound_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'h'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NUM_FRAMES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exception_on_overflow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sound_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SOUND_THRESHOLD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;count_silent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;frames&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sound_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;percent_silent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count_silent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frames&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ℹ️  Finished recording {seconds} seconds: {(percent_silent * 100):.2f}&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;% &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;silent.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frames&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;percent_silent&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I saved any 3-second sample that wasn’t silent as a wav file, using the &lt;a href=&quot;https://docs.python.org/3/library/wave.html&quot;&gt;wave library&lt;/a&gt;. Somehow, I recall seeing some error when I tried to write this function using a &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; statement, so I ended up opening and closing the file directly:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save_sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frames&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;data&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;live&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Sound-{str(datetime.now())}.wav&quot;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;⤵️  Storing audio to: {file_path}...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wave&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;wb&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setnchannels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NUM_CHANNELS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setsampwidth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sample_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setframerate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;writeframes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frames&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;With this minimal setup, I did a couple rounds of laundry and ended up with a bunch of wav files! That was the end of day 1 of the hack project.&lt;/p&gt;
+
+&lt;h3 id=&quot;-labels&quot;&gt;🏷 Labels&lt;/h3&gt;
+
+&lt;p&gt;For day 2, I started by having to label the data I had previously recorded. I did this manually, by listening to all of the recordings – well, at least the first second of each one. Luckily, these washing machines don’t tend to beep or spin at random, so all I had to do was find when it started and stopped doing one of those things, and bulk move all of those files into a directory. At this point I was thinking of making a classifier that could tell me about different things that the machine was doing, so I created four groups: beeps, spinning, washing, and “human” (which was usually me coming in and out of the room).&lt;/p&gt;
+
+&lt;p&gt;I’m used to regularly labelling text for our classifiers at work, but usually do things like listen to music while doing this. Stepping through and listening to audio files needs your eyes, ears, and hands - this was all encompassing. It is also a prime way to annoy other people in your household.&lt;/p&gt;
+
+&lt;p&gt;In summary: this was super boring, so I had a gin &amp;amp; tonic while I was doing this. I ended up with 43 samples of &lt;em&gt;beeps&lt;/em&gt;, 588 samples of the machine making noises as part of the wash cycle, 38 samples that were sounds from me, and 748 samples of the machine spinning. I would later come back to this and change it to two classes: beeping and not beeping - which is what I ended up using.&lt;/p&gt;
+
+&lt;p&gt;Once that data was sorted into different directories, I loaded up the file paths (and corresponding label/directory) into a Pandas data frame and then used &lt;a href=&quot;https://scikit-learn.org/&quot;&gt;scikit learn&lt;/a&gt; for what it is best known for: &lt;a href=&quot;https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html&quot;&gt;train test split&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;-1d-convolution&quot;&gt;🤖 1D Convolution&lt;/h3&gt;
+
+&lt;p&gt;Okay, finally! Time for some machine learning. I fired up my browser to figure out how to even begin on this.&lt;/p&gt;
+
+&lt;p&gt;This is the bit of the hack that is intentionally over-engineered. I am very aware that all I really wanted to do was detect a high-pitched sound among mostly background noise, and so could have gone down the audio analysis route. But that’s not fun, so I didn’t do that.&lt;/p&gt;
+
+&lt;p&gt;At work, we primarily use PyTorch, and so that was my first port of call. I found &lt;a href=&quot;https://pytorch.org/tutorials/beginner/audio_classifier_tutorial.html&quot;&gt;this tutorial&lt;/a&gt; which points to a paper called “Very Deep Convolutional Neural Networks for Raw Waveforms” (&lt;a href=&quot;https://arxiv.org/pdf/1610.00087.pdf&quot;&gt;here’s the PDF&lt;/a&gt;). I skimmed the paper - it looks like it’s based on some dataset of urban sounds called &lt;a href=&quot;https://urbansounddataset.weebly.com/urbansound8k.html&quot;&gt;UrbanSound8k&lt;/a&gt;, which has 10 classes of sounds like horns, children playing, and dogs barking. The tutorial also links to &lt;a href=&quot;https://colab.research.google.com/github/pytorch/tutorials/blob/gh-pages/_downloads/audio_classifier_tutorial.ipynb&quot;&gt;this Colab notebook&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I first tried swapping my dataset into this notebook, but soon hit all sorts of errors. I think this boils down the fact that the tutorial was written for PyTorch 1.1.0, and I was running 1.4.0. Everything was broken.&lt;/p&gt;
+
+&lt;p&gt;I ended up going back to first principles. By that, I mean that it had been so long since I had worked at this level of detail in PyTorch that my first few attempts didn’t work at all, and I had to go and re-learn about 1-D convolutional layers. Here’s a &lt;a href=&quot;https://www.youtube.com/watch?v=yd_j_zdLDWs&quot;&gt;really good YouTube video&lt;/a&gt; that helped me.&lt;/p&gt;
+
+&lt;p&gt;In the end, I made a neural net with a dimensionality reduction step (1-D convolution, batch norm, and max pool), and then a classifier (linear and softmax):&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BeepNet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BeepNet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Conv1d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;in_channels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NUM_CHANNELS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;out_channels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;kernel_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;KERNEL_SIZE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;stride&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;STRIDE&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BatchNorm1d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_features&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NUM_CHANNELS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxPool1d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classifier&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Linear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;in_features&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;298&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out_features&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NUM_LABELS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Softmax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;forward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;hidden&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hidden&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once this seemed to be working, I looked into using a GPU to train the model. I spent a while moving the data into Google Drive and reading about how I could &lt;a href=&quot;https://stackoverflow.com/questions/48376580/google-colab-how-to-read-data-from-my-google-drive&quot;&gt;load it all into a Colab notebook&lt;/a&gt;. In the end, this was another unnecessary rabbit hole and I trained the whole thing in minutes on my laptop.&lt;/p&gt;
+
+&lt;p&gt;I trained the model for a few epochs and it converged pretty fast. I then looked at the examples of what it was doing, and the results seemed legit. I hear you asking - what did you do about overfitting? The answer is that I did absolutely nothing. A model that was overfit on these beeps (that all sound exactly the same) was fine.&lt;/p&gt;
+
+&lt;p&gt;You can see the notebook that I used &lt;a href=&quot;https://github.com/nlathia/sound-detection/blob/master/model/Audio_Classifier.ipynb&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;-deploying-to-production&quot;&gt;⏭ Deploying to production&lt;/h3&gt;
+
+&lt;p&gt;The final stage was to make something that could use this model to detect the beeps, and somehow let me know.&lt;/p&gt;
+
+&lt;p&gt;At this stage, I had two different components: a PyAudio thing that would record samples and save them to a wav file, and a PyTorch model that would use torchaudio to load data from a file and give it to the model. Instead of figuring out a way for the PyAudio data to go directly to the model, I decided to keep what I already had and use the disk as an intermediary.&lt;/p&gt;
+
+&lt;p&gt;Here’s how I made this unnecessarily complicated: I decided that it would be unacceptably slow if all of this happened in a single process. So I turned back to an old friend, the &lt;a href=&quot;https://docs.python.org/3/library/multiprocessing.html&quot;&gt;multiprocessing&lt;/a&gt; library - and found out how multiprocessing has a neat bug where &lt;a href=&quot;https://bugs.python.org/issue35219&quot;&gt;Python crashes on macOS&lt;/a&gt;; setting some weird flag &lt;code class=&quot;highlighter-rouge&quot;&gt;export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES&lt;/code&gt; before running it fixed this 🤷‍♂️.&lt;/p&gt;
+
+&lt;p&gt;The main process in my pipeline records a sample of audio and (if it is not silent) saves it to a file; it then pops the path to the file onto a queue. On the other side, a classifier process reads from that queue and loads up and classifies any file that is popped onto it.&lt;/p&gt;
+
+&lt;p&gt;What does it do if it detects a beep? I hunted around for different options here. One of the first options I thought of was to &lt;a href=&quot;https://realpython.com/python-send-email/&quot;&gt;send myself an email&lt;/a&gt;; the problem is that I’ve turned off gmail notifications (and my life has been much better since). I then went down a rabbit hole of options - Signal, WhatsApp, SMS gateways, paid services, and all of that.&lt;/p&gt;
+
+&lt;p&gt;I settled on using Telegram, because I stumbled onto a &lt;a href=&quot;https://medium.com/@ManHay_Hong/how-to-create-a-telegram-bot-and-send-messages-with-python-4cf314d9fa3e&quot;&gt;Medium post&lt;/a&gt; about setting up a bot and sending it a message with Python, and it looked do-able. But, what if the model &lt;em&gt;was&lt;/em&gt; wrong? How could I avoid that short walk out to check? I decided that the pipeline should also send me the actual audio that it thought was a beep. Sending a snippet of audio via telegram was not something that looked super straightforward, until I ran into the &lt;a href=&quot;https://github.com/python-telegram-bot/python-telegram-bot&quot;&gt;Python Telegram Bot&lt;/a&gt; library. The main problem I ran into was that this library would only send sound files that were formatted as mp3s. Instead of re-writing everything to always use mp3s, I found an mp3 encoder called &lt;a href=&quot;https://formulae.brew.sh/formula/lame&quot;&gt;lame&lt;/a&gt; that could be installed via brew. I found that before finding any Python library that I could use directly, so I just called this function from Python:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;convert_to_mp3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;path_fields&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;file_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path_fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.wav&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;.mp3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;result_file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path_fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;🎧  Converting: {file_path} -&amp;gt; {result_file}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;command&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;lame --preset standard &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{file_path}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{result_file}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;system&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;🎧  Converted to mp3 with result={result}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result_file&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;-thats-it-or-was-it&quot;&gt;🎉 That’s it! …Or was it?&lt;/h3&gt;
+
+&lt;p&gt;All of this means that I now take my super old laptop and fire up the pipeline after I’ve started the machine. I then go and hang out, anxiously waiting for a message. Here’s how &lt;a href=&quot;https://twitter.com/neal_lathia/status/1231322746593988611&quot;&gt;I tweeted&lt;/a&gt; when it started working!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://nlathia.github.io/blog/images/beep-net.jpg&quot; alt=&quot;&quot; title=&quot;BeepNet in action&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The first time it worked, I was overloaded with messages. I had forgotten to add a way for it to &lt;em&gt;not&lt;/em&gt; send me a message every time it detected a beep (which was happening in multiple 3-second interval successions), so I had to add in a way for it to be rate-limited to one message every X minutes.&lt;/p&gt;
+
+&lt;p&gt;There were also a couple of times that it didn’t seem to work: the classifier process would die, the laptop’s wifi would have briefly gone down, or other such oddities. So I added in a bunch of logging, a time out (it would message me if it hadn’t detected a beep in more than X minutes), and I added in the &lt;a href=&quot;https://github.com/jd/tenacity&quot;&gt;tenacity&lt;/a&gt; library’s annotations so that it would retry message sending.&lt;/p&gt;
+
+&lt;h3 id=&quot;-whats-next&quot;&gt;💻 What’s next?&lt;/h3&gt;
+
+&lt;p&gt;All of the code for this is on Github in my &lt;a href=&quot;https://github.com/nlathia/sound-detection&quot;&gt;sound-detection&lt;/a&gt; repo. Feel free to use it, find bugs, and tell me what’s wrong with it.&lt;/p&gt;
+
+&lt;p&gt;The silliest thing about all of this is that I now have to fire up my old laptop when I want it to monitor a laundry cycle. Some day in the future I’ll think about spending some time getting this to work on a Raspberry Pi or some other device that I can leave out there.&lt;/p&gt;</content><author><name></name></author><summary type="html">🏡 Hack day idea</summary></entry><entry><title type="html">Testing SQL the hard way</title><link href="http://0.0.0.0:4000/data-science/monzo/2020/03/15/Testing-SQL-the-hard-way.html" rel="alternate" type="text/html" title="Testing SQL the hard way" /><published>2020-03-15T00:00:00-05:00</published><updated>2020-03-15T00:00:00-05:00</updated><id>http://0.0.0.0:4000/data-science/monzo/2020/03/15/Testing-SQL-the-hard-way</id><content type="html" xml:base="http://0.0.0.0:4000/data-science/monzo/2020/03/15/Testing-SQL-the-hard-way.html">&lt;h3 id=&quot;-context&quot;&gt;📊 Context&lt;/h3&gt;
+&lt;p&gt;It’s not uncommon for Data Science workflows to have large chunks of SQL. Maybe you have a sequence of queries that you run every day to produce dashboards, or maybe you have a bunch of queries that spit out features that you feed into machine learning algorithms. If you’re a Data Scientist, you’re bound to have written a &lt;code class=&quot;highlighter-rouge&quot;&gt;SELECT&lt;/code&gt; statement at &lt;em&gt;some point&lt;/em&gt; of your day!&lt;/p&gt;
+
+&lt;p&gt;There’s an online wiki for programming languages called &lt;a href=&quot;http://progopedia.com/&quot;&gt;progopedia&lt;/a&gt; which &lt;a href=&quot;http://progopedia.com/language/sql/&quot;&gt;lists SQL&lt;/a&gt; as “&lt;strong&gt;not&lt;/strong&gt; a programming language:” this perfectly characterises everything that is strange about these words that we write, execute, and rely on to get our insights right every single day. SQL doesn’t have all the sensible things that &lt;em&gt;real&lt;/em&gt; programming languages have to help us feel confident that they are doing what we think they’re doing. Primarily, it lacks a straightforward abstraction for “unit” testing.&lt;/p&gt;
+
+&lt;p&gt;About a year and half ago, a colleague &lt;a href=&quot;https://uk.linkedin.com/in/jackcook909&quot;&gt;Jack&lt;/a&gt; and I were wrangling with a query that &lt;em&gt;had to be right&lt;/em&gt;–we are, after all, working in a regulated industry. We were dealing with a bunch of queries that were orchestrated together with &lt;a href=&quot;https://airflow.apache.org/&quot;&gt;Airflow&lt;/a&gt;.  The main problem we had was that we could not rely on the input to our query being right &lt;strong&gt;and&lt;/strong&gt; needed to prevent this query from quietly succeeding if anything in its results was wrong.&lt;/p&gt;
+
+&lt;p&gt;We went the entire journey from manually validating entries in our table to automating the detection and reporting of inconsistencies so that we could flag or fix errors that were upstream of our query: this post is a heavily simplified example of what we did. In case you’re wondering, I’ve called the post “testing SQL the hard way” because we have now abandoned this approach (and replaced it with &lt;a href=&quot;https://www.getdbt.com/&quot;&gt;dbt&lt;/a&gt;). But it had some fun lessons, so here goes!&lt;/p&gt;
+
+&lt;h3 id=&quot;️-a-table-of-users&quot;&gt;👯‍♂️ A table of users&lt;/h3&gt;
+&lt;p&gt;Let’s look at a toy example: let’s say that we want to make a table that has some key information about all of a company’s customers. I’ve written all of the snippets below in BigQuery SQL, so that you can copy/paste it into the &lt;a href=&quot;https://console.cloud.google.com/bigquery&quot;&gt;console&lt;/a&gt; and play around with it yourself.&lt;/p&gt;
+
+&lt;p&gt;We start by building up some mock data. Imagine you have a JSON payload (an “event”) each time a user creates an account, with the &lt;code class=&quot;highlighter-rouge&quot;&gt;user_id&lt;/code&gt;, the timestamp of when the account was created, and a bunch of other critical fields. Something like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;WITH&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;account_created_events&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;UNNEST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_1&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;account_created&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-01&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_2&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;account_created&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-02&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_3&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;account_created&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-03&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_4&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;account_created&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-04&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When users finish some set of actions, we get another event to tell us that the user has completed their signup. Here’s some more mock data, for those same users:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;signup_completed_events&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;UNNEST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_1&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;signup_completed&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-02&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_2&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;signup_completed&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-03&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_3&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;signup_completed&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-04&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_4&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;signup_completed&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-05&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can take those two events and create a table with one row per user:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;-- Extract the account creation columns&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;WITH&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;accounts_created&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;JSON_EXTRACT_SCALAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;$.user_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JSON_EXTRACT_SCALAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;$.account_created&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;account_created&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;account_created_events&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;-- Extract the signup completion columns&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;signups_completed&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;JSON_EXTRACT_SCALAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;$.user_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JSON_EXTRACT_SCALAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;$.signup_completed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signup_completed&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signup_completed_events&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;-- Join them together&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;account_created&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;signup_completed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;TIMESTAMP_DIFF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signup_completed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;account_created&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HOUR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signup_time&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;accounts_created&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;LEFT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;JOIN&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signups_completed&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;USING&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And here are the results:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://nlathia.github.io/blog/images/bigquery-post/users-table.png&quot; alt=&quot;&quot; title=&quot;A table of users&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Perfect! This is the ideal analytics table to answer a ton of different basic analytic questions: How many users do we have? How many of them signed up today? How long does it take users, on average, to complete signup?&lt;/p&gt;
+
+&lt;p&gt;This is also the type of table that could be extended with tens (or even hundreds) of columns, each representing unique pieces of information about each user. It is the type of canonical data table that could grow to having tens of contributors and many tens of use cases. As long as this table maintains its core structural assumption (one row per user), we’ll be good to go.&lt;/p&gt;
+
+&lt;p&gt;How could this go wrong?&lt;/p&gt;
+
+&lt;h3 id=&quot;-someone-completes-the-signup-flow-twice&quot;&gt;🙃 Someone completes the signup flow twice&lt;/h3&gt;
+
+&lt;p&gt;Let’s imagine that a customer, due to whatever reason, completes the signup flow twice. Maybe there’s a bug in the app and the customer uninstalls &amp;amp; reinstalls the app, maybe there was a bug or failure in the backend service that is emitting those events (whatever, it doesn’t matter!).&lt;/p&gt;
+
+&lt;p&gt;Nothing has changed in the analytics code base, but now we have two signup completed events for that user:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;signup_completed_events&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;UNNEST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_1&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;signup_completed&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-02&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_2&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;signup_completed&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-03&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_3&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;signup_completed&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-04&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_4&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;signup_completed&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-01-05&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;user_3&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;signup_completed&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;2020-02-04&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;}&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;-- Yikes!&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This tiniest of errors – something that is largely invisible to the person who is &lt;em&gt;writing&lt;/em&gt; the SQL, breaks the table: &lt;code class=&quot;highlighter-rouge&quot;&gt;user_3&lt;/code&gt; appears twice. Not only that, but your stats on signup completion rates have shot through the roof!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://nlathia.github.io/blog/images/bigquery-post/users-table-errors.png&quot; alt=&quot;&quot; title=&quot;A table of users with errors!&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Herein lies the problem: a tiny issue in the data has propagated itself through the &lt;code class=&quot;highlighter-rouge&quot;&gt;LEFT JOIN&lt;/code&gt;s in the analytics code base, and has completely skewed some metrics that you are using.&lt;/p&gt;
+
+&lt;p&gt;Of course, you could argue that this is &lt;em&gt;fairly trivial&lt;/em&gt; to fix: we’d need to add in a pre-processing step on the signup completed events to pick the one we care about more, and spit out one signup event per user. But what if this table has tens or hundreds of columns? What if the person contributing a new column is not the person who added the signup stats column, so doesn’t know this? What if we have &lt;em&gt;two&lt;/em&gt; of these types of problems manifest at the same time? What if this table is input to some downstream queries, and all they know is that &lt;em&gt;their&lt;/em&gt; table is now wrong?&lt;/p&gt;
+
+&lt;p&gt;These problems are more of a headache to discover and diagnose than they are to fix. Indeed, they may first manifest as a question about the &lt;em&gt;metrics&lt;/em&gt; (“why has our average sign up time gone through the roof?”) and not about the &lt;em&gt;data&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;-unit-testing-a-table-in-two-steps&quot;&gt;🐛 “Unit” testing a table in two steps&lt;/h3&gt;
+
+&lt;p&gt;This post is not about fixing those bugs: it is only about an approach that we used to use to &lt;em&gt;detect&lt;/em&gt; these types of problems with some sort of meaningful error message. At its core, this method relies on &lt;strong&gt;enumerating your assumptions&lt;/strong&gt; about the structure of the table, and then &lt;strong&gt;triggering an error in the query execution&lt;/strong&gt; if you find any.&lt;/p&gt;
+
+&lt;p&gt;In our example, our key assumption was that the table has &lt;strong&gt;one row per user&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 1&lt;/strong&gt;. Separately from the query above, we wrote a query that should create an empty &lt;code class=&quot;highlighter-rouge&quot;&gt;users_table_errors&lt;/code&gt; table if the &lt;code class=&quot;highlighter-rouge&quot;&gt;users&lt;/code&gt; table’s assumptions were not broken:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;WITH&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user_validation&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;COUNT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_rows&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;GROUP&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;HAVING&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_rows&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;-- Should never be the case, amirite?&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;&quot;Duplicated user_ids&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;failure_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;COUNT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;DISTINCT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_failures&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user_validation&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;-- Union all with any other validations (e.g. validating time stamps)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;These types of queries are an extremely useful way of (a) documenting what you expect, and (b) creating a table of all of the (in this case) user ids that don’t match your expectations – and how many times each one is duplicated.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://nlathia.github.io/blog/images/bigquery-post/users-validation-table.png&quot; alt=&quot;&quot; title=&quot;A validation table with a list of errors.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2&lt;/strong&gt;. Now that we have a way to identify errors, we need a way to stop our query from completing successfully if any errors are found. The first way we did this was to force BigQuery to compute something it couldn’t if it found errors: we would literally encode a one divided by zero. Shortly after, we found a debugging function buried in &lt;a href=&quot;(https://cloud.google.com/bigquery/docs/reference/standard-sql/debugging_functions)&quot;&gt;the BigQuery documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If a validations table is &lt;em&gt;not&lt;/em&gt; empty, we used this &lt;code class=&quot;highlighter-rouge&quot;&gt;ERROR()&lt;/code&gt; function to stop the query! It looks like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ERROR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CONCAT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;ERROR: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_failures&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;failure_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users_table_errors&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_failures&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you run this in the BigQuery console, it pops up with this kind of alert:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://nlathia.github.io/blog/images/bigquery-post/bigquery-error.png&quot; alt=&quot;&quot; title=&quot;The BigQuery ERROR() alert.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The final workflow would run (1) the original query, (2) the validation query, and then (3) the error query. This approach really accelerated our ability to diagnose and fix errors; it de-coupled the &lt;del&gt;code&lt;/del&gt; SQL that did the work from the SQL that did the validation, and it automatically documented all of our assumptions about a given table.&lt;/p&gt;
+
+&lt;p&gt;For our example, above: we’d see an error message that reads &lt;code class=&quot;highlighter-rouge&quot;&gt;ERROR: 1 Duplicated user_ids&lt;/code&gt;; we’d pop open the &lt;code class=&quot;highlighter-rouge&quot;&gt;users_table_errors&lt;/code&gt; and see that it has 1 entry with &lt;code class=&quot;highlighter-rouge&quot;&gt;user_3&lt;/code&gt;; and voilà, we’d already be on track to finding and resolving the problem.&lt;/p&gt;
+
+&lt;h3 id=&quot;-why-is-this-the-hard-way-of-testing&quot;&gt;🏚 Why is this the “hard way” of testing?&lt;/h3&gt;
+
+&lt;p&gt;We got a lot of value out of the approach above; the major trade-off was that we had to write (nearly) double the amount of SQL. This is not too dissimilar from what happens in other programming languages, where we &lt;em&gt;can&lt;/em&gt; write unit tests.&lt;/p&gt;
+
+&lt;p&gt;However, these are definitely not &lt;a href=&quot;https://en.wikipedia.org/wiki/Unit_testing&quot;&gt;&lt;strong&gt;unit&lt;/strong&gt; tests&lt;/a&gt;: we would primarily discover errors in the data when the analytics pipeline was running, and had to make choices as to whether we wanted our (fairly huge) graph of queries to halt running completely on every error, or continue with warnings. We had started designing ways to quantify the severity of errors (both in terms of columns &lt;em&gt;and&lt;/em&gt; in terms of number of affected rows), to run queries on samples of data, and more.&lt;/p&gt;
+
+&lt;p&gt;By the end of 2019, though, the Data Science team at Monzo migrated to using data build tool, or &lt;a href=&quot;https://www.getdbt.com/&quot;&gt;dbt&lt;/a&gt;. If you want to read about why we think that was a good choice, &lt;a href=&quot;https://stephen.sh/posts/why-is-dbt-so-important&quot;&gt;Stephen’s post here&lt;/a&gt; describes things that we like about it. It helped us to automate a lot of the work flow that I’ve described above, and more.&lt;/p&gt;
+
+&lt;p&gt;Does this solve everything we need to ensure reliable, consistent, and scalable analytics queries? Absolutely not. The experience of writing this kind of “code” is still very much characterised by the “try running it and see if the results look sensible,” which is a far cry from where it could be. But it’s a great step in the right direction.&lt;/p&gt;</content><author><name></name></author><summary type="html">📊 Context It’s not uncommon for Data Science workflows to have large chunks of SQL. Maybe you have a sequence of queries that you run every day to produce dashboards, or maybe you have a bunch of queries that spit out features that you feed into machine learning algorithms. If you’re a Data Scientist, you’re bound to have written a SELECT statement at some point of your day!</summary></entry><entry><title type="html">When is a neural net too big for production?</title><link href="http://0.0.0.0:4000/opinion/monzo/2019/09/29/Large-NLP-in-prod.html" rel="alternate" type="text/html" title="When is a neural net too big for production?" /><published>2019-09-29T00:00:00-05:00</published><updated>2019-09-29T00:00:00-05:00</updated><id>http://0.0.0.0:4000/opinion/monzo/2019/09/29/Large-NLP-in-prod</id><content type="html" xml:base="http://0.0.0.0:4000/opinion/monzo/2019/09/29/Large-NLP-in-prod.html">&lt;h3 id=&quot;-background&quot;&gt;💬 Background&lt;/h3&gt;
+&lt;p&gt;Over the last couple of years, there have been a ton of exciting developments in natural language processing (NLP). In case you haven’t been working in this area, here’s the crash course: the development of &lt;a href=&quot;http://ruder.io/nlp-imagenet/&quot;&gt;deep pre-trained language models&lt;/a&gt; has taken the field by storm. In particular, &lt;a href=&quot;https://arxiv.org/abs/1706.03762&quot;&gt;transformer architectures&lt;/a&gt; are everywhere, and were popularised by Google’s release of the &lt;a href=&quot;https://arxiv.org/abs/1810.04805&quot;&gt;&lt;strong&gt;B&lt;/strong&gt;idirectional &lt;strong&gt;E&lt;/strong&gt;ncoder &lt;strong&gt;R&lt;/strong&gt;epresentations from &lt;strong&gt;T&lt;/strong&gt;ransformers&lt;/a&gt; (BERT) model, OpenAI’s release of the &lt;a href=&quot;https://openai.com/blog/better-language-models/&quot;&gt;GPT(-2) models&lt;/a&gt;, and other similar releases.&lt;/p&gt;
+
+&lt;p&gt;Various research teams are continuing to compete to train better language models; if you look at the &lt;a href=&quot;https://gluebenchmark.com/leaderboard&quot;&gt;General Language Understanding Evaluation (GLUE)&lt;/a&gt; benchmark leaderboard, you’ll find a host of other approaches (many of them also named BERT: ALBERT, RoBERTa, etc.). The overarching trend in this research has been to train &lt;strong&gt;bigger&lt;/strong&gt; models with &lt;strong&gt;more data&lt;/strong&gt; - growing to the extent that researchers &lt;a href=&quot;https://arxiv.org/abs/1906.02243&quot;&gt;have investigated&lt;/a&gt; the costly carbon footprint of training these large networks.&lt;/p&gt;
+
+&lt;p&gt;For practicioners, the main selling point of pre-trained language models is that you do not need to start from scratch when developing a new text classifier: you can fine tune a pre-trained model and often get state-of-the-art results with a fraction of the work. But as these models continue to grow in size, folks have started to question how useful they are in practice. For example, this quote in &lt;a href=&quot;https://explosion.ai/blog/spacy-pytorch-transformers&quot;&gt;a blog post&lt;/a&gt; from the explosion.ai team caught my eye (emphasis mine):&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In a recent talk at Google Berlin, Jacob Devlin described how Google are using his BERT architectures internally. &lt;strong&gt;The models are too large to serve in production, but they can be used to supervise a smaller production model.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Unfortunately, it looks like this talk &lt;a href=&quot;https://twitter.com/honnibal/status/1157592067712966657&quot;&gt;was not recorded&lt;/a&gt;, and so all of the context around this claim was lost. In light of that, this post gives an overview of how these models &lt;em&gt;can&lt;/em&gt; and &lt;em&gt;have been&lt;/em&gt; put into production.&lt;/p&gt;
+
+&lt;h3 id=&quot;-patterns-for-models-in-production&quot;&gt;🚢 Patterns for models in production&lt;/h3&gt;
+&lt;p&gt;Let’s begin with a very pragmatic question: &lt;strong&gt;what is “production?”&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For our purposes, production is the environment where we put software that we have written (and models we have trained) so that it can enable features in a product to work without any manual intervention. By this definition, we exclude any code that we use for analytics or ad-hoc purposes, even though there may be potential applications of NLP in those domains (e.g., sentiment analysis on historical data).&lt;/p&gt;
+
+&lt;p&gt;I’m also assuming that this environment is designed using &lt;a href=&quot;https://en.wikipedia.org/wiki/Microservices&quot;&gt;microservices&lt;/a&gt; – which just so happens to be how the &lt;a href=&quot;https://monzo.com/blog/2016/09/19/building-a-modern-bank-backend&quot;&gt;Monzo backend is designed&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;There are three main ways that models can be used in production:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;RESTful Services&lt;/strong&gt;. This is the first (and sometimes only thing) that comes to mind when folks talk about “production.” The idea is to build some kind of microservice with an API which can receive requests, do some work (i.e., get predictions from a model), and return a result. For example, when a customer types a query into the Monzo app’s help screen, we have a service that receives that request and returns relevant help articles (disclaimer: that has been simplified a bit. We have quite a few services that are involved in this work, but the idea is the same).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Consumer Services&lt;/strong&gt;. The second approach is to build a service which listens out for certain events and requests for some work to be done when they happen. For example, when a customer starts chatting with our customer support team, we have a service that is listening for particular events in order to (a) generate embeddings of the chat’s first turn, and (b) trigger recommendations that are shown to the agent for saved responses that may be relevant to the current query.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Cron Jobs&lt;/strong&gt;. These are batches of work that need to be done on a regular basis. For example, we store all of the help articles and agent responses in a content management system - and these are regularly edited and updated with new content. Our search and recommendation services use the &lt;em&gt;embeddings&lt;/em&gt; of this content: we therefore have cron jobs that regularly run, encode all of the text and store the embeddings so that they can be used when needed.&lt;/p&gt;
+
+&lt;p&gt;In practice, building an end-to-end system is likely to involve more than one of the above. I’ve already mentioned the system which gives our agents response recommendations: this system has a cron job (to encode all of the response text), a consumer service (which decides when recommendations should be triggered), and a RESTful service (which is, effectively, a k-Nearest Neighbour between the encoded customer text and the encoded responses).&lt;/p&gt;
+
+&lt;h3 id=&quot;️-when-is-a-model-too-big&quot;&gt;🙅‍♂️ When is a model too big?&lt;/h3&gt;
+&lt;p&gt;Now that I’ve described three generic ways that models are shipped, let’s tackle the main question: when is a model too big? There are two scenarios to consider: (1) a model is too big &lt;em&gt;to ship at all&lt;/em&gt;, and (2) a model’s size is making it inefficient.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Too big to ship at all?&lt;/strong&gt; The main question that may prevent shipping a model at all is about reconciling the hardware (where you want to run a model) with the size of the model. In practice, current models’ sizes are not a big problem in cloud-based backend systems, which have a variety of different instance sizes available - the hardware we have in the cloud &lt;em&gt;can&lt;/em&gt; ship a model like BERT. It may eat up a ton of memory - but it will &lt;em&gt;work&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;This could change if you want to want to ship a model elsewhere (for any other reason). For example, &lt;a href=&quot;https://slideslive.com/38917690/multitask-learning-in-the-wilderness&quot;&gt;this ICML workshop talk&lt;/a&gt; by Andrej Karpathy describes a large multi-task neural net that needs to run in a car, or folks at Google are investigating &lt;a href=&quot;https://ai.googleblog.com/2017/04/federated-learning-collaborative.html&quot;&gt;federated learning&lt;/a&gt; in order to distribute model training across mobile phones. This is part of a broader movement that is pushing machine learning towards “edge” devices, which are generally resource and energy constrained.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Too big to be efficient?&lt;/strong&gt; Models are often trained using GPUs, but shipped on non-GPU instances, where inference will be slower. As models get bigger, inference time often continues to grow. There may be a point where this slow down makes it infeasible. This is going to be a very application-specific decision: for example, a chat bot responding within a few seconds may still be “fast” in the customers’ eyes, while if it took a similar time to get search results on Google, something would seem odd. To dig deeper, let’s reference the three patterns above.&lt;/p&gt;
+
+&lt;p&gt;In cron job settings, inference time is usually not such a big deal - predictions can be batched, and need to be completed on a schedule. Performance will become more of an issue as the amount of data grows, and we can then consider parallelising the problem to make it faster.&lt;/p&gt;
+
+&lt;p&gt;In the other two patterns, things become even more application specific. Consider, for example, the system I mentioned above that is consuming chat events to decide to push saved response recommendations to our agents. In this case, the time the system needs to generate those recommendations should be (broadly) less than the time that it takes an agent to read through what has been written so far - this use case is measured in the order of multiple seconds; i.e., nearly an eternity for computers.&lt;/p&gt;
+
+&lt;p&gt;Finally, we have services that we are experimenting with to try and &lt;a href=&quot;https://monzo.com/blog/2018/08/01/data-help&quot;&gt;improve the app help screen&lt;/a&gt; - some of these are using BERT. In our first experiment, we saw that some of these services were struggling under the load they were receiving - but the first port of call is to &lt;a href=&quot;https://github.com/vaquarkhan/vaquarkhan/wiki/Difference-between-scaling-horizontally-and-vertically&quot;&gt;scale them horizontally&lt;/a&gt; rather than pull the handbrake and not deploy them at all. This means that we are trading off between how many instances we need (or want) to spin up and the performance we want to achieve, much like what happens when these same models are trained on large clusters.&lt;/p&gt;
+
+&lt;h3 id=&quot;-example-serving-bert-predictions&quot;&gt;🤗 Example: serving BERT predictions&lt;/h3&gt;
+&lt;p&gt;At Monzo, we have decided for our Python microservices to be as lightweight as possible: they are effectively a nice wrapper around a model’s &lt;code class=&quot;highlighter-rouge&quot;&gt;predict()&lt;/code&gt; function, and we write the rest in &lt;a href=&quot;https://golang.org/&quot;&gt;Go&lt;/a&gt; - the main language that is used throughout the Monzo backend.&lt;/p&gt;
+
+&lt;p&gt;We have built a &lt;a href=&quot;https://cookiecutter.readthedocs.io/en/latest/&quot;&gt;cookiecutter&lt;/a&gt; Python microservice template that uses &lt;a href=&quot;https://github.com/huge-success/sanic&quot;&gt;Sanic&lt;/a&gt;. When one of these services is starting up, it needs to do two, fairly slow, things: (1) find and retrieve the model that it wants to serve (I’ll blog about that problem separately), and (2) load the model (in &lt;code class=&quot;highlighter-rouge&quot;&gt;eval()&lt;/code&gt; mode) and the tokenizer as &lt;code class=&quot;highlighter-rouge&quot;&gt;global&lt;/code&gt; variables in memory.&lt;/p&gt;
+
+&lt;p&gt;(Side note: I originally intended to share some code snippets here, but this jekyll theme stubbornly refused to be mobile friendly. So I’ve removed it - but it’s not far off from the available examples online.)&lt;/p&gt;
+
+&lt;p&gt;I did a small test on my own laptop using &lt;a href=&quot;https://stackoverflow.com/questions/938733/total-memory-used-by-python-process&quot;&gt;this approach&lt;/a&gt; which uses &lt;code class=&quot;highlighter-rouge&quot;&gt;psutil&lt;/code&gt; to measure the “Resident Set Size” memory usage (is this the right way? 🤷‍♂️). Before loading the model, memory usage was about 79 MB: after the call to &lt;code class=&quot;highlighter-rouge&quot;&gt;load_model()&lt;/code&gt;, it shot up to just over 957. A huge jump, yes (and 100s of times bigger than what you would expect in non-machine learning services) - but still well below what decent cloud instances provide.&lt;/p&gt;
+
+&lt;p&gt;Once these steps have finished, the service will start serving requests. Each of these services will have an endpoint (or &lt;a href=&quot;https://sanic.readthedocs.io/en/latest/sanic/routing.html&quot;&gt;Sanic route&lt;/a&gt;) to get the model’s predictions for a given input.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;async&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;await&lt;/code&gt; syntax in Sanic routes is the key here: handlers are an &lt;a href=&quot;https://docs.python.org/3/library/asyncio-task.html&quot;&gt;async co-routine&lt;/a&gt;, and all model predictions are run in the &lt;code class=&quot;highlighter-rouge&quot;&gt;asyncio&lt;/code&gt; event loop, rather than as blocking functions. There are many blog posts that describe the details of the Python event loop and the &lt;code class=&quot;highlighter-rouge&quot;&gt;async / await&lt;/code&gt; syntax much better than I ever could; if you’re interested, I’d recommend searching for this topic (&lt;a href=&quot;https://stackabuse.com/python-async-await-tutorial/&quot;&gt;here’s one&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;model_predict()&lt;/code&gt; runs model predictions with &lt;code class=&quot;highlighter-rouge&quot;&gt;torch.no_grad()&lt;/code&gt;: this ensures that the autograd engine is not used. According to &lt;a href=&quot;https://discuss.pytorch.org/t/model-eval-vs-with-torch-no-grad/19615&quot;&gt;this thread&lt;/a&gt;, this reduces memory usage and speeds up computation. Naturally, you can’t then backpropagate (needing to do so while serving is an entirely different type of problem!).&lt;/p&gt;
+
+&lt;p&gt;There was one tiny trick that two folks on the team discovered which helped us to make these types of services &lt;em&gt;even faster&lt;/em&gt;. They discovered the issue that it seems &lt;a href=&quot;https://twitter.com/MarkNeumannnn/status/1067926695338926080&quot;&gt;others have also found&lt;/a&gt; regarding threading performance and the &lt;code class=&quot;highlighter-rouge&quot;&gt;OMP_NUM_THREADS&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;MKL_NUM_THREADS&lt;/code&gt; environment variables; the one difference was that they also had to factor in how all of this plays with Sanic &lt;a href=&quot;https://sanic.readthedocs.io/en/latest/sanic/deploying.html#workers&quot;&gt;worker threads&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;-reflections&quot;&gt;🔍 Reflections&lt;/h3&gt;
+&lt;p&gt;The main disclaimer that I’ll add to the above is that we are currently in the stage of development where we’re iterating on and validating new product features, and not squeezing performance gains out of existing ones. Perhaps, once we reach that stage (where every megabyte of memory, instance we spin up, and microsecond matters), I’ll change my mind about BERT being suitable for production 😊.&lt;/p&gt;
+
+&lt;p&gt;So, after writing an entire blog post about how we can (and do) but large models like BERT into production, I’ll close with two thoughts.&lt;/p&gt;
+
+&lt;p&gt;First, the research on &lt;a href=&quot;https://medium.com/huggingface/distilbert-8cf3380435b5&quot;&gt;distilling&lt;/a&gt; and &lt;a href=&quot;https://arxiv.org/abs/1909.11687&quot;&gt;compressing&lt;/a&gt; these models into smaller ones that retain similar levels of accuracy is still very valuable. It will unlock our ability to (a) run these models more efficiently, and (b) run them on edge devices at all. Just as training larger models with more data is showing impressive feats of engineering and distributed model training, doing more with less seems to push researchers towards hard, unsolved problems of understanding how neural nets learn at all.&lt;/p&gt;
+
+&lt;p&gt;Second: the main (hidden) assumption that I’ve had throughout this whole post is that an &lt;strong&gt;entire&lt;/strong&gt; neural net should be shipped as a &lt;strong&gt;single&lt;/strong&gt; service. Maybe this doesn’t have to be the case: a network could be broken up into multiple microservices (e.g., imagine freezing an entire pre-trained network and then shipping multiple different fine-tuned heads into different services). I haven’t been able to find a lot of blog posts about machine learning in production - if you find (or write!) one, do &lt;a href=&quot;https://twitter.com/neal_lathia&quot;&gt;send it my way&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Acknowledgements: thanks to &lt;a href=&quot;https://stephen.sh/&quot;&gt;Stephen Whitworth&lt;/a&gt; for feedback on a draft of this post.&lt;/p&gt;</content><author><name></name></author><summary type="html">💬 Background Over the last couple of years, there have been a ton of exciting developments in natural language processing (NLP). In case you haven’t been working in this area, here’s the crash course: the development of deep pre-trained language models has taken the field by storm. In particular, transformer architectures are everywhere, and were popularised by Google’s release of the Bidirectional Encoder Representations from Transformers (BERT) model, OpenAI’s release of the GPT(-2) models, and other similar releases.</summary></entry><entry><title type="html">Machine learning, faster</title><link href="http://0.0.0.0:4000/opinion/monzo/2019/08/13/Machine-learning-faster.html" rel="alternate" type="text/html" title="Machine learning, faster" /><published>2019-08-13T00:00:00-05:00</published><updated>2019-08-13T00:00:00-05:00</updated><id>http://0.0.0.0:4000/opinion/monzo/2019/08/13/Machine-learning-faster</id><content type="html" xml:base="http://0.0.0.0:4000/opinion/monzo/2019/08/13/Machine-learning-faster.html">&lt;p&gt;Speed is not a word that is regularly associated with machine learning teams. When we talk and write about accomplishments in machine learning, there is often a focus on the problem, the algorithmic approach, and the results - but no mention of the time that it took to get there.&lt;/p&gt;
+
+&lt;h3 id=&quot;does-speed-matter-in-machine-learning&quot;&gt;Does speed matter in machine learning?&lt;/h3&gt;
+&lt;p&gt;I remember once speaking with a machine learning researcher who worked at a large company. He told me that a product team had approached him with a very exciting idea that had to do with text summarisation. He started looking into the problem and made some very significant contributions over the course of 12 months - going so far as publishing papers in top-tier conferences about the topic. I asked him if his ideas made it into the product in question. Unfortunately, the answer was no: by the time his research was completed, the product team had moved on from this problem, and weren’t interested in having the solution anymore 😭.&lt;/p&gt;
+
+&lt;p&gt;I’ve heard many variants of this story: they all capture a misaligned pace of work between product and machine learning teams. Ultimately, this leads to machine learning research never making it out of the lab. And yet, the best measure of &lt;em&gt;impact&lt;/em&gt; for machine learning, if you work in a non-research institution, is whether you can use it to help your customers - and that means getting it out of the door.&lt;/p&gt;
+
+&lt;p&gt;Speed matters. This goes beyond thinking about minimum viable products (and the ML equivalent of “use a logistic regression before you use a neural network”); this is about the speed of the entire lifecycle for building machine learning systems.&lt;/p&gt;
+
+&lt;p&gt;I covered four angles to this topic, when I gave talks about it recently:&lt;/p&gt;
+
+&lt;h3 id=&quot;-quickly-deploying-models-to-production&quot;&gt;🚢 Quickly deploying models to production&lt;/h3&gt;
+&lt;p&gt;Quickly deploying models to production is one of the biggest roadblocks for impactful machine learning. In many companies, this boils down to &lt;em&gt;who is trusted&lt;/em&gt; to do this work; often, ‘Scientists’ design and train a model, and then hand it over to ‘Engineers’ to put it into production. This implicitly develops a “throw it over the wall” mentality: people who train models do not have to think about how complex it would be to ship, and folks who ship models can throw a model back over the wall if it’s not behaving how it should. The most common complaint I’ve had from &lt;em&gt;Scientists&lt;/em&gt; is along the lines of “I trained this model months ago and I’m just sitting here waiting for it to be shipped,” and &lt;em&gt;Engineers&lt;/em&gt; retort that they get no recognition for doing all of the hard work of enabling production inference to actually happen. A frustrating experience all around.&lt;/p&gt;
+
+&lt;p&gt;At Monzo, Machine Learning Scientists deploy their own models. We are enabling that by focusing on our tooling. The goal that we set ourselves is that if you can write a &lt;code class=&quot;highlighter-rouge&quot;&gt;predict()&lt;/code&gt; function for a machine learning model, you should also be able to &lt;strong&gt;safely&lt;/strong&gt; deploy a model to production. To enable this, we’ve built a &lt;code class=&quot;highlighter-rouge&quot;&gt;cookiecutter&lt;/code&gt; microservice template that Machine Learning Scientists use: it guides them through a small set of options (e.g., “which ML library are you using?”) and then creates everything they need, minus small bits, like the &lt;code class=&quot;highlighter-rouge&quot;&gt;predict()&lt;/code&gt; function itself. We can now build and deploy a service in a matter of hours - right after we finish training a model. A &lt;em&gt;Scientist&lt;/em&gt; does not have to wait around for others to finish the work, and can take an idea all the way from validation to deployment.&lt;/p&gt;
+
+&lt;h3 id=&quot;-quickly-validating-misbehaviours&quot;&gt;🔍 Quickly validating misbehaviours&lt;/h3&gt;
+&lt;p&gt;Last year, after a re-launch of our &lt;a href=&quot;https://monzo.com/blog/2017/08/22/the-help-search-algorithm&quot;&gt;help screen search system&lt;/a&gt;, a very common question that we would get from product teams is “when I search for &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt;, why doesn’t article &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt; show up?” Trying to explain machine learning algorithms is hard enough - diagnosing minor misbehaviours felt even more challenging. Has something gone wrong with our data pipeline, our model, or how we are post-processing the results down stream?&lt;/p&gt;
+
+&lt;p&gt;This is a type of problem that could grind us to a halt: it’s not the sort of thing we could write unit (or integration) tests for, and neither is it something where the problem is immediately clear. To tackle this quickly, we started writing &lt;strong&gt;validation tests&lt;/strong&gt;: these are a set of fairly simple inputs (e.g. “moving home”) that have obvious outputs (the &lt;a href=&quot;https://monzo.com/help/account-and-profile/update-home-address&quot;&gt;updating my home address&lt;/a&gt; article), which we expect our &lt;strong&gt;production&lt;/strong&gt; machine learning system to be able to return when making predictions. These run in production: they are integrated into how we update the embeddings that are stored in the system, and prevent updates from happening if expected predictions fail (also, we get notified on Slack ⚠️ ).&lt;/p&gt;
+
+&lt;p&gt;Keeping track of the online performance of machine learning models is going beyond what we traditionally do when deploying software - writing validation tests is another small improvement that has helped us to keep on top of how these systems operate online.&lt;/p&gt;
+
+&lt;h3 id=&quot;️-quickly-repurposing-models-for-new-problems&quot;&gt;♻️ Quickly repurposing models for new problems&lt;/h3&gt;
+&lt;p&gt;Last year, Monzo went through a &lt;a href=&quot;https://monzo.com/blog/2018/12/17/customer-support&quot;&gt;challenging period&lt;/a&gt; where non-urgent response times for customer support was in the order of days rather than hours. The entire company rallied behind this: engineers, designers, and lawyers all dropped what they were doing to respond to customers.&lt;/p&gt;
+
+&lt;p&gt;As part of enabling the entire company to answer customers, a set of topic-based queues were set up; the idea was that it is easier to train someone to answer one type of question rather than answer any kind of question. Our team was asked whether we could set up a way to detect what customers were talking about and automatically assign queries to queues accordingly. Typically, machine learning teams would start here with the usual questions (e.g., what data do we have?) and methods (e.g., training a classifier). However, this wasn’t a request to kick-start a project looking into text classification: this was a request to get something working and deployed, now.&lt;/p&gt;
+
+&lt;p&gt;One of the systems that we were already running at the time served recommendations to customer support agents - it looked at what customers said and returned recommendations for which of our many different saved responses may be appropriate to use. For example, if a customer says “I’ve forgotten my PIN,” the system recommends a response that contains all of the details of how to recover it. This system is not explicitly &lt;em&gt;categorising&lt;/em&gt; queries; it is mapping questions to recommended answers based on a similarity metric. However, the recommended answers could easily be mapped to categories!&lt;/p&gt;
+
+&lt;p&gt;We therefore quickly repurposed this system’s recommendations to solve for the queue classification problem: we wrapped the recommendations in &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; statements to redirect queries to queues based on what reply was recommended. This was deployed this in less than a day!&lt;/p&gt;
+
+&lt;p&gt;This lesson has stuck with us since then: combining rule engines &lt;em&gt;with&lt;/em&gt; machine learning models can be used to quickly create, contextualise, or repurpose a decision system.&lt;/p&gt;
+
+&lt;h3 id=&quot;-measuring-time-to-results-not-results&quot;&gt;⏰ Measuring time-to-results, not results&lt;/h3&gt;
+&lt;p&gt;The systems mentioned above use an encoder architecture that was published in 2017 (based on the &lt;em&gt;Attention is all you need&lt;/em&gt; &lt;a href=&quot;https://arxiv.org/abs/1706.03762&quot;&gt;paper&lt;/a&gt;). While working on it, we felt that, overall, we were taking advantage of latest research when building our systems. Then, in 2018, deep pre-trained language models (like ELMo, ULMFit, BERT) appeared and started to take the top spot in a variety of research challenges - and many of them were open sourced. Every few months the state-of-the-art was changing. As a non-research team, that focuses on building systems, how could we keep up with this pace of research?&lt;/p&gt;
+
+&lt;p&gt;We decided to set ourselves a challenge: to explore how these techniques could work on as many different NLP problems as we could find, in a really short time (a couple of weeks). A typical approach here, which I have used before, is to embark on a new project for each idea: analyse the data, understand/refine the problem, train and evaluate models, and tweak until something starts looking promising. There was no way that, using this approach, we could evaluate tens of ideas in a fortnight. Instead, rather than trying to answer the question “what is the best result I can get?,” we designed our work around “how long will it take to get a result?”&lt;/p&gt;
+
+&lt;p&gt;Switching our perspective led us towards taking a highly modular approach to our NLP work. We built a pipeline that creates supervised learning datasets from all of our chat data: we just point it to what we want to predict, and give it some additional arguments to tweak how we want the text to be processed. This tool is completely separate from anything that does any machine learning; for that, we built a number of Colab notebook &lt;strong&gt;templates&lt;/strong&gt;, which take (as input) a dataset, and then run it through a specific algorithm (e.g., ULMFit). Our guiding principle was that anyone should be able to point a notebook at their dataset, and then run all the cells to get to a result.&lt;/p&gt;
+
+&lt;p&gt;Many of the experiments that we ran had poor results - and we have thrown them away. However, the pipelines that we used to get them have stayed and evolved, and are regularly used to generate the data that trains all of our models. This experience changed my perspective on &lt;em&gt;research&lt;/em&gt; time: it is time well spent if we learn about new things and develop &lt;em&gt;tools&lt;/em&gt; that allow us to apply it quickly (if we also get some good results, that’s a bonus!).&lt;/p&gt;
+
+&lt;h3 id=&quot;️-conclusions&quot;&gt;⬇️ Conclusions&lt;/h3&gt;
+&lt;p&gt;There’s a famous quote that I’ve often heard: “to increase your success rate, double your failure rate” (it looks like &lt;a href=&quot;https://en.wikiquote.org/wiki/Thomas_J._Watson&quot;&gt;Thomas Watson&lt;/a&gt; said this). This is as true in machine learning as it is anywhere else.&lt;/p&gt;
+
+&lt;p&gt;In the machine learning team at Monzo, we’ve been thinking about this in terms of the &lt;em&gt;speed&lt;/em&gt; of our work. This is not about cutting corners, being less rigorous, or skipping important steps of the work. Speed is about setting ourselves up to get results quickly, repurposing systems quickly, validate online behaviour quickly, and deploy to production quickly.&lt;/p&gt;
+
+&lt;p&gt;This post covers a few stories that shaped our views on speed - but this is always a work in progress. More posts to come! It is based on these two talks:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Speeding up Machine Learning Development April 2019, Xcede Data Science Networking Event. London.&lt;/li&gt;
+  &lt;li&gt;Using Deep Learning to Support Customer Operations March 2019, ReWork Deep Learning in Finance Summit. London.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You can find the slides from my talk &lt;a href=&quot;https://www.slideshare.net/neal.lathia/machine-learning-faster&quot;&gt;here&lt;/a&gt;; reach out &lt;a href=&quot;https://twitter.com/neal_lathia&quot;&gt;on twitter&lt;/a&gt; if you have any thoughts!&lt;/p&gt;</content><author><name></name></author><summary type="html">Speed is not a word that is regularly associated with machine learning teams. When we talk and write about accomplishments in machine learning, there is often a focus on the problem, the algorithmic approach, and the results - but no mention of the time that it took to get there.</summary></entry><entry><title type="html">Neural approaches to conversational AI</title><link href="http://0.0.0.0:4000/paper/2018/12/29/neural-conversations.html" rel="alternate" type="text/html" title="Neural approaches to conversational AI" /><published>2018-12-29T00:00:00-06:00</published><updated>2018-12-29T00:00:00-06:00</updated><id>http://0.0.0.0:4000/paper/2018/12/29/neural-conversations</id><content type="html" xml:base="http://0.0.0.0:4000/paper/2018/12/29/neural-conversations.html">&lt;p&gt;Available: &lt;a href=&quot;https://arxiv.org/pdf/1809.08267.pdf&quot;&gt;https://arxiv.org/pdf/1809.08267.pdf&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The stand-out points (for me) were about problem formulation (e.g., single vs multi turn dialog) and that nearly all sections discussed that robust evaluation is a core problem in dialog systems: we don’t have generalised, automated, scalable, robust ways to determine that a conversation with a computer has gone well.&lt;/p&gt;
+
+&lt;h2 id=&quot;chapter-1-introduction&quot;&gt;Chapter 1. Introduction&lt;/h2&gt;
+
+&lt;p&gt;Intelligent dialogue systems are on the rise thanks to breakthroughs in deep and reinforcement learning. The research field is growing too, attracting folk from the NLP, IR, and ML communities. A number of tutorials and surveys have been published - this chapter is another survey, based on tutorials given at SIGIR and ACL 2018 - that hopes to provide a unified view of conversational / dialog systems.&lt;/p&gt;
+
+&lt;p&gt;The kinds of problems that dialog systems are expected to solve include:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Question answering&lt;/strong&gt;: providing a concise, direct answer to user queries based on rich knowledge drawn from various data sources.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Task completion&lt;/strong&gt;: accomplishing a task for the user (e.g., restaurant reservation, business trip planning).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Social chat&lt;/strong&gt;: conversing seamlessly with the user and providing useful recommendations.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bots can be grouped into two categories: “task oriented” and “chitchat.” All of the personal assistants on the market today (e.g., Alexa) are task oriented and handle simple, one off tasks (e.g., reporting the weather). They are typically composed of four modules: (1) Natural Language Understanding, (2) state tracking, (3) dialog policy, (4) Natural Language Generation – although there is now a trend to develop all four of these together using a neural network. Most of these will have access to external databases that supporting completing the task.&lt;/p&gt;
+
+&lt;p&gt;An example of a chat-oriented bot is XiaoIce - there’s an overview of it in the recent &lt;a href=&quot;https://jack-clark.net/2018/12/25/import-ai-126-what-makes-microsofts-biggest-chatbot-work-europe-tries-to-craft-ai-ethics-and-why-you-should-take-ai-risk-seriously/&quot;&gt;Import AI newsletter&lt;/a&gt;. Their primary goal is often to be “companions to humans with an emotional connection.”&lt;/p&gt;
+
+&lt;p&gt;The unified view casts dialog as an &lt;em&gt;optimal (hierarchical) decision making&lt;/em&gt; process. The top level is about picking the right agent (e.g., question answering vs. meeting scheduling), the lower level is about picking the right action. These can be thought of as options over a Markov Decision Process, which fits well with reinforcement learning.&lt;/p&gt;
+
+&lt;p&gt;A common metric to use as a reward function is CPS: &lt;strong&gt;Conversation-turns Per Session&lt;/strong&gt;. There are two views on this metric: it sometimes needs to be minimised (complete a task quickly) and other times needs to be maximised (engage in long/meaningful conversations). The can be combined by reasoning over multiple sessions: being able to complete a task quickly (small short-term CPS) means that users will find the dialog system useful and will use it often (large long-term CPS).&lt;/p&gt;
+
+&lt;p&gt;Neural-based NLP tasks are usually performed in three steps: (1) encoding user input (words) into vectors, (2) reasoning in the vector space to generate a response, (3) decoding the response into a symbolic space (back to words). End-to-end training of neural nets results in a tighter coupling between the architecture and the application – the focus shifts away from having the right components for language processing (e.g., parsing, context reasoning, etc.) towards having the right architecture.&lt;/p&gt;
+
+&lt;h2 id=&quot;chapter-2-machine-learning-background&quot;&gt;Chapter 2. Machine Learning Background&lt;/h2&gt;
+
+&lt;p&gt;This chapter is an overview of ML. I’m only going to write notes about bits that are specific to conversational systems.&lt;/p&gt;
+
+&lt;p&gt;Widely used neural network layers for text classification:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Embedding layers: mapping each word to an m-dimensional vector.&lt;/li&gt;
+  &lt;li&gt;Fully connected layers: performing linear projections&lt;/li&gt;
+  &lt;li&gt;Convolutional-pooling layers: forms a local feature vector of a word and its adjacent words (within a fixed sized window).&lt;/li&gt;
+  &lt;li&gt;Recurrent layers: map the text to a dense/low dimensional vector by sequentially and recurrently processing each word.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Two examples: &lt;a href=&quot;https://www.microsoft.com/en-us/research/project/dssm/&quot;&gt;Deep Structured Semantic Model&lt;/a&gt; and &lt;a href=&quot;https://google.github.io/seq2seq/&quot;&gt;Seq2Seq&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;chapter-3-question-answering-and-machine-reading-comprehension&quot;&gt;Chapter 3. Question Answering and Machine Reading Comprehension&lt;/h2&gt;
+
+&lt;p&gt;Question Answering (QA) allows a user to query a large scale knowledge base/document collection in natural language. They differ from search engines in that they aim to provide a concise and direct answer rather than a ranked list of results. QA is split into single-turn and multi-turn, with the latter being an emerging research topic.&lt;/p&gt;
+
+&lt;p&gt;Knowledge base (KB) question answering has been developed based on symbolic approaches – which has been hard to scale. KBs are sometimes known as knowledge graphs - entities are nodes and relations are directed edges between them. Finding an answer to a question is based on semantic parsing: mapping a question to a “meaningful” representation, finding the paths in the graph that match the query, and then retrieving the nodes. This approach has two challenges:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Paraphrasing: there are many ways to ask the same question. Embeddings have been a useful way to tackle this.&lt;/li&gt;
+  &lt;li&gt;Search complexity: number of candidate paths grows exponentially with the path length.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Embeddings map entities and relations to continuous vectors in a (neural) space: this space can be viewed as a hidden semantic space where various expressions with the same semantic meaning map to the same vector. There are various ways (e.g., ReasoNet using DL and DeepPath using RL) to perform multi-step knowledge based reasoning using these vectors.&lt;/p&gt;
+
+&lt;p&gt;For multi-turn QA, users need to interactively compose (complex) queries, where the agent can ask clarifying questions. The Entropy Minimization Dialogue Management strategy picks the next question to ask based on the attribute that has the most entry in the remaining KB entries.&lt;/p&gt;
+
+&lt;p&gt;Machine Reading Comprehension is the task of answering questions given a set of text passages. Answers are defined as a span of text in (one of the) passage(s). There are many datasets (e.g., SQuAD) that are fueling research in this area. As with approaches above, this is usually done in 3 steps: encoding, reasoning, and decoding.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Encoding: Popular pre-trained embeddings include word2vec and GloVe, and can be enhanced with part of speech tags. Contextual embeddings (e.g., ELMo and BERT) uses contextual cues from surrounding words to refine the embeddings.&lt;/li&gt;
+  &lt;li&gt;Reasoning: can be done in a single-step (match the question and document only once) or multi-step.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Many of these systems are developed as single-turn. To make this conversational, the system also needs to include (encode) the conversation history.&lt;/p&gt;
+
+&lt;h2 id=&quot;chapter-4-task-oriented-dialogue-systems&quot;&gt;Chapter 4. Task-oriented Dialogue Systems&lt;/h2&gt;
+
+&lt;p&gt;Completing a task is different from question answering – they are typically domain dependent (e.g., book a hotel room). There are a variety of types, including slot-filling dialogue: where the machine needs to collect information from the user in order to complete the task.&lt;/p&gt;
+
+&lt;p&gt;The interaction between a dialog agent and a user mirrors the interaction between an RL agent and the environment. An appropriate reward function in this domain would give a high reward for completing the task and a small penalty for each required intermediate turn. In practice, reward functions are often a linear combination of a subset of the following:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Task completion success&lt;/li&gt;
+  &lt;li&gt;Time elapsed (number of turns)&lt;/li&gt;
+  &lt;li&gt;Coherence, diversity, personal style(s)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For RL, researchers have developed user simulators for RL agents to converse with – since conversing with real users is expensive. The simulators could be based on a user agenda or based on models/data. Ultimately, many evaluations rely on recruited users (small scale) or A/B tests.&lt;/p&gt;
+
+&lt;p&gt;Slot filling problems also rely on dialogue state tracking – containing all information about what the user is looking for at the current turn of the conversation. This is the input information to the dialogue policy which decides what action to take next. For example, see &lt;a href=&quot;https://www.microsoft.com/en-us/research/event/dialog-state-tracking-challenge/&quot;&gt;this challenge&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;An example dialogue policy is DQN, which takes as input an encoding of the current dialogue state. It outputs a vector who entries correspond to all the possible dialogue-act/slot pairs that can be chosen by the system. Learning the policy from scratch takes a lot of data, but can be sped up by using expert-generated dialogues, imitation learning, or replay buffer spiking (warm start). In online settings, an agent has to balance between exploit (maximise reward) and explore (discover better alternatives) – exploration when neural nets are used is an active research topic. This is made even more challenging when needing to extend the agent’s domain while serving users (adding more intents/slots).&lt;/p&gt;
+
+&lt;p&gt;Dialog can often be decomposed into a sequence of related sub-dialogues that each focus on a single topic. For example: booking a flight, hotel and car rental for a single trip. These are referred to as composite-task dialogues, where subtasks may have interdependencies. On the other hand, if a dialog can have more than one broad subject matter (e.g., hotels and restaurants), this is referred to as multi-domain dialogue.&lt;/p&gt;
+
+&lt;p&gt;Natural Language Generation (NLG) aims to convert a communication goal into natural language form. Rule and template based approaches are the most common ways to achieve this. Newer approaches (corpus-based) aim to optimise generation from a corpora of text. There are a number of LSTM based approaches that have been explored here.&lt;/p&gt;
+
+&lt;p&gt;All of these modules in a dialog system are often optimised separately. If all of them are differentiable, then the whole system can be optimised by backprop. Supervised and reinforcement learning have both been applied to this scenario.&lt;/p&gt;
+
+&lt;p&gt;Beyond slot-filling dialogue:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Information seeking dialog&lt;/li&gt;
+  &lt;li&gt;Navigation dialogue&lt;/li&gt;
+  &lt;li&gt;Multimodal dialogue with non-verbal inputs&lt;/li&gt;
+  &lt;li&gt;Mixed initiative and negotiation&lt;/li&gt;
+  &lt;li&gt;Multiple-parties&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;chapter-5-fully-data-driven-conversation-models-and-social-bots&quot;&gt;Chapter 5. Fully Data-Driven Conversation Models and Social Bots&lt;/h2&gt;
+
+&lt;p&gt;End to end systems do not rely on expert knowledge and do not have the traditional components described in the previous chapter. These are used more often for chit chat scenarios rather than task completion. Many of these systems are inspired by statistical machine translation.&lt;/p&gt;
+
+&lt;p&gt;Early systems represented the data as query/response pairs, which limited the context of the responses. Researchers have since explored RNN/LSTM based approaches that exploited a longer context. Other approaches such as the Hierarchical Recurrent Encoder-Decoder (HRED) aim to exploit longer-term context. Attention based models allow for conditioning on parts of the sentence that are relevant for prediction.&lt;/p&gt;
+
+&lt;p&gt;Challenges in these systems:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Response blandness - responses are often bland, deflective, uninformative (e.g. “I don’t know”). A variety of methods, including GANs, have been explored to increase the diversity of responses.&lt;/li&gt;
+  &lt;li&gt;Speaker consistency - responses are incoherent, where the system contradicts itself. This is often a result of a one-to-many of examples in training data (e.g., there are many answers to “how old are you?”).&lt;/li&gt;
+  &lt;li&gt;Word repetitions - since it is not clear how often a specific word or phrase should be repeated in the output.&lt;/li&gt;
+  &lt;li&gt;Response appropriateness - struggling to produce names and facts that has appropriate semantic content.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Grounded conversation models aim to help to effectively converse about a user’s environment, by factoring in additional information (e.g. using images from the environment).&lt;/p&gt;
+
+&lt;p&gt;Supervised learning in end to end conversation training is hard because human-human conversation training data is very different from online human-computer scenarios. These approaches also optimise for an immediate reward rather than a long-term one. Reinforcement learning in this domain is hard because of the difficulty of coming up with the right reward function.&lt;/p&gt;
+
+&lt;p&gt;Researchers have tried using social media data (e.g., twitter or reddit) to train these systems. They usually need to reconstruct dialogues from the posts, and sometimes run into trouble with API limits. Evaluation is just as challenging as previous sections – it’s common to use human raters, alongside metrics like BLEU, ROUGE, and METEOR. There is research that shows that human ratings and these metrics do not correlate.&lt;/p&gt;
+
+&lt;h2 id=&quot;chapter-6-conversational-ai-in-industry&quot;&gt;Chapter 6. Conversational AI in Industry&lt;/h2&gt;
+
+&lt;p&gt;Gives a number of examples, e.g. Bing QA, Siri, Google Assistance, Alexa, Cortana, etc.&lt;/p&gt;
+
+&lt;p&gt;Most notably, this section highlights differences between research and application:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Scale and quality of text&lt;/li&gt;
+  &lt;li&gt;Latency&lt;/li&gt;
+  &lt;li&gt;User experience&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Many of the actual chatbot examples do not use any AI at all, and fully rely on handcrafted rules.&lt;/p&gt;</content><author><name></name></author><summary type="html">Available: https://arxiv.org/pdf/1809.08267.pdf</summary></entry><entry><title type="html">Using data to build a better help screen</title><link href="http://0.0.0.0:4000/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen.html" rel="alternate" type="text/html" title="Using data to build a better help screen" /><published>2018-08-01T00:00:00-05:00</published><updated>2018-08-01T00:00:00-05:00</updated><id>http://0.0.0.0:4000/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen</id><content type="html" xml:base="http://0.0.0.0:4000/monzo/data-science/2018/08/01/Using-data-to-build-a-better-help-screen.html">&lt;p&gt;Originally published on &lt;a href=&quot;https://monzo.com/blog/2018/08/01/data-help/&quot;&gt;monzo.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Our customer support team are always on hand if you need to chat with a human, but that isn’t the only way to find answers: the help screen now has over 400 pages that answer common questions, from activating your card to travelling abroad.&lt;/p&gt;
+
+&lt;p&gt;As we work to make sure we can keep giving you world-class support as we scale, we’ve been using data to make changes to the help screen so you can find your own answers faster.&lt;/p&gt;
+
+&lt;h3 id=&quot;measuring-how-helpful-weare&quot;&gt;Measuring how helpful we are&lt;/h3&gt;
+&lt;p&gt;If you scroll to the bottom of any page in the help screen, you’ll see a button that says ‘I can’t find what I’m looking for.’ If the page you’re reading didn’t have the right answer, clicking it will put you in touch with someone from our customer support team.&lt;/p&gt;
+
+&lt;p&gt;When you do that, it also gives us a powerful signal that the page you were reading wasn’t good enough to answer your question. If you don’t click the button, that’s another useful signal, that maybe you did find all the information that you needed.&lt;/p&gt;
+
+&lt;p&gt;We use these signals to prioritise the help pages we need to improve: if lots of people have to start a chat after reading a certain article, we know we need to make it clearer or add some extra information. We’ve set up a dashboard that tracks each page’s performance in terms of ‘conversion to chat,’ which lets us quickly identify pages that we need to improve, and measure any changes after we update a page.&lt;/p&gt;
+
+&lt;p&gt;We also measure how people behave when they use the help screen. We call a set of interactions with the help screen a ‘session,’ and each one can include one or more of the following actions: searching, seeing a suggested help page, navigating the categories, and starting a conversation through in-app chat.&lt;/p&gt;
+
+&lt;p&gt;From tracking this data, we found:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Customers who used our search functionality were much less likely to get in touch with customer support.&lt;/li&gt;
+  &lt;li&gt;If people opened an article but didn’t find what they needed, they were very unlikely to go back and search again. Most people opted to chat to someone in our customer support team straight away.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These insights told us that searching and navigating help pages isn’t as seamless as it should be. So we’ve been using them to make the help screen better!&lt;/p&gt;
+
+&lt;h3 id=&quot;easier-navigation-with-relatedarticles&quot;&gt;Easier navigation with related articles&lt;/h3&gt;
+&lt;p&gt;Many of our help pages are about very similar topics, but each one’s relevant in a slightly different scenario. For example, we have separate articles for “I forgot my PIN,” “My PIN is blocked,” “I don’t know my PIN,” and “I want to change my PIN.” But if you search for “PIN,” we’ll show you most of these results.&lt;/p&gt;
+
+&lt;p&gt;In the past, if you clicked on one of these search results but didn’t find the answer you were looking for, you’d need to go back into your search results to browse the other answers, or return to the help screen and start all over again.&lt;/p&gt;
+
+&lt;p&gt;Because this process wasn’t easy, people were more likely to tap ‘I can’t find what I’m looking for’ and get in touch with customer support instead.&lt;/p&gt;
+
+&lt;h4 id=&quot;what-we-built&quot;&gt;What we built&lt;/h4&gt;
+&lt;p&gt;So, to make it easier to find the right answer after landing on the wrong search result, we’ve added ‘Related articles.’ We now list other pages that are semantically related to the one you’re currently reading.&lt;/p&gt;
+
+&lt;p&gt;&lt;img data-width=&quot;1600&quot; data-height=&quot;1320&quot; src=&quot;https://cdn-images-1.medium.com/max/800/0*EA_E54jnSAHFPWq1.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To work out whether two pages should be related, we’ve built a system that makes it easy for us to run A/B tests. It means we can show different customers related articles that had been computed in different ways, and work out which method is most successful.&lt;/p&gt;
+
+&lt;p&gt;So far, we’ve tried some relatively simple methods:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Manually categorising articles: We tried relating articles using the categories we set manually when we write content for the help screen. Two articles are related if they also appear in the same categories that you can navigate in the help screen.&lt;/li&gt;
+  &lt;li&gt;Using machine learning: We also tried relating articles using an open source machine learning model that was trained on millions of words from a Google News dataset.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;does-it-work&quot;&gt;Does it work?&lt;/h4&gt;
+&lt;p&gt;In a short series of experiments, we learned that showing customers related articles significantly lowered conversion to chat across the board: people were able to find the answer they needed, even if they landed on the wrong one at first, without needing to chat with someone in customer support.&lt;/p&gt;
+
+&lt;p&gt;Interestingly, using machine learning showed no significant improvement compared to grouping articles manually by category. There are a couple of reasons why this may be the case. First, we invested a lot of time to make sure that pages were grouped together properly. Second, we used an open source machine learning model to compute related articles, rather than using our own data. We think training them on our own data might produce better results.&lt;/p&gt;
+
+&lt;h3 id=&quot;integrating-search-throughout-the-helpscreen&quot;&gt;Integrating search throughout the help screen&lt;/h3&gt;
+&lt;p&gt;Our analysis of help screen sessions also showed that customers who use search were approximately 20% more likely to find the answer that they needed, without having to get in touch with customer support.&lt;/p&gt;
+
+&lt;p&gt;Because search seems to be the most effective way for people to find the answers that they need, we decided to find out how we could help customers benefit from our search results, without forcing them to actually search.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-we-built-1&quot;&gt;What we built&lt;/h3&gt;
+&lt;p&gt;We’ve been running some experiments and making changes to the help screen, like putting the search bar at the centre to make searching more prominent.&lt;/p&gt;
+
+&lt;p&gt;We also ran an experiment that showed you search results as you typed a message to our customer support team. For example, if your started telling us that you forgot your PIN, we’d suggest a series of relevant articles. Under the hood, these suggestions use the same machine learning service that powers search on the help screen. And we didn’t add any additional friction to the process of getting in touch, so you’d still be able to start a new conversation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img data-width=&quot;1600&quot; data-height=&quot;1320&quot; src=&quot;https://cdn-images-1.medium.com/max/800/0*1xYnSQp4-QEGJ9QB.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;does-it-work-1&quot;&gt;Does it work?&lt;/h3&gt;
+&lt;p&gt;We found that suggesting relevant articles as you typed helped you find the answer you needed as effectively as searching yourself, so we added the feature to the apps!&lt;/p&gt;
+
+&lt;h2 id=&quot;whats-next&quot;&gt;What’s next?&lt;/h2&gt;
+
+&lt;h3 id=&quot;understanding-what-you-talk-to-us-about&quot;&gt;Understanding what you talk to us about&lt;/h3&gt;
+&lt;p&gt;We’ve recently begun another round of analysis, to find out what customers talk to us about when the help screen hasn’t been helpful. We’ll use this analysis to help us identify areas that the help screen doesn’t cover at all, and understand how we can improve specific help pages even more.&lt;/p&gt;
+
+&lt;h3 id=&quot;more-nuanced-machine-learning&quot;&gt;More nuanced machine learning&lt;/h3&gt;
+&lt;p&gt;We’ve started prototyping various ways that we can use the data we collect to tweak the existing machine learning features on the help screen.&lt;/p&gt;
+
+&lt;p&gt;Right now a lot of our machine learning focuses on the content of each page, and doesn’t factor in the implicit feedback that we get as you view and click on articles. The actions you take when you use our search results are powerful indicators of their quality.&lt;/p&gt;
+
+&lt;p&gt;For example, imagine if every time a customer searched to find out what to do if they forgot their pin, they always ignored the first two results and picked the third answer on the list. This would tell us that we should promote the third result to the top of the list, so everyone could find it right away.&lt;/p&gt;
+
+&lt;h3 id=&quot;surfacing-other-kinds-of-content&quot;&gt;Surfacing other kinds of content&lt;/h3&gt;
+&lt;p&gt;Right now our help search algorithm surfaces help articles with text. But in the future, we want it to be able to show you other types of results as well. For example, if your question’s been answered by someone in the community, we’d like to link you to their post.&lt;/p&gt;
+
+&lt;h3 id=&quot;making-better-suggestions&quot;&gt;Making better suggestions&lt;/h3&gt;
+&lt;p&gt;We’re also looking to experiment with machine learning in other areas altogether. For example, the suggested articles on the help screen are currently computed using a number of rules, and we have a hunch that personalising these results with machine learning could help us provide better suggestions.&lt;/p&gt;
+
+&lt;h3 id=&quot;preempting-questions-about-specific-transactions&quot;&gt;Preempting questions about specific transactions&lt;/h3&gt;
+&lt;p&gt;We’ve noticed that lots of conversations with customer support are about specific transactions, which is why the help screen now shows your last three transactions.&lt;/p&gt;
+
+&lt;p&gt;But we’ve also started to explore how we can identify which transactions you’re likely to have questions about, and link them with useful answers.&lt;/p&gt;
+
+&lt;p&gt;All week we’ll be sharing an insight into how we’re working to make sure Monzo’s ready to support one billion customers! Join the discussion on the community forum and keep an eye out on the &lt;a href=&quot;https://monzo.com/blog/&quot;&gt;blog&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/monzo?lang=en&quot;&gt;Twitter&lt;/a&gt; for updates 👀.&lt;/p&gt;</content><author><name></name></author><summary type="html">Originally published on monzo.com.</summary></entry><entry><title type="html">The first 90 days (book review)</title><link href="http://0.0.0.0:4000/book/2018/05/27/The-first-90-days.html" rel="alternate" type="text/html" title="The first 90 days (book review)" /><published>2018-05-27T00:00:00-05:00</published><updated>2018-05-27T00:00:00-05:00</updated><id>http://0.0.0.0:4000/book/2018/05/27/The-first-90-days</id><content type="html" xml:base="http://0.0.0.0:4000/book/2018/05/27/The-first-90-days.html">&lt;p&gt;Most of the blog posts that I read about tech show how thorough typical workflows are: we take a systematic approach when trying to solve problems in software development, data science, and product management. So why not be &lt;em&gt;just as systematic&lt;/em&gt; when thinking about &lt;em&gt;how we work&lt;/em&gt; within our team and company?&lt;/p&gt;
+
+&lt;p&gt;I recently had the opportunity to think about this in some time that I had between jobs. As part of this, I read a book called &lt;a href=&quot;https://www.amazon.co.uk/First-Days-Updated-Expanded-Strategies/dp/1422188612&quot; data-href=&quot;https://www.amazon.co.uk/First-Days-Updated-Expanded-Strategies/dp/1422188612&quot; class=&quot;markup--anchor markup--p-anchor&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;The First 90 Days&lt;/a&gt;. There are a few key ideas in this book that captured a very systematic approach to joining a new team and organisation; I feel that being aware and mindful of these points helped me in the first 90 days of my new role. In this post, I’m going to summarise five broad ideas that I picked up while reading it.&lt;/p&gt;
+
+&lt;h3 id=&quot;understand-what-kinds-of-problems-you-gravitate-towards&quot;&gt;Understand what kinds of problems you gravitate towards&lt;/h3&gt;
+&lt;p&gt;The premise of the book is that you are either joining a new organisation or have been promoted into a new role that has a wider scope than the one you had before. Both of these situations are often met with great enthusiasm — and a desire to immediately get to work and start ‘doing stuff.’ Who doesn’t want to roll up their sleeves and dive right in?&lt;/p&gt;
+
+&lt;p&gt;Different parts of the book, however, describe that ‘getting things done’ — say, creating a new product feature or changing a process in an organisation, requires solving different types of problems &lt;em&gt;at the same time&lt;/em&gt;. These include &lt;em&gt;technical&lt;/em&gt; (e.g., building systems), &lt;em&gt;political&lt;/em&gt; (e.g., prioritising conflicting strategies), and &lt;em&gt;cultural&lt;/em&gt; (e.g., maintaining team dynamics) problems. A key point that I picked up through some of the early exercises in the book is that we all &lt;em&gt;naturally gravitate&lt;/em&gt; towards a certain type of problem over others — perhaps because it is the type of problem that we have worked on in our previous role.&lt;/p&gt;
+
+&lt;p&gt;The issue with naturally gravitating towards a certain type of problem is that (a) you are only working on &lt;em&gt;one third&lt;/em&gt; of what it really takes to ‘get things done’ &lt;em&gt;in an organisation&lt;/em&gt;, (b) you can blindside yourself to the real problems that need solving, and (c) you can alienate your new colleagues who do not gravitate towards the same kind of action that you do.&lt;/p&gt;
+
+&lt;p&gt;A spurious scenario that would capture this would be: imagine learning about a system that your team maintains, and immediately seeing that there are some huge problems — bugs or technical debt — that you know how to fix. These are technical problems, and perhaps, as an individual, you gravitate towards these. However, these technical problems may have originated from how the team made decisions or how they worked together before you joined. By immediately diving in to squash bugs, you may not only fail to solve the root cause of the technical problem, but you may also fail to make a positive contribution to other efforts at resolving it that focus on a different angle of the problem.&lt;/p&gt;
+
+&lt;h3 id=&quot;meet-stakeholders-natural-historians-and-cultural-interpreters&quot;&gt;Meet stakeholders, natural historians, and cultural interpreters&lt;/h3&gt;
+&lt;p&gt;Joining a new organisation naturally involves meeting a lot of new people. In most cases, we’ll be quickly introduced to people that the book characterises as &lt;em&gt;vertical relationships&lt;/em&gt;: people that will report to you and stakeholders that you will report to.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;The First 90 Days&lt;/em&gt; discusses other types of people to look out for. An obvious starting point are people who may be characterised as &lt;em&gt;horizontal&lt;/em&gt; &lt;em&gt;relationships&lt;/em&gt; — your neighbours. If I recall correctly, there’s a mention of something along the lines of “you don’t want to be meeting your neighbours for the first time when your house is on fire”: horizontal relationships may not help on a day to day basis, but they may be critical at some point in the future when things are going wrong.&lt;/p&gt;
+
+&lt;p&gt;There are two other types of colleagues that we should also be on the lookout for, that no one will &lt;em&gt;explicitly&lt;/em&gt; introduce you to.&lt;/p&gt;
+
+&lt;p&gt;The first group are &lt;em&gt;natural historians.&lt;/em&gt; These people will be able to give you the background to a team or project — they broadly answer the question “how did we get to where we are today?” I recall some quote that said that joining a company will be a new chapter in your life, but it will not be the &lt;em&gt;first chapter&lt;/em&gt; in that company’s story. There’s a common saying that captures the importance of meeting natural historians — “those who cannot learn from history are doomed to repeat it” — without having the right historical context, your initial work in the team may be repeating mistakes from the past.&lt;/p&gt;
+
+&lt;p&gt;The second group are &lt;em&gt;cultural interpreters&lt;/em&gt;. These people will be able to onboard you into the cultural practices of your new organisation. Where are decisions made? What amount of open conflict is expected or tolerated, and how is it resolved? Why do certain teams work well together (or not)? Having someone who can openly give you some insight into these can let you adapt quicker to your new environment. For example, your previous company may have used meetings as a forum to fiercely debate the pros and cons of a particular decision before making it. Your new company, instead, may use meetings to announce decisions that have already been made. If you come into your new job expecting (and trying to) fiercely debate a decision that has already been made, then your efforts to steer that decision are coming too late and will have less impact.&lt;/p&gt;
+
+&lt;h3 id=&quot;learn-systematically-by-asking-the-same-questions-manytimes&quot;&gt;Learn systematically by asking the same questions many times&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;The First 90 Days&lt;/em&gt; has a huge focus on learning —one of the biggest take-aways from the book is that we should set time to learn proactively and systematically during this transition phase.&lt;/p&gt;
+
+&lt;p&gt;In many companies, there will be an onboarding process or set of welcome/introduction-to sessions. These sessions tend to focus on &lt;em&gt;business&lt;/em&gt; &lt;em&gt;as usual&lt;/em&gt; (‘what problems are we solving?’), perhaps broken down by team. The other perspectives that are less frequently covered — and therefore are up to you to proactively figure out — are about &lt;em&gt;connections&lt;/em&gt; (‘who will I work on solving these problems with?’), &lt;em&gt;expectations&lt;/em&gt; (‘what part of this problem will I be working on?’) and &lt;em&gt;culture&lt;/em&gt; (‘how do we collaboratively solve problems?’). While all four of these are equally important, the book places the responsibility of learning about these on you — it’s your job to learn about how the pieces of your organisation fit together, rather than their job to tell you.&lt;/p&gt;
+
+&lt;p&gt;One-to-one meetings are emphasised as a massive opportunity to learn and get quick, varied insight into a company’s dynamics. I used to treat these kinds of meetings as a way to get to know a person (and still believe that this is an important part of a 1:1 meeting), but I would never really come prepared with specific questions. The book suggests different ways of approaching this. For example, you could focus on &lt;em&gt;challenges and opportunities&lt;/em&gt;: what are our biggest challenges? Why are they challenges for us? What are our most promising opportunities, and what do we need to change to achieve them? What would you focus on and why? Alternatively, you could focus on the &lt;em&gt;past, present and future&lt;/em&gt;: Why was this done this way? How are things going now? Where would we like to be in the future?&lt;/p&gt;
+
+&lt;p&gt;The benefit that I found from having a structured set of questions that I asked everybody in my first 1:1 with them went beyond the information that I learned from their answers: I got insight into the &lt;em&gt;variance&lt;/em&gt; between answers to the same question. This variability has more information about the company’s structure than anything else that I’ve come across to date — it encodes where teams are aligned and focused, and where frictions may be emerging.&lt;/p&gt;
+
+&lt;p&gt;The other question that I tried to ask everybody at the end of each meeting was “who do you think I should meet next?” Keeping track of this was a very interesting experiment; my hypothesis is that people will frequently point you towards others who they feel have a large amount of influence or insight.&lt;/p&gt;
+
+&lt;h3 id=&quot;diagnose-the-organisation-as-asystem&quot;&gt;Diagnose the organisation as a system&lt;/h3&gt;
+&lt;p&gt;The previous points have covered (a) knowing yourself, (b) meeting others, and (c) structuring how you learn. Based on these, the book talks about making an assessment of what ‘state’ your new team or company is currently in, which is a key part of understanding how you fit in and what you should do next. To do so, the book talks about the &lt;a href=&quot;http://sourcesofinsight.com/stars-model-of-business-evolution/&quot;&gt;STARS model&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This acronym stands for different scenarios that a team can find itself in, and captures what kind of action is needed:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;Start-up&lt;/em&gt;: a team that is assembling the initial capabilities (people, technology, etc.) in order to get a new project off the ground. You will be dealing with _bootstrapping-_type of problems and will need to work on maintaining focus.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Turnaround&lt;/em&gt;: a team that is trying to save a project that is widely acknowledged to be in deep trouble (a ‘burning platform’ situation). Efforts will need to focus on re-energising a demoralised team and making effective changes quickly.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Accelerated growth&lt;/em&gt;: a team that is scaling extremely quickly or managing a rapidly expanding business. Onboarding many new team members at the same time is a challenge to maintaining productivity and culture, particularly when structures that were previously unnecessary become essential.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Realignment&lt;/em&gt;: a team that faces problems which will drift it into danger. It is not quite yet at the _turnaround _stage, but complacency will take it there; the main difference may even be that the team doesn’t recognise that changes are needed.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Sustaining success&lt;/em&gt;: a team that needs to preserve the vitality of recent successes and take it to the next level. While this is generally a great situation to be in, your arrival marks a change — and so finding ways to maintain success given that change become a major area of focus.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;An interesting detail that is mentioned is that within the same organisation, different teams may be in a different ‘state’ of the STARS model. Having a broad assessment of where your and other teams are gives you insight into how you can start working, both within your team and with other teams.&lt;/p&gt;
+
+&lt;h3 id=&quot;avoid-common-pitfalls-in-your-first-contributions&quot;&gt;Avoid common pitfalls in your first contributions&lt;/h3&gt;
+&lt;p&gt;Finally, now that we have learned about ourselves, met others in a structured way, learned about the company, and made an assessment about where things are, we can start thinking about what we will do first.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;The First 90 Days&lt;/em&gt; has plenty of anecdotes about people coming into a new position and falling prey to some kind of pitfall which tarnishes how their colleagues view them — and even ultimately defines their success or failure in that role. Many of these failures are attributed to the points above, i.e. not spending time learning about your new oganisation and role.&lt;/p&gt;
+
+&lt;p&gt;I noted down a few specific pitfalls. These include:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;Coming in with “the” answer.&lt;/em&gt; Approaching a problem in your new role with a specific answer can be a really negative experience for your colleagues. For example, imagine that you leave a large tech company to join a small tech start-up, and every time that a problem arises, you say: “in [large tech company], we did X, and it worked.” In these cases, you are not only failing to adapt to where you currently are (a small start-up), but could also be implicitly undermining the opinions of colleagues who do not have experience at an equivalent large tech company.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Change for change’s sake.&lt;/em&gt; It’s often tempting to do something — after all, it is easier to feel that we are being productive when we are doing something rather than do nothing. Making a change in order to satisfy our ego, rather than solve a problem, is dangerous. Instead, the book hints at looking for early wins in areas that those who you will work closely with care deeply about.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;How you contribute matters as much as what you do&lt;/em&gt;. When we come into a new role, our “fresh” eyes may quickly allow us to identify some quick wins — say, a product feature change that may significantly shift a metric that everyone cares about. However, if you achieve this early win but, in order to do so, you break cultural norms and practices in your team or undermine others, your quick win may not be so useful after all.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;I was initially fairly sceptical that I would find value from what seems to be a popular book for business leaders while moving from one &lt;em&gt;data team&lt;/em&gt; to another. I therefore treated the book like a textbook — referencing different sections, jumping back and forth between them, and skipping others.&lt;/p&gt;
+
+&lt;p&gt;Now that I have spent more than 90 days in my new role, a lot of the issues that this book highlighted feel useful. It’s clearly too early to say that I have succeeded or failed by using them — but equally, they nearly seem obvious in retrospect, and have become a reference point that I go back to from time to time.&lt;/p&gt;
+
+&lt;p&gt;Starting a new job is always an exciting time. Equally, it is an opportunity to proactively shape how you work with others, and how they see you. Thinking about an organisation as a system that can be characterised around various principles, qualities, and structures, changed how I viewed what it means to work — and I hope that these notes may help you do the same.&lt;/p&gt;</content><author><name></name></author><summary type="html">Most of the blog posts that I read about tech show how thorough typical workflows are: we take a systematic approach when trying to solve problems in software development, data science, and product management. So why not be just as systematic when thinking about how we work within our team and company?</summary></entry><entry><title type="html">Industry stories about machine learning</title><link href="http://0.0.0.0:4000/conference/2018/04/15/Industry-Stories-about-Machine-Learning.html" rel="alternate" type="text/html" title="Industry stories about machine learning" /><published>2018-04-15T00:00:00-05:00</published><updated>2018-04-15T00:00:00-05:00</updated><id>http://0.0.0.0:4000/conference/2018/04/15/Industry-Stories-about-Machine-Learning</id><content type="html" xml:base="http://0.0.0.0:4000/conference/2018/04/15/Industry-Stories-about-Machine-Learning.html">&lt;p&gt;Last week, I went to the &lt;a href=&quot;https://www.papis.io/europe-2018&quot;&gt;PAPIs.io Europe 2018&lt;/a&gt; conference, which was held in Canary Wharf Tower in London. The conference describes itself as a “series of international conferences dedicated to real-world Machine Learning applications, and the innovations, techniques and tools that power them” (and, from what I gather, the name &lt;em&gt;papis&lt;/em&gt; comes from “Predictive APIs”). I went down on the Thursday, the day that was dedicated to “Industry and Startups,” and took some notes on what I saw. Here’s a quick summary!&lt;/p&gt;
+
+&lt;p&gt;&lt;img data-width=&quot;1296&quot; data-height=&quot;592&quot; src=&quot;https://cdn-images-1.medium.com/max/1200/1*7pig2ezHCXRvZNsshPYpgw.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ml-infrastructure-with-kubernetes-dask-andjupyter&quot;&gt;ML infrastructure with Kubernetes, Dask, and Jupyter&lt;/h2&gt;
+&lt;p&gt;The morning keynote was by &lt;a href=&quot;http://ogrisel.com/&quot;&gt;Olivier Grisel&lt;/a&gt;, who is probably best known for his immense contributions to &lt;a href=&quot;http://scikit-learn.org/stable/&quot;&gt;scikit-learn&lt;/a&gt; — and therefore anyone who does machine learning in Python is indebted to him! His slides are online &lt;a href=&quot;https://docs.google.com/presentation/d/1PuvBl2rqZi0k0J2x4XcShmFiLeSfBXkarg6nYAGCxUs/edit#slide=id.p&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In &lt;a href=&quot;https://www.youtube.com/watch?v=9zEAC89QcjA&quot;&gt;this video&lt;/a&gt;, starting around 23 minutes in, he shows how to set up your own machine learning infrastructure using three main open source components: &lt;a href=&quot;https://kubernetes.io/&quot;&gt;Kubernetes&lt;/a&gt; (a cluster orchestration system based on &lt;a href=&quot;https://en.wikipedia.org/wiki/Operating-system-level_virtualization&quot;&gt;containers&lt;/a&gt;), &lt;a href=&quot;https://dask.pydata.org/en/latest/&quot;&gt;Dask&lt;/a&gt; (a tool to parallelize python jobs that is deeply integrated with existing python libraries like pandas/numpy), and &lt;a href=&quot;http://jupyter.org/&quot;&gt;Jupyter Notebooks&lt;/a&gt; (the well-known web application for interactive development).&lt;/p&gt;
+
+&lt;p&gt;Specifically, he was using &lt;a href=&quot;https://kubernetes.io/docs/getting-started-guides/minikube/&quot;&gt;minikube&lt;/a&gt; to run kubernetes locally and &lt;a href=&quot;https://jupyterhub.readthedocs.io/en/latest/&quot;&gt;jupyter hub&lt;/a&gt; to manage multiple users on a single jupyter server. The first example that he showed was somewhat trivial (e.g., incrementing a counter), but this allowed him to describe, in depth, how the computation was being distributed and executed. The second example showed how to run a &lt;a href=&quot;http://scikit-learn.org/stable/modules/grid_search.html#exhaustive-grid-search&quot;&gt;grid search&lt;/a&gt; to find the best parameters for a Support Vector Machine, using &lt;a href=&quot;http://distributed.readthedocs.io/en/latest/joblib.html&quot;&gt;dask-joblib&lt;/a&gt; to run this on the cluster.&lt;/p&gt;
+
+&lt;p&gt;One of my favourite lines from the Q&amp;amp;A was an off-hand comment that touches on developing ML systems: “you shouldn’t do everything in a Jupyter notebook” (because that’s not great for maintenance).&lt;/p&gt;
+
+&lt;h2 id=&quot;prediction-at-the-edge-withaws&quot;&gt;Prediction at the edge with AWS&lt;/h2&gt;
+&lt;p&gt;The second talk was by &lt;a href=&quot;https://aws.amazon.com/evangelists/julien-simon/&quot;&gt;Julien Simon&lt;/a&gt; (who blogs &lt;a href=&quot;https://medium.com/@julsimon&quot;&gt;here&lt;/a&gt;), an AI/ML evangelist from Amazon. Starting at about minute 59 in &lt;a href=&quot;https://www.youtube.com/watch?v=9zEAC89QcjA&quot;&gt;this video&lt;/a&gt;, his talk focused on running machine learning predictions outside of data centers (‘at the edge’ — on cameras, on sensors, etc.). Achieving this entailed, perhaps unsurprisingly, going through a whirlwind tour of various AWS services that are available for machine learning systems. These included:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Defining and manipulating models with &lt;a href=&quot;https://aws.amazon.com/blogs/aws/introducing-gluon-a-new-library-for-machine-learning-from-aws-and-microsoft/&quot;&gt;Gluon&lt;/a&gt; and &lt;a href=&quot;https://aws.amazon.com/mxnet/&quot;&gt;MXNet&lt;/a&gt;;&lt;/li&gt;
+  &lt;li&gt;Building and training models with &lt;a href=&quot;https://aws.amazon.com/sagemaker/&quot;&gt;SageMaker&lt;/a&gt;;&lt;/li&gt;
+  &lt;li&gt;Using &lt;a href=&quot;https://aws.amazon.com/lambda/&quot;&gt;Lambda&lt;/a&gt; to write on-demand prediction functions;&lt;/li&gt;
+  &lt;li&gt;Deploying the code to edge devices using &lt;a href=&quot;https://aws.amazon.com/greengrass/&quot;&gt;Greengrass&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;His talk closed with a demo of &lt;a href=&quot;https://aws.amazon.com/deeplens/&quot;&gt;DeepLens&lt;/a&gt;, the “world’s first deep learning enabled video camera for developers” which was recently launched, showing real-time object detection in action.&lt;/p&gt;
+
+&lt;h2 id=&quot;managing-the-gap-between-the-engineer-and-data-scientist-role&quot;&gt;Managing the gap between the engineer and data scientist role&lt;/h2&gt;
+&lt;p&gt;One of the talks that touched on very interesting topics was by &lt;a href=&quot;https://www.linkedin.com/in/bethlogan&quot;&gt;Beth Logan&lt;/a&gt; from &lt;a href=&quot;https://www.dataxu.com/&quot;&gt;dataxu&lt;/a&gt;, a data-driven advertising company. She described how they go about developing and automating the deployment of a machine learning pipeline (hence the title ‘changing tires while driving;’ the talk is online &lt;a href=&quot;https://www.youtube.com/watch?v=WV_o7B4YcNw&quot;&gt;here&lt;/a&gt;) to support various applications in the advertising domain.&lt;/p&gt;
+
+&lt;p&gt;Moving away from the ML itself, there were some interesting points made about how to manage what a ‘data scientist’ does vs. what an ‘engineer’ does, in order for each role to play to their strengths. In effect, this was about letting data scientists develop and iterate on models, while leaving all of the job of productionising and scaling them to engineers — who also had to demonstrate that the production implementation performed as expected.&lt;/p&gt;
+
+&lt;p&gt;The intersection of data science and engineering is a topic that I could probably write an entire blog post about; suffice to say, we had a discussion at the end about whether such a divide is the ‘right’ way to do this, and how each discipline can upskill the other while collaborating.&lt;/p&gt;
+
+&lt;h2 id=&quot;pipeline-jungles-in-machinelearning&quot;&gt;Pipeline jungles in machine learning&lt;/h2&gt;
+&lt;p&gt;The next talk was by &lt;a href=&quot;https://sites.google.com/site/moussataifishomepage/&quot;&gt;Moussa Taifi&lt;/a&gt; from &lt;a href=&quot;https://www.appnexus.com/en&quot;&gt;Appnexus&lt;/a&gt;, another company that deals with digital advertising. He discussed building various kinds of pipelines for click prediction, a common task in online advertising.&lt;/p&gt;
+
+&lt;p&gt;Moussa touched on a number of practical aspects of developing pipelines while going back and forth between research and production. These included getting into trouble with reproducing results once pipelines are overly complex (‘jungles’), model versioning for experiments, avoiding common issues like time travel (training on data that was created after the data in the test set), and whether it is better to go for systems with just-in-time data transformations and feature extraction vs. building models from a fixed set of features that are precomputed, regardless of the task at hand&lt;/p&gt;
+
+&lt;h2 id=&quot;building-a-culture-of-machinelearning&quot;&gt;Building a culture of machine learning&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.linkedin.com/in/trieloff/&quot;&gt;Lars Trieloff&lt;/a&gt; gave a high-level talk about nurturing a culture of AI inside of &lt;a href=&quot;https://www.adobe.com/uk/#&quot;&gt;Adobe&lt;/a&gt; — focusing specifically on &lt;a href=&quot;https://www.adobe.com/uk/sensei.html&quot;&gt;Adobe Sensei&lt;/a&gt;. His talk spanned three broad areas: &lt;em&gt;brand, vision, and technology&lt;/em&gt;, and how the three needed to gel in order to foster a culture of machine learning within an organisation. Interestingly, he also touched on responsibility — and how all employees at the company needed to go through training and approval process when developing new machine learning tools.&lt;/p&gt;
+
+&lt;h2 id=&quot;feasibility-vs-return-on-investment-in-machinelearning&quot;&gt;Feasibility vs return on investment in machine learning&lt;/h2&gt;
+&lt;p&gt;Poul Petersen from &lt;a href=&quot;https://bigml.com/&quot;&gt;BigML&lt;/a&gt; gave a talk about how the company predicted 6 out of 6 of the 2018 Oscar winners — see &lt;a href=&quot;https://blog.bigml.com/2018/03/01/predicting-the-2018-oscar-winners/&quot;&gt;this blog post&lt;/a&gt; which has some similar content. Oscars aside, he made an interesting observation about how to prioritise machine learning projects, based on comparing their feasibility and projected return on investment. If both are low, this is clearly a no-go area; if both are high, this is a no-brainer that you should already be working on. The remaining two categories were ‘postponable’ (low ROI, highly feasible) and ‘brainers’ (high ROI, not currently feasible).&lt;/p&gt;
+
+&lt;p&gt;He gave a similar analogy for the progression of which algorithms were his go-tos, depending on what stage of development a particular system was at: early stage, requiring rapid prototyping (logistic regression), mid stage, where you have a proven application (random forests), and finally late stage, where tweaking performance becomes critical (neural networks).&lt;/p&gt;
+
+&lt;h2 id=&quot;startup-pitches--panelthe-european-ai-landscape&quot;&gt;Startup pitches &amp;amp; panel — the European AI landscape&lt;/h2&gt;
+&lt;p&gt;The startup pitches were dispersed across the day. The ones I saw here:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.logicalclocks.com&quot;&gt;Logical Clocks&lt;/a&gt;: who have an enterprise machine learning platform called &lt;a href=&quot;http://www.logicalclocks.com/deep-learning/&quot;&gt;Hops&lt;/a&gt; that aims to improve the productivity of data scientists.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.antiverse.io/&quot;&gt;Antiverse&lt;/a&gt;: aim to enable antibody drug discovery in one day using AI.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://tensorflight.io/&quot;&gt;Tensorflight&lt;/a&gt;: automate property inspections by analysing satellite and aerial data using machine learning.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://teebly.co/&quot;&gt;Teebly&lt;/a&gt;: offers a single point of contact for a business’ clients, automating all of the various ways that they can get in touch with you.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Some of these startups participated in a startup battle at the end of the day, which was &lt;a href=&quot;https://medium.com/@thomasrorystone/1st-startup-competition-judged-by-an-ai-apply-to-win-100-000-from-ai-seed-7ce5cb42df72&quot;&gt;judged by an AI&lt;/a&gt;. While I was somewhat sceptical when I first heard about this, it was actually very entertaining. Each startup took turns being asked questions by an Alexa, with questions ranging from the size, experience, and structure of the team, and were scored on a variety of factors. The winners took home £100k!&lt;/p&gt;
+
+&lt;p&gt;The startup panel, instead, took a retrospective perspective — looking back at what worked for Twizoo (which was &lt;a href=&quot;https://techcrunch.com/2017/11/09/skyscanner-buys-twizoo-to-add-social-content-shout-outs-to-travel-reviews/&quot;&gt;acquired by Skyscanner&lt;/a&gt;, shortly before I left), &lt;a href=&quot;http://predictionio.apache.org/index.html&quot;&gt;prediction.io&lt;/a&gt; (which was &lt;a href=&quot;https://techcrunch.com/2016/02/19/salesforce-acquires-predictionio-to-build-up-its-machine-learning-muscle/&quot;&gt;acquired by Salesforce&lt;/a&gt; after being founded in London), and &lt;a href=&quot;https://seedcamp.com/&quot;&gt;Seedcamp&lt;/a&gt;. The recurring theme was the importance of focusing on the &lt;em&gt;customer&lt;/em&gt;, rather than the machine learning: technology is an enabler to solve a customer’s pain, and the abstract machine learning problems that need to be solved along the way are nearly superfluous compared to the customer’s need.&lt;/p&gt;
+
+&lt;p&gt;There are many different take-aways from this day. One that stands out is that the European &lt;a href=&quot;https://medium.com/cityai/the-european-artificial-intelligence-landscape-more-than-400-ai-companies-build-in-europe-bd17a3d499b&quot;&gt;startup landscape in the machine learning&lt;/a&gt; space is still thriving and growing. And, indeed, &lt;a href=&quot;https://twitter.com/libbykinsey&quot;&gt;Libby&lt;/a&gt; from &lt;a href=&quot;https://medium.com/project-juno&quot;&gt;Project Juno AI&lt;/a&gt; announced that they are starting another round of mapping this landscape — a project that’s definitely worth checking out and contributing to.&lt;/p&gt;</content><author><name></name></author><summary type="html">Last week, I went to the PAPIs.io Europe 2018 conference, which was held in Canary Wharf Tower in London. The conference describes itself as a “series of international conferences dedicated to real-world Machine Learning applications, and the innovations, techniques and tools that power them” (and, from what I gather, the name papis comes from “Predictive APIs”). I went down on the Thursday, the day that was dedicated to “Industry and Startups,” and took some notes on what I saw. Here’s a quick summary!</summary></entry></feed>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Five lessons from building machine learning systems | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Five lessons from building machine learning systems" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="… to power features in the Skyscanner app! ✈️" />
+<meta property="og:description" content="… to power features in the Skyscanner app! ✈️" />
+<link rel="canonical" href="http://0.0.0.0:4000/opinion/machine-learning/skyscanner/2018/01/21/Five-lessons-from-building-machine-learning-systems.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/opinion/machine-learning/skyscanner/2018/01/21/Five-lessons-from-building-machine-learning-systems.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-01-21T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"… to power features in the Skyscanner app! ✈️","headline":"Five lessons from building machine learning systems","dateModified":"2018-01-21T00:00:00-06:00","datePublished":"2018-01-21T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/opinion/machine-learning/skyscanner/2018/01/21/Five-lessons-from-building-machine-learning-systems.html"},"url":"http://0.0.0.0:4000/opinion/machine-learning/skyscanner/2018/01/21/Five-lessons-from-building-machine-learning-systems.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Five lessons from building machine learning systems | Neal Lathia</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Five lessons from building machine learning systems" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="… to power features in the Skyscanner app! ✈️" />
+<meta property="og:description" content="… to power features in the Skyscanner app! ✈️" />
+<link rel="canonical" href="http://0.0.0.0:4000/opinion/machine-learning/skyscanner/2018/01/21/Five-lessons-from-building-machine-learning-systems.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/opinion/machine-learning/skyscanner/2018/01/21/Five-lessons-from-building-machine-learning-systems.html" />
+<meta property="og:site_name" content="Neal Lathia" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-01-21T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"… to power features in the Skyscanner app! ✈️","headline":"Five lessons from building machine learning systems","dateModified":"2018-01-21T00:00:00-06:00","datePublished":"2018-01-21T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/opinion/machine-learning/skyscanner/2018/01/21/Five-lessons-from-building-machine-learning-systems.html"},"url":"http://0.0.0.0:4000/opinion/machine-learning/skyscanner/2018/01/21/Five-lessons-from-building-machine-learning-systems.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Neal Lathia" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Neal Lathia</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/research/">Research</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Five lessons from building machine learning systems</h1><p class="page-description">... to power features in the Skyscanner app! ✈️</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2018-01-21T00:00:00-06:00" itemprop="datePublished">
+        Jan 21, 2018
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#opinion">opinion</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#machine-learning">machine-learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#skyscanner">skyscanner</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>In January 2017 I left Skyscanner, where I was a Senior Data Scientist. Like I did with a previous post a couple of years ago, I thought I’d summarise my journey by collecting some thoughts and lessons learned from the projects that I was involved in — which all focused on building different machine learning features for the Skyscanner app.</p>
+
+<p>This post does not have any breakthrough insights on specific algorithms or technologies. Instead, I focus on a few broader aspects of data science: definining methodologies, dealing with uncertainty, building pipelines, and fostering a culture of machine learning.</p>
+
+<h3 id="5">5.</h3>
+<p>My first squad designed, built, and ran some experiments with a pipeline that uses different kinds of unsupervised ranking in order to compute localised destination recommendations. We set out to build a new system, and so we didn’t know a lot of things: what data should we use? What kind of ranking algorithm? Where will the feature appear for users, and how will they interact with it?</p>
+
+<p>As a data scientist working in a new problem space, there’s certainly an initial urge to reach for the latest algorithm right away. Similarly, as engineers working on a new system, there’s an instinct to automate and scale everything within the problem’s scope. However, that is a far cry from what we needed in order to get the initial system up and running: what we really needed was a foundation that we could use to run experiments.</p>
+
+<p>Our focus shifted towards designing a pipeline that would allow us to run all kinds of experiments: for example, experiments that changed input data type or size, parameters, or switch algorithms —all aimed at demonstrating how much we were incrementally making a difference, rather than proving that we had solved the problem outright. You can read more about the pipeline’s <a href="https://towardsdatascience.com/write-the-code-f6d58c728df0">initial architecture here</a>.</p>
+
+<p>The process itself encompassed many small details and tasks that the data science commmunity does not tend to celebrate (at least, not as much as the newest algorithm!). The algorithm itself was a very small piece of the whole ecosystem — much like the little black box in this image:</p>
+
+<p><img data-width="1540" data-height="570" src="https://cdn-images-1.medium.com/max/800/1*XJYmDINosll9EbXDC_mZKw.png" /></p>
+
+<p>When I presented this work in the industry session at the <a href="https://recsys.acm.org/recsys17/industry-session-1/#content-tab-1-3-tab">ACM Recommender Systems</a> conference (the abstract <a href="http://nlathia.github.io/papers/lathia_recsys17.pdf">pdf is here</a>), I recall feeling a form of impostor syndrome — from an algorithmic perspective, this system is very simple compared to the typical academic papers that are presented at the conference. However, it works! You can see this feature today in the iOS app if you navigate to the ‘explore’ tab, where there are various groups of destinations.</p>
+
+<p><strong>Lesson:</strong> Getting a data pipeline into production for the first time entails dealing with many different moving parts —in these cases, spend more time thinking about the pipeline itself, and how it will enable experimentation, and less about its first algorithm.</p>
+
+<h3 id="4">4.</h3>
+<p>A squad that I spent many recent months working with focuses on improving the search experience in the app. As part of this, we ran experiments that aimed to explore how <a href="https://hackernoon.com/learning-to-rank-for-flight-itinerary-search-8594761eb867">learning to rank flight itineraries</a> can do better than sorting itineraries by price.</p>
+
+<p>This work threw us into the tricky domain of evaluating supervised machine learning models from a cost/benefit perspective. What sort of offline evaluation improvement warrants running an online experiment? Is an improvement of x% in precision worth the work (and time) that it will take to run an A/B test? What is “wrong” with this process if many models with better offline scores don’t perform better in online experiments? These are problems that I’ve mentioned in a previous post; to date, I still don’t think that there are any definitive answers. When developing a model offline, we need to be able to measure its performance with particular metrics (like precision); however, the actual user behaviour that the model aims to support is often not captured by the same metrics. Similarly, online (A/B) testing everything is infeasible— the best way we have to prioritise what to test next, in supervised learning, is to run offline evaluations and then discuss their results with other stakeholders.</p>
+
+<p><strong>Lesson:</strong> This highlights the importance of considering the big picture and debating the pros and cons of running a specific machine learning experiment with various stakeholders. Accuracy is not enough!</p>
+
+<h2 id="3">3.</h2>
+<p>The itineraries mentioned above are only one part of the app’s search experience; indeed, the app’s search result interface is going beyond itineraries and towards being designed <a href="https://medium.com/@SkyscannerEng/from-itineraries-to-widgets-9b89ca72fda4">around the idea of widgets</a>. For example, <a href="https://twitter.com/Skyscanner/status/944146987087224832">this tweet</a> shows a screen shot of the app giving users suggestions to change their search dates.</p>
+
+<p>An interesting problem that emerged from this is how to design the “best” layout for a given user’s search when various widgets are available. As I described in the keynote I gave at the 2017 <a href="http://www.aitechworld.net/">AI Tech World</a> conference (slides <a href="https://www.slideshare.net/neal.lathia/ai-personalised-experiences">here</a>), the main approach that we were exploring is the use of <a href="https://en.wikipedia.org/wiki/Multi-armed_bandit">multi-armed bandits</a> to learn to create layouts for different searches. Although this was the first time that I had worked with multi-armed bandits, I felt confident that the research literature and resources available online about this approach would be there to inform each step we needed to take. I was wrong!</p>
+
+<p>One of the fascinating aspects of this work was that there are many practical decisions that needed to be made (e.g., what variability in user experience should be allowed) that are often taken for granted or altogether ignored in the research literature.</p>
+
+<p><strong>Lesson:</strong> the devil is in the detail. While machine learning does provide useful abstractions, there are many practical decisions that need to be made in a product that is driven by machine learning that govern how it works.</p>
+
+<h2 id="2">2.</h2>
+<p>I’ve seen the “data science is 80% data cleaning” phrase in all different shapes and sizes. It often comes up at Data Science meetups and conferences. However, one topic that I feel isn’t discussed as much as it should be is about working, as a Data Scientist, within and across multi-disciplinary teams.</p>
+
+<p>A recurring conversation that I had with engineers, product managers, and designers started with: <em>what is machine learning?</em> Venturing into this hyped and <a href="https://www.youtube.com/watch?v=ORHFOnaEzPc">alchemist-filled</a> field can be both daunting and overwhelming — and it is unclear how to get the best result when intersecting with other discipline’s methods. How should data scientists factor in qualitative research results into their workflow? How does machine learning fit into experience design?</p>
+
+<p>Naturally, a lot of practical questions emerge that do not have much to do with machine learning itself, but about how to understand and make use of the benefits that this tool could provide. My main take-away was yet another 80/20 rule: <em>data science is 80% education and 20% implementation</em>.</p>
+
+<p>I mean this as a two-way street: I learned a lot by having regular 1–1s with product owners to understand how they do things: for example, <a href="https://hackernoon.com/look-at-your-product-from-a-new-perspective-f0709760614b">here’s a great post</a> by <a href="https://medium.com/u/9b0ace60125e">Andrea Sipos</a> on the development of one of the app’s features. Similarly, I spent time trying to communicate how machine learning works and fits into this picture. After a few of these conversations, I wrote a blog post on machine learning for product managers; <a href="https://medium.com/@girardin/experience-design-in-the-machine-learning-era-e16c87f4f2e2">here’s a similar post</a> by <a href="https://medium.com/u/f2dadcd2686c">Fabien Girardin</a> that discusses the implications of machine learning for designers.</p>
+
+<h3 id="1">1.</h3>
+<p>There’s a <a href="https://hackernoon.com/the-ai-hierarchy-of-needs-18f111fcc007">great post</a> by <a href="https://medium.com/u/b31aba7f4828">Monica Rogati</a> that discusses the “AI hierarchy of needs;” the foundations that a company needs to build before it can reach the peak of advanced machine learning in production. The post describes how you need to be able to crawl (collect, load, move, transform data) before you can walk (experimentation, simple machine learning), and walk before you can run (use state of the art machine learning).</p>
+
+<p>The projects that I’ve described above all started and progressed to different stages of this hierarchy. However, just as <a href="http://dilbert.com/strip/2017-10-02">software is never finished</a>, it’s very challenging to claim that you are “finished” with the one part of the AI journey and will move up the hierarchy to the next step.</p>
+
+<p>In other words, you won’t stop caring about being able to crawl well (count, load, transform data) when you have started caring about walking (experimentation). As I described in <a href="https://twitter.com/neal_lathia/status/902212550980493312">this twitter thread</a>, building app features that use machine learning relied on <em>standing on the shoulders of giants</em> — for example, the other teams that develop the infrastructure and experimentation services.</p>
+
+<h3 id="wrapping-up">Wrapping Up 🌍</h3>
+<p>When I joined Skyscanner, I was the first data scientist based in the London office, at WeWork in Moorgate. Since I joined, Skyscanner was <a href="https://www.skyscanner.net/blogs/ctrip-announces-agreement-to-acquire-skyscanner">acquired by CTrip</a>, it <a href="https://techcrunch.com/2017/11/09/skyscanner-buys-twizoo-to-add-social-content-shout-outs-to-travel-reviews/">acquired Twizoo</a>, and <a href="https://www.skyscanner.net/blogs/skyscanner-to-launch-in-trip-content-through-trip-com">Trip.com joined forces with Skyscanner</a>. Skyscanner moved into <a href="https://www.skyscanner.net/jobs/offices/london/">new offices</a> near Tottenham Court Road, and there are now 5 London-based data scientists, more than 20 across all of the Skyscanner offices, and the team is continuing to grow.</p>
+
+<p>Naturally, the projects I’ve mentioned above are a very thin slice of the various places where data scientists at Skyscanner are working. In April 2017, we organised and hosted a series of public lightning talks as part of the London <a href="http://past.datasciencefestival.com/2017/london/event/london/2017/data-science-festival-day-2-lightening-talks-skyscanner/">Data Science Festival</a> that gave a glimpse into some other projects. At this event, Dima Karamshuk gave a talk on optimising content caching (<a href="https://www.youtube.com/watch?v=NFM0tsvZEds">here</a>), Ruth Garcia gave a talk on evaluating ad quality (<a href="https://www.youtube.com/watch?v=Ggv1I27anmc">here</a>), and Ryszard T. Kaleta gave a talk about machine learning with social data (<a href="https://www.youtube.com/watch?v=__ILL-EGGCY">here</a>).</p>
+
+<p>Suffice to say, if you follow <a href="https://medium.com/u/401f3b3c958f">Skyscanner Engineering</a> you’re likely to run into more data science blog posts in the near future. For example, here’s a recent one from <a href="https://medium.com/@SkyscannerEng/lets-make-roi-a-fair-game-e2eb734a9560">Sri²</a> about multi-touch attribution.</p>
+
+<p>Do you have any thoughts or want to share your own insights? Feel free to reach out to <a href="https://twitter.com/neal_lathia">on twitter</a>.</p>
+
+<p><strong>Thanks:</strong></p>
+<ul>
+  <li>Ewan Nicholson,</li>
+  <li>Sri² Perangur,</li>
+  <li>Dima Karamshuk,</li>
+  <li>Ruth Garcia</li>
+  <li>Andrea Sipos</li>
+</ul>
+
+<p>for the feedback on this post, and for being generally awesome people.</p>
+
+  </div><a class="u-url" href="/opinion/machine-learning/skyscanner/2018/01/21/Five-lessons-from-building-machine-learning-systems.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p></p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nlathia" title="nlathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/neal_lathia" title="neal_lathia"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
