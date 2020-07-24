@@ -1,7 +1,7 @@
 ---
 layout: content
-title: Research
-permalink: /research/
+title: Press & Speaking
+permalink: /public/
 ---
 
 Show off your projects here!

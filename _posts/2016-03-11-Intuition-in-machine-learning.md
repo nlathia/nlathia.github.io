@@ -48,7 +48,7 @@ Here is what you get if you plot a simple linear regression’s parameters vs. t
 ### Perspective #4: Code and Practice
 If putting machine learning theory into practice is your goal, you cannot get away from code. Here is how you fit a simple linear model in scikit-learn, which is what all of the work on gradient descent was leading up to.
 
-```
+```python
 from sklearn.linear_model import LinearRegression
 
 model = LinearRegression()
