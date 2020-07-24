@@ -1,4 +1,11 @@
-		<h2>SIGIR: Research vs. Reality</h2>
+---
+layout: post
+title: "SIGIR: Research vs. Reality"
+description: Originally published on mobblog.cs.ucl.ac.uk
+categories: [research, transport]
+---
+
+		<h2></h2>
 
 			<div class="entry">
 				<p>Last week, I attended SIGIR 2010 in Geneva, where I presented a <a href="http://mobblog.cs.ucl.ac.uk/2010/05/20/temporal-diversity-in-recommender-systems/">paper</a>. The conference has left its traces online: a steady stream of <a href="http://search.twitter.com/search?q=%23sigir2010+OR+%23sigir+OR+%23sigir10">tweets</a> and some great blog-posts (e.g., <a href="http://thenoisychannel.com/">the Noisy Channel</a>). You can even read comments about the incredible (and, for my part, unexpected) temperatures of some of the <a href="http://twitter.com/marchionini/status/19429779748">conference rooms</a>.</p>

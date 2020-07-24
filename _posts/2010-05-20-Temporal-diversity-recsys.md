@@ -1,4 +1,11 @@
-		<h2>Temporal Diversity in Recommender Systems</h2>
+---
+layout: post
+title: "Temporal Diversity in Recommender Systems"
+description: Originally published on mobblog.cs.ucl.ac.uk
+categories: [research, transport]
+---
+
+		<h2></h2>
 
 			<div class="entry">
 				<p>This year I&#8217;ll be presenting a paper &#8220;Temporal Diversity in Recommender Systems&#8221; at <a href="http://sigir2010.org/doku.php">SIGIR in Geneva</a>,  which I wrote with my supervisors (<a href="http://www.cs.ucl.ac.uk/staff/s.hailes/">Steve Hailes</a>, <a href="http://www.cs.ucl.ac.uk/staff/l.capra/">Licia Capra</a>) and <a href="http://research.tid.es/xar/">Xavier Amatriain</a> from Telefonica Research in Barcelona. As you can expect from the paper&#8217;s title, we&#8217;ll be appearing in the session on <a href="http://sigir2010.org/doku.php?id=program:sessions">Filtering and Recommendation</a>.<a id="session_3bfiltering_and_recommendation" name="session_3bfiltering_and_recommendation"></a></p>

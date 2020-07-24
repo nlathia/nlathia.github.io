@@ -1,4 +1,11 @@
-		<h2>Netflix Prize &#8211; Round 2</h2>
+---
+layout: post
+title: "Netflix Prize: Round 2"
+description: Originally published on mobblog.cs.ucl.ac.uk
+categories: [research, transport]
+---
+
+		<h2></h2>
 
 			<div class="entry">
 				<p>The <a href="http://netflixprize.com/">netflix prize</a> winners have been <a href="http://www.wired.com/epicenter/2009/09/bellkor%E2%80%99s-pragmatic-chaos-wins-1-million-netflix-prize/">announced</a>, as well as the next $1  million competition. From <a href="http://sacramento.bizjournals.com/sacramento/stories/2009/09/21/daily3.html">here</a>:</p>

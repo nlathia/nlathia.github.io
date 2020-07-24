@@ -1,7 +1,11 @@
-		<h2>Random Picks from ECML/PKDD 2010</h2>
+---
+layout: post
+title: "Random Picks from ECML/PKDD 2010"
+description: Originally published on mobblog.cs.ucl.ac.uk
+categories: [research, transport]
+---
 
-			<div class="entry">
-				<p>I&#8217;m at the <a href="http://ecmlpkdd2010.org/">2010 ECML/PKDD</a> Conference in Barcelona, Spain; I&#8217;ll be presenting a paper (<a href="http://www.slideshare.net/neal.lathia/temporal-defenses-for-robust-recommendations">slides</a>, <a href="http://www.cs.ucl.ac.uk/staff/n.lathia/papers/lathia_psdml10.pdf">paper</a>) at the Workshop on Privacy and Security in Data Mining and Machine Learning (<a href="http://fias.uni-frankfurt.de/~dimitrakakis/workshops/psdml-2010/">PSDML</a>). Check out the real-time posts on <a href="http://twitter.com/search?q=%23ecmlpkdd2010">twitter</a> here.</p>
+I&#8217;m at the <a href="http://ecmlpkdd2010.org/">2010 ECML/PKDD</a> Conference in Barcelona, Spain; I&#8217;ll be presenting a paper (<a href="http://www.slideshare.net/neal.lathia/temporal-defenses-for-robust-recommendations">slides</a>, <a href="http://www.cs.ucl.ac.uk/staff/n.lathia/papers/lathia_psdml10.pdf">paper</a>) at the Workshop on Privacy and Security in Data Mining and Machine Learning (<a href="http://fias.uni-frankfurt.de/~dimitrakakis/workshops/psdml-2010/">PSDML</a>). Check out the real-time posts on <a href="http://twitter.com/search?q=%23ecmlpkdd2010">twitter</a> here.</p>
 <p>Also, in a similar fashion to what Daniele did for <a href="http://mobblog.cs.ucl.ac.uk/2010/09/17/cikm-2010/">CIKM 2010</a>, here is a</p>
 <div style="display: none"></div>
 </p>

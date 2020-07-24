@@ -1,7 +1,11 @@
-			<h2>ACM RecSys 2009 Keynote (in 140 character chunks)</h2>
+---
+layout: post
+title: "ACM RecSys 2009 Keynote (in 140 character chunks)"
+description: Originally published on mobblog.cs.ucl.ac.uk
+categories: [research, transport]
+---
 
-			<div class="entry">
-				<p>The third <a href="http://recsys.acm.org/">ACM RecSys</a> conference started today in New York; unfortunately I could not make it. However, a number of people who I follow on Twitter are there (<a href="http://twitter.com/xamat">@xamat</a>, <a href="http://twitter.com/danielequercia">@danielequercia</a>, <a href="http://twitter.com/barrysmyth">@barrysmyth</a>)&#8230; and are tweeting away as the conference unfolds. You can follow the stream of #recsys09 tweets <a href="http://search.twitter.com/search?q=%23recsys09+OR+%23recsys">here</a>. Although I&#8217;m sure that there are many details that do not make it into the 140 character-long tweets, they provide a real time snapshot of what is going on in the conference.</p>
+The third <a href="http://recsys.acm.org/">ACM RecSys</a> conference started today in New York; unfortunately I could not make it. However, a number of people who I follow on Twitter are there (<a href="http://twitter.com/xamat">@xamat</a>, <a href="http://twitter.com/danielequercia">@danielequercia</a>, <a href="http://twitter.com/barrysmyth">@barrysmyth</a>)&#8230; and are tweeting away as the conference unfolds. You can follow the stream of #recsys09 tweets <a href="http://search.twitter.com/search?q=%23recsys09+OR+%23recsys">here</a>. Although I&#8217;m sure that there are many details that do not make it into the 140 character-long tweets, they provide a real time snapshot of what is going on in the conference.</p>
 <p>For example, the <a href="http://recsys.acm.org/program.html#keynote">first keynote</a> has <a href="http://twitter.com/barrysmyth/statuses/5097222885">just ended</a>. <a href="http://corp.strands.com/team">Francisco Martin</a>, Founder/CEO Strands, gave a talk about the &#8220;Top 10 Lessons Learned Developing, Deploying, and Operating Real-World Recommender Systems.&#8221; Here&#8217;s the twitter summary (note: copy/pasted and lightly edited to merge similar tweets).</p>
 <p><strong>Lesson 1</strong> &#8211; Make sure a recommender is really needed! Do you have lots of recommendable items? Many diverse customers?&#8230; also think Return-on-Invesment&#8230; a more <em>sophisticated</em> recommender <em>may</em> not deliver a better ROI.</p>
 <p><strong>Lesson 2</strong> &#8211; Make sure the recommendations make <em>strategic</em> sense. Is the best recommendation for the customer also the best for the business? What is the difference between a good and useful recommendation? Good recommendations vs useful recs; Obvious recommendations may not be useful; risky recs may deliver better long-term value</p>
