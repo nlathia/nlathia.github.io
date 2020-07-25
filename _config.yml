@@ -8,7 +8,7 @@ email: neal.lathia@gmail.com
 twitter_username: neal_lathia 
 github_username: nlathia
 
-baseurl: "/" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://nlathia.github.io" # the base hostname & protocol for your site
 
 google_analytics_id: 
