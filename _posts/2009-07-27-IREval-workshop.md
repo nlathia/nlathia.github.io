@@ -1,0 +1,26 @@
+---
+layout: post
+title: "Workshop on the Future of IR Evaluation"
+description: Originally published on mobblog.cs.ucl.ac.uk
+categories: [research]
+---
+
+I recently attended the <a href="http://staff.science.uva.nl/~kamps/ireval/">SIGIR '09 IREVAL workshop</a> on the future of IR evaluation, where I presented a poster on <a href="http://www.cs.ucl.ac.uk/staff/n.lathia/publications/sigir09_ireval.html">evaluating collaborative filtering over time</a>. The workshop began with invited talks from (IR-research superstars) Chris Buckley (<a href="http://videolectures.net/chris_buckley/">videolectures</a>), and <a href="http://labs.yahoo.com/user/154">Georges Dupret</a>, giving talks that drew on years of research experience. The workshop participants then broke into groups to discuss different proposals related to IR-evaluation, and the workshop closed with a group discussion about each proposal. As can be expected, this workshop brought up many more questions than it answered. Below I've transcribed some notes that I took during the day:
+
+Much like the recommender system community, IR research is worried about the problem of "which system is best?" Robertson discussed the science of hypothesis testing, comparing the need for controlled lab experiments and observational studies. A funny note he made was the "typical" SIGIR paper, which proceeds as follows: (a) Build a model, (b) Ask the model how to perform a ranking, (c) Construct a system that follows the model's advice, (d) Choose a baseline, (e) Evaluate with TREC, (f) Show that the model is better than the baseline and conclude that the system/model/approach is good. I found this particularly entertaining (in fact, at IJCAI, another researcher referred to these kind of papers as _minor-delta papers_). He concluded that "**a rich theory should have something to say both to lab experiments and observational studies**." In other words, you should ask your model to tell you about things that you don't know; unfortunately, most IR models are only asked about relevance and are not invited to make other predictions.
+
+Dumais began her talk by asking the audience how they would improve a search engine with $1 million dollars (with a nod to the recently finished <a href="http://mobblog.cs.ucl.ac.uk/2009/06/30/discussing-the-netflix-prize/">Netflix prize</a>). She discussed how success depends on both content ranking (order? spam? efficiency?) and the user interface/interaction (presentation? features? speed?), and how modern day search engines don't know (with click data) if their results are a tremendous success or abject failure. The problem in the domain of IR is deciding what to optimise - and, as Robertson said, user study and controlled experiment results have complimentary sets of information. One of the difficulties is thus the replicability of results, in the face of changing users, content, and queries: current test collections are very limited with respect to user activities. She closed on an important question: can we develop a shared resource for IR-evaluation?
+
+Buckley had a number of interesting points to make; the most salient (from my point of view) being that, while individual measures have not done such a terrible job to date, users can not distinguish between an ranking with mean average precision (MAP) of 0.55 and 0.95.
+
+Dupret reinforced many of the above points, with many interesting questions. What common assumptions about user behaviour are built into our metrics? How can we distinguish between, say, one session with N clicks and N sessions with 1 click? One of his conclusions was resounded throughout the day: **metrics require a realistic user model** to support them.
+
+The discussion groups were divided into four topics: putting humans in the loop, social data and evaluation, improving cranfield, and new domains and tasks (collaborative filtering evaluation fell into the latter group). The results of many of the discussions highlighted the importance of modeling and involving users (lots of mentions of the potential that <a href="http://mobblog.cs.ucl.ac.uk/2009/02/10/crowdsourcing-user-studies-with-mechanical-turk/">mechanical turk has for evaluation</a>).
+
+The groups then reconvened for a discussion, and one of the most interesting points from one of the panel members was focusing on two questions: Why is SIGIR popular? Why is SIGIR dangerous?
+
+* ...it is popular because of the _**great success of search engines**_ - but is dangerous because search engines provide a _**biased view of the world**_ (and are not only motivated to satisfy user information needs).
+* ...it is popular because it **_offers models_** that account for aspects that we investigate about how human search. However, these models are seductive; researchers often overlook the **_explaining why_** when exploring their data.
+* ...it is popular because it provides methods of **_measuring improvement_**, in order to foster competition and progress. However, evaluation is coerced into a narrow spectrum- **_evaluation mechanisms are being abused_** in order to publish results.
+
+As the panel discussed these points, I wondered how many other fields of Computer Science are afflicted by the same problems. Maybe it's time to stop calling ourselves scientists?

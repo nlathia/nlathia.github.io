@@ -1,0 +1,20 @@
+---
+layout: post
+title: "Temporal Collaborative Filtering"
+description: Originally published on mobblog.cs.ucl.ac.uk
+categories: [research]
+---
+
+As part of my recent work on collaborative filtering (CF), I've been examining the role that time plays in recommender systems. To date, the most notable use of temporal information (if you're familiar with the <a href="http://netflixprize.com/">Netflix prize</a>) is that researchers are using time(stamps) to inch their way closer to the million dollar reward. The idea is to use how user-ratings vary according to, for example, the day of the week they were input in order to _better predict_ the probe (and more importantly, the qualifying) datasets. I suppose my only criticism here is that once the million dollars has been won, nobody is going to implement and deploy this aspect of the algorithm (unless you are prepared to update your recommendations every day?) - since, in practice, we do not know _when users are going to rate items_.
+
+In the context of my work, I've been looking at 2 areas; the effect of time on (1) <a href="http://www.cs.ucl.ac.uk/staff/n.lathia/publications/recsys08.html">similarity between users</a> (RecSys '08), and (2) the recommender system itself. Here's a brief summary of (2):
+
+The problem is that there seems to be a bit of a gap between how CF is researched (in a nutshell: split data. design algorithm. train/ test. redesign algorithm. train/test...) and how it is deployed in practice (which is along the lines of: let users rate stuff. train algorithm. compute/serve recommendations. let users rate more stuff. train again, compute/serve again. let users rate more stuff...). Deployed recommender systems live on the arrow of time, and are updated regularly to serve up the latest recommendations. What does this mean? That (a) the users, (b) the content, and (c) the data are subject to growth. Summary statistics of the data change over time: recommender systems need to make decisions based on _sparse, incomplete, inaccurate, and changing data._ So why are they not evaluated as such?
+
+We did just that, with a couple algorithms and the Netflix data, simulating weekly updates. At each update time t, the training data is any rating input before t, and the test is any rating that will be input before the next update. Interestingly, no single algorithm dominated over the entire time - sometimes one model was most accurate, other times a different one was. If you decompose the users into groups, often the results for a particular group were _the complete opposite_ of the "global" results: the best model (or parameter setting) for the global, collective error is not the optimal strategy for each user. The most apparent feature of this set of iterative experiments is that CF (especially the kNN approach, which has sometimes been referred to as memory-based CF) _has no memory_: it does not take into account how well it is performing, and just does the same task over and over again at each update (the only difference being that it has more data).
+
+So, to wrap things up, we proposed and evaluated a method that does take into account temporal performance- it looks at how well the system is performing and adapts itself to try and perform better _for each user_. It does so by changing user-neighbourhood sizes over time (details/results will <a href="http://www.cs.ucl.ac.uk/staff/n.lathia/publications/sigir09.html">appear at SIGIR '09</a>). A neat consequence of trying to cater for the needs of each user is that the global accuracy increases as well, and the system automatically tunes its operation without any human intervention.
+
+Of course, accuracy is far from the end of the story- in fact, I sometimes think it is becoming one of the more boring sides of recommender system research. But the insight here is that given a metric (accuracy? diversity? novelty? robustness?) and a system that updates itself iteratively, we can design methods so that the system tunes itself to improve on this metric: this is what I have been looking at in recent weeks, and will post more about in the near future.
+
+			

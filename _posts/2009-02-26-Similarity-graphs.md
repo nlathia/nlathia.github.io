@@ -1,0 +1,15 @@
+---
+layout: post
+title: "Similarity Graphs"
+description: Originally published on mobblog.cs.ucl.ac.uk
+categories: [research]
+---
+
+The idea of reasoning about content to recommend as a similarity graph is quite widespread. Broadly speaking, you can start by drawing a set of circles (for users) on the left and a set of circles (for "items" - songs, movies..) on the right; when users rate/listen to/etc items, you draw an arrow from the corresponding left circle to the right circle (i.e. a bipartite graph).  What collaborative filtering algorithms can do is project the two-sided graph to two equivalent representations, where users are linked to other users, and items are linked to other items based on how similar they are.
+
+There are a bunch of places where this kind of abstraction has been used; for example, <a href="http://www.iua.upf.es/~ocelma/">Oscar Celma</a> used graphs to navigate users when discovering music in the long-tail. Paul Lamere posted graphs made with the EchoNest API <a href="http://musicmachinery.com/2009/02/26/the-led-zeppelin-graph/">on his blog</a>. I've also dabbled in this area a bit, but not using music listening data; I was using (the more traditional) MovieLens and Netflix datasets. The question that comes to mind when reading about techniques that _operate on_ the graph, though, is: are the underlying graphs _real_ representations of similarity between content? What if the graphs are _wrong_?
+
+A tiny (potentially biased) example shows this: on Last.fm, <a href="http://www.last.fm/music/Led+Zeppelin/+similar">Led Zepp's #2 similar artist</a> is Pink Floyd, a band that does not appear in <a href="http://musicmachinery.files.wordpress.com/2009/02/lz-full.png">Paul Lamere's graph</a> (note: the latter graph has been pruned. So maybe this is a bad example, but you get the idea). Navigating on graphs for an artist made using two different datasets may lead you down very different paths of discovery..
+
+This problem is rooted in the fact that different similarity measures don't agree with one another: given two vectors of ratings, different measures will produce equally different similarity values (and distributions of similarity). As I looked at <a href="http://www.cs.ucl.ac.uk/staff/n.lathia/publications/treck08.html">in this paper</a>, this sometimes means that random-valued similarity produces pretty good predictive accuracy results. Another way of thinking about the problem may be looking at how the graph changes over time as users rate the content even more. One of the main results <a href="http://www.cs.ucl.ac.uk/staff/n.lathia/publications/recsys08.html">I poster-ed</a> at RecSys '08 is that, in the case of movies being explicitly rated, this graph is subject to huge (and quick) change. Two users will be extraordinarily similar now, and drop out of each other's neighbourhood later. Is this a good thing? How does this reflect on the collaborative filtering assumption of  "users who have been like-minded _in the past_ are likely to share similar _future interests_?"
+
