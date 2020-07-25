@@ -7,9 +7,7 @@ categories: [paper]
 
 While discussing some A/B tests that we are running, [Colin McFarland](https://medium.com/u/e0e17553ea9f) recommended “Unexpected Results in Online Controlled Experiments” by Kohavi and Longbotham, from SIG KDD Explorations 2010. Following on from my other research summaries, here’s a quick overview of the paper.
 
-```
-If a result seems unexpected it may be due to lack of understanding of user behavior or it could be due to a software or experimental design problem.
-```
+> If a result seems unexpected it may be due to lack of understanding of user behavior or it could be due to a software or experimental design problem.
 
 This short, well-written paper does not focus on specific ideas or experimental results, but instead covers a wide range of unexpected lessons learned across a variety of online experiments. Many of these lessons capture differences between the control (A) and treatment (B) groups that end up unduly affecting your experiment, causing you to measure a change where none should have been measured.
 
@@ -38,8 +36,6 @@ The authors also share the following take-aways:
 
 At Skyscanner, our internal experimentation tool (Dr Jekyll) simply forces a new allocation and new scorecard anytime the experimenter makes a change. We also force buckets to be balanced: you choose your percentage of users you want in the experiment and we split all treatments equally.
 
-```
-Running a good online experiment is a lot more than just randomly assigning users into two groups — it requires careful planning and vigilance in monitoring for known and yet-to-be discovered sources of experimental bias.
-```
+> Running a good online experiment is a lot more than just randomly assigning users into two groups — it requires careful planning and vigilance in monitoring for known and yet-to-be discovered sources of experimental bias.
 
 Here’s another good read about experimentation: [Design Like You're Right, Test Like You're Wrong](http://codevoyagers.com/2016/03/16/design-like-youre-right-test-like-youre-wrong/).
