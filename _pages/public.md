@@ -44,6 +44,12 @@ Building a Bank with Data
 [How Monzo data management team aims to enable better internal decisions](https://www.compelo.com/banking/analysis/monzo-data-management/)
 <br />Compelo. April 2019.
 
+[Mindfulness boosts student mental health during exams, study finds](https://www.theguardian.com/lifeandstyle/2017/dec/18/mindfulness-boosts-student-mental-health-during-exams-cambridge-university-study-finds)
+<br />The Guardian. December 2017.
+
+[Eight weeks of mindfulness reduces stress in students during exam times, according to Cambridge University academics who carried out the largest study of its kind](https://www.dailymail.co.uk/health/article-5193703/Mindfulness-reduces-stress-students-exam-times.html)
+<br />The Daily Mail. December 2017.
+
 [Get Up and Move. It May Make You Happier](https://www.nytimes.com/2017/01/25/well/move/get-up-and-move-it-may-make-you-happier.html)
 <br />New York Times. January 2017.
 
@@ -83,11 +89,13 @@ Feature on Mobile Medicine ([PDF](http://mrc.io/networkwinter1415))
 [Are You Happy? An App Tries To Raise Our Collective Mood](http://www.forbes.com/sites/davidferris/2013/03/20/are-you-happy-an-app-tries-to-raise-our-collective-mood/)
 <br />Forbes, March 2013.
 
-[Crunch commuter data to track changing communities](https://www.salon.com/2013/10/24/bike_shares_can_be_perfect_solving_the_commuting_algorithm/)
+[Crunch commuter data to track changing communities](https://www.newscientist.com/article/mg21428605-400-crunch-commuter-data-to-track-changing-communities/?ignored=irrelevant)
 <br />New Scientist. April 2012.
 
 [Are your travel habits making journeys more expensive?](http://www.bbc.co.uk/news/uk-england-london-13389363)
 <br />BBC News. May 2011.
 
+[Predicting movie reviews bags team $1m prize](https://www.newscientist.com/article/dn17393-predicting-movie-reviews-bags-team-1m-prize/)
+<br />New Scientist. June 2009.
 
 
