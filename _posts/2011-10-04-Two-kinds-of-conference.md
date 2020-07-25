@@ -11,7 +11,7 @@ The panel discussion at <a href="http://www.ubicomp.org/ubicomp2011/" target="_b
 
 In doing so, Ubicomp joins the rest of the "who are we?" gang, including the AI community (what is artificial intelligence?), the data mining community (what should being a data miner mean?), and the recommender community (I remember a panel at one of the past conferences: "RecSys isn't anybody's home conference. We all belong elsewhere").
 
-The problem with this is that, in theory, doing <em>everything</em> dilutes the value of any <em>one thing</em> that you do: understanding the goal of the community really affects the quality and impact of the work that can be done. But is this really the case? Personally, I am not sure if I agree. In particular, I remembered <a href="http://mobblog.cs.ucl.ac.uk/2010/07/26/sigir-research-vs-reality/" target="_blank">a post</a> that I wrote about SIGIR 2010 where I quoted another researcher when I wrote:
+The problem with this is that, in theory, doing _everything_ dilutes the value of any _one thing_ that you do: understanding the goal of the community really affects the quality and impact of the work that can be done. But is this really the case? Personally, I am not sure if I agree. In particular, I remembered <a href="http://mobblog.cs.ucl.ac.uk/2010/07/26/sigir-research-vs-reality/" target="_blank">a post</a> that I wrote about SIGIR 2010 where I quoted another researcher when I wrote:
 
 > the research has fallen into a methodological rut; the conference is “trapped by a very successful paradigm [...where] people can do complex work, the quality of that work can be measured, and progress made.”
 
@@ -21,15 +21,15 @@ What is really important about any conference? Does a community really matter? T
 
 ### Attendee Mixing/Diversity
 
-The conferences I've been to that felt the strangest were the least diverse ones, in terms of the audience. KDD was very interesting because there are so many walks of life that are somehow involved in the "big-data" bandwagon. While the Ubicomp <em>work</em> certainly scores highly in diversity, I did notice that the 'community' is full of faces that are very familiar to each other (e.g., session chairs calling out to audience members by name). Does that make bigger = better?
+The conferences I've been to that felt the strangest were the least diverse ones, in terms of the audience. KDD was very interesting because there are so many walks of life that are somehow involved in the "big-data" bandwagon. While the Ubicomp _work_ certainly scores highly in diversity, I did notice that the 'community' is full of faces that are very familiar to each other (e.g., session chairs calling out to audience members by name). Does that make bigger = better?
 
 ### Building bridges
 
 I've drawn a lot of value from conferences that put people with diverging opinions and backgrounds in the same room. The researcher beside the industry; the technically-minded beside the humanist.
 
-Ultimately, though, none of this stuff matters (unless you are trying to sell registrations to your conference). What excites me the most about conferences is seeing people work on <strong>important Problems</strong>. Seeing research that matters, that addresses huge problems in the world, whether by chipping away at it one piece at a time or slamming a huge dent into it; and, particularly, stuff that could not be easily solved by any one company (should they suddenly find a business model in it).
+Ultimately, though, none of this stuff matters (unless you are trying to sell registrations to your conference). What excites me the most about conferences is seeing people work on **important Problems**. Seeing research that matters, that addresses huge problems in the world, whether by chipping away at it one piece at a time or slamming a huge dent into it; and, particularly, stuff that could not be easily solved by any one company (should they suddenly find a business model in it).
 
-I would re-post the question I ended with there: <strong>why do we have presentation-based conferences?</strong> I'm still not sure. Maybe it's as flawed as peer review (being a consequence of it).
+I would re-post the question I ended with there: **why do we have presentation-based conferences?** I'm still not sure. Maybe it's as flawed as peer review (being a consequence of it).
 
 If you are curious, here's a list of the conferences I've attended in the last few years, sorted by theme.
 

@@ -12,9 +12,7 @@ In my case, this meant making sure the inbox didn't overflow, reading some paper
 My experience? Some aspects of this method don't work so well. Being (as) brief (as possible) in emails comes across badly. Trying to remotely manage a project doesn't work; it seems unclear to others as to whether you are away or not, and how to go about decision making in the mean time. Others are definitely great: I'm back and blogging!
 
 Here are a number of highlights of the time I've spent catching up on tweets/posts:
-<ul>
-	<li>The papers that will be presented at <a href="http://www.ubicomp.org/ubicomp2011/acceptedpapers.html" target="_blank">ACM Ubicomp</a> (September) and <a href="http://www.recsys.acm.org/2011/accepted_papers.shtml" target="_blank">ACM RecSys</a> (October) are online.</li>
-	<li>The KDD Cup workshop <a href="http://kddcup.yahoo.com/workshop.php#" target="_blank">schedule</a> is online.</li>
-	<li>A <a href="http://www.occamslab.com/petricek/data/" target="_blank">paper (and data set)</a> with ratings from an online dating web site.</li>
-	<li>Listen to someone put their <a href="http://www.youtube.com/watch?v=S2_6ggJf3ns" target="_blank">foot in their mouth</a> regarding the London riots (as well as rap!). Some <a href="http://www.leonneal.com/blog/2011/08/12/london-riots-august-2011/" target="_blank">amazing pictures</a> are online as well.</li>
-</ul>
+* The papers that will be presented at <a href="http://www.ubicomp.org/ubicomp2011/acceptedpapers.html" target="_blank">ACM Ubicomp</a> (September) and <a href="http://www.recsys.acm.org/2011/accepted_papers.shtml" target="_blank">ACM RecSys</a> (October) are online.
+* The KDD Cup workshop <a href="http://kddcup.yahoo.com/workshop.php#" target="_blank">schedule</a> is online.
+* A <a href="http://www.occamslab.com/petricek/data/" target="_blank">paper (and data set)</a> with ratings from an online dating web site.
+* Listen to someone put their <a href="http://www.youtube.com/watch?v=S2_6ggJf3ns" target="_blank">foot in their mouth</a> regarding the London riots (as well as rap!). Some <a href="http://www.leonneal.com/blog/2011/08/12/london-riots-august-2011/" target="_blank">amazing pictures</a> are online as well.

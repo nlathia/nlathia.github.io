@@ -5,7 +5,7 @@ description: Originally published on mobblog.cs.ucl.ac.uk
 categories: [research]
 ---
 
-Recently, I submitted my first paper to <a href="http://recsys.acm.org/" title="RecSys" target="_blank">RecSys 07</a>, "Private Distributed Collaborative Filtering using Estimated Concordance Measures." Even though it is not particularly about mobile-stuff, here's a quick run through the main ideas:
+Recently, I submitted my first paper to [RecSys 07](http://recsys.acm.org/), "Private Distributed Collaborative Filtering using Estimated Concordance Measures." Even though it is not particularly about mobile-stuff, here's a quick run through the main ideas:
 
 Collaborative filtering is a means of using a community's behavior, within a certain domain (movies, music), to support reducing the amount of information that each individual needs to looks through to find their items of interest. It is the dominant method behind recommender systems (such as Amazon, etc), and is based on a simple idea: people with previous shared interests will, most likely, share common likes and dislikes in the future. So, to predict how much I will like a certain item, the system first compares my rating history to all the other users to produce similarity measures, and then uses these similarity measures to compute a weighted average of how much they enjoyed the item in question.
 

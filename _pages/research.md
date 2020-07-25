@@ -4,7 +4,7 @@ title: Research
 permalink: /research/
 ---
 
-### 📣 Upcoming Conferences
+## 🔍 Program Committees
 
 [14th ACM Conference on Web Search and Data Mining](http://www.wsdm-conference.org/2021/), Program Committee. 2021.
 
@@ -13,7 +13,7 @@ permalink: /research/
 A full list is on [this archive page](../archive/reviewing.html).
 
 
-### 🎓 PhD Research
+## 🎓 PhD Research
 
 [Evaluating Collaborative Filtering Over Time](../papers/lathia_ucl_thesis10.pdf)
 
@@ -21,7 +21,7 @@ N. Lathia. Department of Computer Science, University College London. June 2010.
 
 Supervisors: [Prof. Stephen Hailes](http://www0.cs.ucl.ac.uk/staff/s.hailes/), [Prof. Licia Capra](http://www0.cs.ucl.ac.uk/staff/l.capra/)
 
-### 👨‍🔬  Research Publications
+## 👨‍🔬  Research Publications
 
 [The Dark Triad of personality and momentary affective states: an experience sampling study](../papers/pilch_20.pdf)
 

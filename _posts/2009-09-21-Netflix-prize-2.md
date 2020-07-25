@@ -9,7 +9,7 @@ The <a href="http://netflixprize.com/">netflix prize</a> winners have been <a hr
 
 > "The new challenge focuses on predicting the movie preferences of people who rarely or never rate the movies they rent. This will be deduced from  more than 100 million data points, including information about renters' ages, genders, ZIP codes, genre ratings and previously chosen movies.
 
-> Instead of a single $1 million prize, this new challenge will be split  into one $500,000 award to the team judged to be leading after six  months and an additional $500,000 to the team in the lead at the  18-month mark, when the contest is wrapped up.&#8221;
+> Instead of a single $1 million prize, this new challenge will be split into one $500,000 award to the team judged to be leading after six months and an additional $500,000 to the team in the lead at the 18-month mark, when the contest is wrapped up."
 
 Interestingly, our previous discussion on the <a href="http://mobblog.cs.ucl.ac.uk/2009/06/30/discussing-the-netflix-prize/">viability of the winner's results</a> has now an answer. From <a href="http://www.appscout.com/2009/09/netflix_1m_prize_winners_inclu.php">here</a>:
 

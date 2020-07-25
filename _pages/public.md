@@ -6,7 +6,7 @@ permalink: /public/
 
 For presentations prior to 2018, please see an archive list [here](../archive/public) or have a look at [my slide share page](http://www.slideshare.net/neal.lathia).
 
-# Recent talks
+# 📣 Recent talks
 
 Deploying machine learning to improve customer support
 <br />November 5 2019, [PyTorch London](https://www.meetup.com/London-PyTorch-Meetup/events/265564747/) Meetup. [Slides](https://www.slideshare.net/neal.lathia/using-language-models-to-supercharge-monzos-customer-support).
@@ -27,7 +27,7 @@ Data @ Monzo
 Building a Bank with Data
 <br />June 2018, [EGG Conference: Towards Data Science at Scale](https://pages.dataiku.com/egg-uk-2018). London [YouTube](https://www.youtube.com/watch?v=hbNRxVR8LHA).
 
-# Press
+# 📰 Press
 
 [Monzo: how the bank of the future uses AI](https://tbtech.co/monzo-how-the-bank-of-the-future-uses-ai/)
 <br />Top Business Tech. August 2019.

@@ -11,4 +11,4 @@ I've just finished a poster for <a href="http://www.cs.ucl.ac.uk/staff/n.lathia/
 
 that will shortly appear at the upcoming <a href="http://www.kdd.org/kdd2011/" target="_blank">ACM SIG KDD Conference on Knowledge Discovery and Data Mining</a>. You can find it below. I'm looking forward to going to San Diego, and the conference next week.
 
-![](../assets/urbanmining/kdd2011_poster.png "ACM KDD 2011 Poster")
+<img src="{{ "/assets/urbanmining/kdd2011_poster.png" | prepend: site.baseurl }}"  alt="ACM KDD 2011 Poster">

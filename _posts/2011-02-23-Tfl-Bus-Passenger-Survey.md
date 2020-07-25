@@ -5,7 +5,7 @@ description: Originally published on urbanmining.wordpress.com
 categories: [research, transport]
 ---
 
-![](https://nlathia.github.io/blog/images/urbanmining/bus_survey_thumb.jpg "TfL's bus survey!")
+<img src="{{ "/assets/urbanmining/bus_survey_thumb.jpg" | prepend: site.baseurl }}"  alt="TfL's bus survey!">
 
 After running my last online survey (read about it <a href="http://urbanmining.wordpress.com/2011/01/11/survey-londoners-how-do-you-get-around-town/">here</a>) on Londoner's trip and ticket purchasing habits, I was pointed to the fact that TfL are, themselves, doing a bit of research. They have been passing out short surveys for passengers to fill in on a number of bus routes, asking people to fill in their origins, destinations, reasons for travel.
 
