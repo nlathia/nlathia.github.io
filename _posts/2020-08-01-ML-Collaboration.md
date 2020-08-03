@@ -9,7 +9,7 @@ If you've ever participated in the design of a software system, you may have spo
 
 The system may be sliced up as front/back-end, client/server, or as several server-side components that talk to or layer on top of each other. Many times, these bits can be drawn with boxes and arrows on a whiteboard, and we have names for the roles who specialise in building certain types of boxes (Backend, Mobile, Web Engineer).
 
-The tech world has been learned so many things about _how_ to build systems that it now produces companies with _thousands_ of people who can work on building large scale software systems together-- and who collectively refer to their discipline as [software engineering](https://research.swtch.com/vgo-eng).
+The tech world has learned so many things about _how_ to build systems that it now produces companies with _thousands_ of people who can work on building large scale software systems together-- and who collectively refer to their discipline as [software engineering](https://research.swtch.com/vgo-eng).
 
 > Software engineering is what happens to programming when you add time and other programmers.
 
@@ -17,7 +17,7 @@ The tech world has been learned so many things about _how_ to build systems that
 
 Machine learning, or "[Software 2.0](https://medium.com/@karpathy/software-2-0-a64152b37c35)," changes many things about programming. A recent highlight was a colleague who, after training his first model, told me "I used to be able to go home at the end of the day, knowing that my code worked." 😅
 
-Aside from the complexity of machine learning itself -- the maths, models, and recent advances -- machine learning is also breaking everything that was common practice in Software Engineering.
+Aside from the complexity of machine learning itself -- the maths, models, and recent advances -- machine learning is also breaking everything that is common practice in Software Engineering.
 
 ML today is broadly pitched as a **sequential** process, covering steps that do things to extract, load, and transform the data, steps that train and validate models, and steps that ~~draw the rest of the fucking owl~~ put the model [into production](http://veekaybee.github.io/2020/06/09/ml-in-prod/#the-mystery-of-deploying-ml).
 
@@ -31,7 +31,9 @@ In doing so, _machine learning_ methods are running amock from the established p
 
 Without having any established patterns for _teams_ to work together on building ML systems, I've seen many folks revert back to some kind of [waterfall](https://en.wikipedia.org/wiki/Waterfall_model) process: projects are split up into a "training phase" and a "productionising phase." The former requires a lot of data analysis and modeling. The latter can't happen until the former is "ready," and often happens with an actual handover from one team to another. In some cases this also means re-writing everything from the first phase (which may have been written in a "non-production" language) into a different programming language.
 
-It's odd to think that a flavour of waterfall is back. The waterfall model was broadly abandoned because it was inefficient and lead to poor outcomes; and yet, it's not uncommon to hear of it applied again in ML--I wonder how many projects are failing because of this. 
+This doesn't mean that there is no iteration; within the "training phase," it's most likely that individuals will be cycling between steps with the data and steps with the model. But when that phase is "done," it is passed on to the next one.
+
+It's odd to think that a flavour of waterfall is back. The waterfall model was broadly abandoned because it was inefficient and lead to poor outcomes; and yet, it's not uncommon to hear of it applied again in ML. A classic example I've heard is about training models that were absolutely infeasible to put into products, and only discovering that late in the process. I wonder how many projects are failing because of this. 
 
 ## We collaborate by competing
 
@@ -55,9 +57,9 @@ Software monoliths are perfectly adequate for some applications, but one of the 
 
 ## So what else can we do?
 
-At the London PyTorch meetup last year, I briefly described a system architecture that was behind one of the machine learning systems that we shipped, and how that enabled multiple people to contribute towards the same problem.
+At the London PyTorch meetup last year, I briefly described a system architecture that was behind one of the machine learning systems that we shipped, and how that enabled multiple people to contribute towards the same problem. At it's core, we transformed an ML problem into a formulation that enabled many people to collaborate on it.
 
-The basic problem (full slide deck is below) was a multi-class text classification problem, where we had fewer than \~20 classes. We wanted to test something with customers quickly, and so we started by training a model that aimed to detect one of those classes. It threw up all of the usual nuance of ML projects; for example, the data quality wasn't quite what we expected. But we managed to iterate on this binary classifier quickly and ship something which showed a lot of promise.
+The basic scenario (full slide deck is below) was a multi-class text classification problem, where we had fewer than \~20 classes. We wanted to test something with customers quickly, and so we started by training a model that aimed to detect one of those classes. It threw up all of the usual nuance of ML projects; for example, the data quality wasn't quite what we expected. But we managed to iterate on this binary classifier quickly and ship something which showed a lot of promise.
 
 When it came to scaling up, we didn't want to throw away all of the work we had done so far. Therefore, instead of training a _single_ 20-class classifier, we trained 20 binary classifiers--one per class.
 
@@ -68,6 +70,7 @@ The benefits we saw of this approach were:
 * Constructive parallelisation: instead of having teams compete to train the "best" model, we were able to split up the work (by class) and train one each.
 * Easier evaluations: understanding the offline performance of a binary classifier is much more straightforward than having to consider a 20x20 confusion matrix -- which helped accelerate us to know when they were good enough.
 * No unintended side-effects: adding a new topic into the system did not change the previous classifiers; we didn't observe any of these classifiers interfering with one another.
+* More control: we were able to add rules to work alongside specific classifiers, and flip switches to turn them on or off.
 
 A natural question to ask is whether all of this work produced a _worse_ model overall. Once we had validated this system in product experiments, a Scientist in my team ran offline experiments comparing those models with a single multi-class alternative: the differences were negligible (in some classes) or worse (in others).
 
@@ -75,7 +78,7 @@ A natural question to ask is whether all of this work produced a _worse_ model o
 
 The top of this blog post has the "Software engineering is what happens to programming when you add time and other programmers" quote. There are many interesting things about ML--but the most exciting bit for me is about turning its potential into real systems. And the only way to achieve that is to have both the tools and methods that we need; it seems that the latter is still in its infancy.
 
-Since giving the PyTorch London presentation in October 2019, I've heard that other companies have adopted this model orchestration approach, so thought to share it more widely. If it's useful for you too, let [me](https://twitter.com/neal_lathia) know. The full presentation is below, and the subject of this post is from slide 22 onwards.
+Since giving the PyTorch London presentation in October 2019, I've heard that other companies have adopted this model orchestration approach, so thought to share it more widely. If it's useful for you too, let [me](https://twitter.com/neal_lathia) know. The full presentation is below, and the example described in this post is from slide 22 onwards.
 
 
 <iframe src="//www.slideshare.net/slideshow/embed_code/key/NFnCQv2LUK5Cy0" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/neal.lathia/using-language-models-to-supercharge-monzos-customer-support" title=" Using language models to supercharge Monzo’s customer support" target="_blank"> Using language models to supercharge Monzo’s customer support</a> </strong> from <strong><a href="https://www.slideshare.net/neal.lathia" target="_blank">Neal Lathia</a></strong> </div>
