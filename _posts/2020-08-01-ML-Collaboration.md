@@ -9,7 +9,7 @@ If you've ever participated in the design of a software system, you may have spo
 
 The system may be sliced up as front/back-end, client/server, or as several server-side components that talk to or layer on top of each other. Many times, these bits can be drawn with boxes and arrows on a whiteboard, and we have names for the roles who specialise in building certain types of boxes (Backend, Mobile, Web Engineer).
 
-The tech world has been learned so many things about _how_ to build systems that it now produces companies with _thousands_ of people who can work on building large scale software systems together-- and who collectively refer to their discipline as [software engineering](https://research.swtch.com/vgo-eng).
+The tech world has learned so many things about _how_ to build systems that it now produces companies with _thousands_ of people who can work on building large scale software systems together-- and who collectively refer to their discipline as [software engineering](https://research.swtch.com/vgo-eng).
 
 > Software engineering is what happens to programming when you add time and other programmers.
 
@@ -80,6 +80,6 @@ A natural question to ask is whether all of this work produced a _worse_ model o
 
 The top of this blog post has the "Software engineering is what happens to programming when you add time and other programmers" quote. There are many interesting things about ML--but the most exciting bit for me is about turning its potential into real systems. And the only way to achieve that is to have both the tools and methods that we need; it seems that the latter is still in its infancy.
 
-Since giving the PyTorch London presentation in October 2019, I've heard that other companies have adopted this model orchestration approach, so thought to share it more widely. If it's useful for you too, let [me](https://twitter.com/neal_lathia) know. The full presentation is below, and the subject of this post is from slide 22 onwards.
+Since giving the PyTorch London presentation in October 2019, I've heard that other companies have adopted this model orchestration approach, so thought to share it more widely. If it's useful for you too, let [me](https://twitter.com/neal_lathia) know. The full presentation is below, and the example described in this post is from slide 22 onwards.
 
 <iframe src="//www.slideshare.net/slideshow/embed_code/key/NFnCQv2LUK5Cy0" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/neal.lathia/using-language-models-to-supercharge-monzos-customer-support" title=" Using language models to supercharge Monzo’s customer support" target="_blank"> Using language models to supercharge Monzo’s customer support</a> </strong> from <strong><a href="https://www.slideshare.net/neal.lathia" target="_blank">Neal Lathia</a></strong> </div>
