@@ -15,7 +15,7 @@ The tech world has learned so many things about _how_ to build systems that it n
 
 ## Enter Software 2.0
 
-Machine learning, or "[Software 2.0](https://medium.com/@karpathy/software-2-0-a64152b37c35)," changes many things about programming. A recent highlight was a colleague who, after training his first model, told me "I used to be able to go home at the end of the day, knowing that my code worked." 😅
+Machine learning, aka "[Software 2.0](https://medium.com/@karpathy/software-2-0-a64152b37c35)," changes many things about programming. A recent highlight was a colleague who, after training his first model, told me "I used to be able to go home at the end of the day, knowing that my code worked." 😅
 
 Aside from the complexity of machine learning itself -- the maths, models, and recent advances -- machine learning is also breaking everything that is common practice in Software Engineering.
 
@@ -59,9 +59,9 @@ Software monoliths are perfectly adequate for some applications, but one of the 
 
 We can do better! And this boils down to marrying up how we define ML problems with the design of their systems, to enable teams to collaborate.
 
-At the London PyTorch meetup last year, I briefly described a system architecture that was behind one of the machine learning systems that we shipped, and how that enabled multiple people to contribute towards the same problem. At it's core, we transformed an ML problem into a formulation that enabled many people to collaborate on it.
+At the London PyTorch meetup last year, I briefly described a system architecture that was behind one of the machine learning systems that we shipped at Monzo, and how that enabled multiple people to contribute towards the same problem. At its core, we transformed an ML problem into a formulation that enabled many people to collaborate on it.
 
-The basic scenario (full slide deck is below) was a multi-class text classification problem, where we had fewer than \~20 classes. We wanted to test something with customers quickly, and so we started by training a model that aimed to detect one of those classes. It threw up all of the usual nuance of ML projects; for example, the data quality wasn't quite what we expected. But we managed to iterate on this binary classifier quickly and ship something which showed a lot of promise.
+The basic scenario (full slide deck is below) was a multi-class text classification problem, where we had fewer than \~20 classes. We wanted to test something with customers quickly, and so we started by training a model that aimed to detect one of those classes. It threw up all of the usual nuances of ML projects; for example, the data quality wasn't quite what we expected. But we managed to iterate on this binary classifier quickly and ship something which showed a lot of promise.
 
 When it came to scaling up, we didn't want to throw away all of the work we had done so far. Therefore, instead of training a _single_ 20-class classifier, we trained 20 binary classifiers--one per class.
 
