@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Software Engineering 2.0"
-description: An architecture we used to parallelise work on one problem.
+description: We have Software 2.0, but are missing Software Engineering 2.0.
 categories: [tech-lead, monzo]
 ---
 
@@ -56,6 +56,8 @@ This ML system (while hugely impressive and likely the state-of-the-art) sounds 
 Software monoliths are perfectly adequate for some applications, but one of the reasons companies large and small had been moving away from them is that they do not faciliate agility and collaboration. There are many posts ([here's one](https://www.mulesoft.com/resources/api/microservices-vs-monolithic)) that go into the "monolith vs microservice" debate, which I won't reiterate; I'm also not arguing that a self driving car _should_ be built with microservices. We're simply back to a place where systems' designs do not easily lend themselves towards having more time and programmers. 
 
 ## So what else can we do?
+
+We can do better! And this boils down to marrying up how we define ML problems with the design of their systems, to enable teams to collaborate.
 
 At the London PyTorch meetup last year, I briefly described a system architecture that was behind one of the machine learning systems that we shipped, and how that enabled multiple people to contribute towards the same problem. At it's core, we transformed an ML problem into a formulation that enabled many people to collaborate on it.
 
