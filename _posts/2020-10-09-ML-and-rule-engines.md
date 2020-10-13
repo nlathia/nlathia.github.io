@@ -62,7 +62,7 @@ There are cases where we can treat machine learning models as a special type of 
 
 The chat message-routing rule engine that I touched on above had one problem: when customers would come into the chat screen from "generic" parts of the app, we could not apply rules to route them to specialised agents. In this case, we recycled a topic classifier system that we had previously built, and tacked it onto the end of the rule engine. If none of the rules matched, the system tries to infer the topic of the conversation using a family of BERT models; if one of those gives us a "yes," we route the chat to specialised agents.
 
-➡️ This setup can sometimmes mean that the machine learning model will only run into the "harder" case. This is an important consideration to keep in mind while training your model.
+➡️ This setup can sometimes mean that the machine learning model will only run into the "harder" case. This is an important consideration to keep in mind while training your model.
 
 ### Use machine learning to make a decision based on the output of many rules
 
