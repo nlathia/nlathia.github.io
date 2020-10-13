@@ -38,7 +38,7 @@ Rule engines, expressed a family of `if`-statements, do really well in determini
 
 The situations where machine learning can usually help share a common theme: they are trying to _optimise_ some kind of process which cannot be fully enumerated with a deterministic set of rules.
 
-This switch from "control" to "optimise" is usually a hallmark indication that learning from data can bring some benefits. Sometimes, this manifests as aspects of  systems that, from a rule-writing perspective, sound vague (for example: "suspect payment" or "conversation that is about a certain topic" or "a photograph that has an animal"); many of these things usually have to do with *human behaviour*.
+This switch from "control" to "optimise" is usually a hallmark indication that learning from data can bring some benefits. Sometimes, this manifests as aspects of systems that, from a rule-writing perspective, sound vague (for example: "suspect payment" or "conversation that is about a certain topic" or "a photograph that has an animal"); many of these things usually have to do with *human behaviour*.
 
 ## Where does machine learning fit in?
 
