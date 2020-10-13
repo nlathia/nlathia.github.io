@@ -9,7 +9,7 @@ In the infamous [Rules of Machine Learning](https://developers.google.com/machin
 
 This is really solid advice. In fact, many companies will have built a rule engine or two before having anyone who was hired to think about machine learning. However, one of the thoughts that I've heard many times from machine learning folks is that "machine learning systems should _replace_ rule engines" -- and that it is just a matter of time, effort, and iteration until they do. 
 
-In my experience, this type of thinking leads folks towards solving the wrong types of problems. It shifts the focus to replicating what can already be accomplished with rules, and removes focus from using machine learning to do what it can do best to _improve_ the outcomes of the entire system.
+In my experience, this type of thinking leads folks towards solving the wrong types of problems. It shifts the focus to replicating what can already be accomplished with rules, and removes focus from using machine learning to improve the outcomes of the _entire_ system.
 
 Based on having had this discussion plenty of times, I recently wrote up an internal doc as a guide when there is appetite to add machine learning into an existing rule engine. This blog post pulls out three key questions from it:
 
@@ -75,4 +75,3 @@ For example, a few years ago we ran an experiment with recommending help article
 When iterating on a system, it's common to start out with a rule engine. From what I've seen, it's less common for those systems to progress towards starting to use _some_ machine learning, and it's fantastically rare for those systems to be migrated to _only_ use machine learning (if you've managed to do that, I want to hear from you!). 
 
 Instead, a pragmatic trade-off is to spend time understanding what value the machine learning bit is providing, and to focus your efforts on that. In this post, I've covered a few different shapes that these systems can take, and skipped some of the other hard bits--such as evaluating them holistically. I'll leave that for another time. 
-
