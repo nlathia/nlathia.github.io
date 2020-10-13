@@ -80,7 +80,7 @@ LEFT JOIN signups_completed USING (user_id)
 
 And here are the results:
 
-![](https://nlathia.github.io/blog/images/bigquery-post/users-table.png "A table of users")
+![](https://nlathia.github.io/assets/bigquery-post/users-table.png "A table of users")
 
 Perfect! This is the ideal analytics table to answer a ton of different basic analytic questions: How many users do we have? How many of them signed up today? How long does it take users, on average, to complete signup?
 
@@ -109,7 +109,7 @@ signup_completed_events AS (
 
 This tiniest of errors -- something that is largely invisible to the person who is _writing_ the SQL, breaks the table: `user_3` appears twice. Not only that, but your stats on signup completion rates have shot through the roof!
 
-![](https://nlathia.github.io/blog/images/bigquery-post/users-table-errors.png "A table of users with errors!")
+![](https://nlathia.github.io/assets/bigquery-post/users-table-errors.png "A table of users with errors!")
 
 Herein lies the problem: a tiny issue in the data has propagated itself through the `LEFT JOIN`s in the analytics code base, and has completely skewed some metrics that you are using.
 
@@ -147,7 +147,7 @@ FROM user_validation
 
 These types of queries are an extremely useful way of (a) documenting what you expect, and (b) creating a table of all of the (in this case) user ids that don't match your expectations -- and how many times each one is duplicated.
 
-![](https://nlathia.github.io/blog/images/bigquery-post/users-validation-table.png "A validation table with a list of errors.")
+![](https://nlathia.github.io/assets/bigquery-post/users-validation-table.png "A validation table with a list of errors.")
 
 **Step 2**. Now that we have a way to identify errors, we need a way to stop our query from completing successfully if any errors are found. The first way we did this was to force BigQuery to compute something it couldn't if it found errors: we would literally encode a one divided by zero. Shortly after, we found a debugging function buried in [the BigQuery documentation]((https://cloud.google.com/bigquery/docs/reference/standard-sql/debugging_functions)). 
 
@@ -163,7 +163,7 @@ WHERE num_failures != 0
 
 If you run this in the BigQuery console, it pops up with this kind of alert:
 
-![](https://nlathia.github.io/blog/images/bigquery-post/bigquery-error.png "The BigQuery ERROR() alert.")
+![](https://nlathia.github.io/assets/bigquery-post/bigquery-error.png "The BigQuery ERROR() alert.")
 
 The final workflow would run (1) the original query, (2) the validation query, and then (3) the error query. This approach really accelerated our ability to diagnose and fix errors; it de-coupled the ~~code~~ SQL that did the work from the SQL that did the validation, and it automatically documented all of our assumptions about a given table.
 
