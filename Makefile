@@ -2,7 +2,7 @@
 # Setup for local development
 .PHONY: localhost
 localhost:
-	rake preview
+	bundle exec jekyll serve
 
 .PHONY: install
 install:
