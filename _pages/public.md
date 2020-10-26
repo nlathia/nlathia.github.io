@@ -8,6 +8,9 @@ For presentations prior to 2018, please see an archive list [here](../archive/pu
 
 # 📣 Recent talks
 
+Machine learning in Industry - Invited Seminar
+<br />November 3, 2020, University College London
+
 Deploying machine learning to improve customer support
 <br />November 5 2019, [PyTorch London](https://www.meetup.com/London-PyTorch-Meetup/events/265564747/) Meetup. [Slides](https://www.slideshare.net/neal.lathia/using-language-models-to-supercharge-monzos-customer-support).
 <br />October 8 2019, Imperial College. London.
@@ -19,7 +22,8 @@ Speeding up Machine Learning Development
 <br />April 4 2019, Xcede Data Science Networking Event. London. [Slides](https://www.slideshare.net/neal.lathia/machine-learning-faster).
 
 Using Deep Learning to Support Customer Operations
-<br />March 30 2019, [ReWork Deep Learning in Finance Summit](https://www.re-work.co/events/deep-learning-in-finance-summit-london-2019). London.
+<br />March 30 2019, [ReWork Deep Learning in Finance Summit](https://www.re-work.co/events/deep-learning-in-finance-summit-london-2019). London. [Online here](https://videos.re-work.co/videos/1440-using-deep-learning-to-support-customer-operations).
+<br />Listed under this [30 Influential AI Presentations from 2019](https://blog.re-work.co/30-pieces-of-influential-ai-research-in-2019/) list.
 
 Data @ Monzo
 <br />February 2019, Lloyd's Bank Data Team Offsite (Invited). London.
