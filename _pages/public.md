@@ -39,6 +39,9 @@ Building a Bank with Data
 [The tipping point of AI FOMO](https://www.finextra.com/the-long-read/17/the-tipping-point-of-ai-fomo)
 <br />Finextra. February 2020.
 
+[Alinea Meets: Neal Lathia - Machine Learning Lead at Monzo ](https://www.linkedin.com/pulse/alinea-meets-neal-lathia-machine-learning-lead-monzo-harry-butcher)
+<br />Alinea Interview. December 2019.
+
 [Monzo: how the bank of the future uses AI](https://tbtech.co/monzo-how-the-bank-of-the-future-uses-ai/)
 <br />Top Business Tech. August 2019.
 
