@@ -33,6 +33,12 @@ Building a Bank with Data
 
 # 📰 Press
 
+[Practical Skills for The AI Product Manager](https://www.oreilly.com/radar/practical-skills-for-the-ai-product-manager/)
+<br />O'Reilly. May 2020.
+
+[The tipping point of AI FOMO](https://www.finextra.com/the-long-read/17/the-tipping-point-of-ai-fomo)
+<br />Finextra. February 2020.
+
 [Monzo: how the bank of the future uses AI](https://tbtech.co/monzo-how-the-bank-of-the-future-uses-ai/)
 <br />Top Business Tech. August 2019.
 
