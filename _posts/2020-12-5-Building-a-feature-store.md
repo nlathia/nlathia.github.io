@@ -11,7 +11,7 @@ This idea has been around for quite a while, but there are now an increasing num
 
 A few months ago, I built a feature store at [Monzo](https://monzo.com/); in light of that, I thought I'd share some of the thinking that motivated my team to need to build one and how I designed it.
 
-As a broad summary: the feature store that we built does not solve for the many different use cases that you may hear about feature store products--our feature store focuses on regularly and safely transferring data between our analytics and production stacks.
+As a broad summary: the feature store that I built does not solve for the many different use cases that you may hear about feature store products--our feature store focuses on regularly and safely transferring data between our analytics and production stacks.
 
 Let's begin!
 
@@ -60,13 +60,13 @@ If you open up the website of your favourite company that is offering a feature 
 
 _It's mind boggling._
 
-Up front, I decided that I had no desire to migrate any of our existing systems to sit behind any kind of centralised "feature store" API. I didn't want the feature store to become stand-in replacement for things that already existed, or a behemoth that is owned by my (small) team. Instead, I learned about what we needed by looking for patterns in the machine learning models that we were shipping. 
+Up front, I decided that I had no desire to migrate any of our existing systems to sit behind any kind of centralised "feature store" API. I didn't want the feature store to become a replacement for things that already existed, or a behemoth that is owned by my (small) team. Instead, I learned about what we needed by looking for patterns in the machine learning models that we were shipping. 
 
 Specifically, we didn't need a feature store until this year, when we ramped up how often we were designing and shipping machine learning models that were trained on tabular data (systems we built prior were very NLP-heavy).
 
 When shipping tabular-based models, we kept finding that many of the features we would input into a model while training it were _not_ readily available in our production infrastructure. A large part of this is because our [analytics stack](https://cloud.google.com/customers/monzo), where all of our Data Scientists and Analysts contribute, sits separately from our [production stack](https://aws.amazon.com/solutions/case-studies/monzo/).
 
-Here's a toy example: a customer's balance, accurate to this specific moment, is already available in production--so doesn't need to be in a feature store. _But_ aggregations on a customer's balance (e.g., a customer's 7-day average balance) were not, even though these numbers were already available in our _analytics_, based on SQL queries that Data Scientists had previously written.
+Here's a toy example: a customer's account balance, accurate to this specific moment, is already available in production--so doesn't need to be in a feature store. _But_ aggregations on a customer's balance (e.g., a customer's 7-day average balance) were not, even though these numbers were already available in our _analytics_, based on SQL queries that Data Scientists had previously written.
 
 We found that we already had an abundance of features in our analytics tables that, if used in production, would specifically be characterised by:
 
@@ -95,7 +95,7 @@ When a table needs to be sync'ed, it gets partitioned into batches and then expo
 
 From there, these batches are read and written into Cassandra--effectively changing a "wide" BigQuery table (e.g. having 10s of features per user) into a very "tall" Cassandra table (one row per user per feature), which enables querying directly for the value of a specific feature.
 
-Finally, the feature store service has endpoints so that other services can query for different types of features; e.g., requesting all the features we have for a given user. These endpoints return the feature values and one field of meta-data: when that feature we last set in the store.
+Finally, the feature store service has endpoints so that other services can query for different types of features; e.g., requesting all the features we have for a given user. These endpoints return the feature values and one field of meta-data: when that feature was last set in the store.
 
 ### 😈  The devil is in the detail (what we valued, what we left out)
 
