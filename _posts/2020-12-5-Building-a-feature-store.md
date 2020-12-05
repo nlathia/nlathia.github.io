@@ -83,7 +83,7 @@ The first couple of times that anyone in my team ran into this, we queried BigQu
 
 What we have today is a system that automates the journey of shipping features between our analytics (BigQuery) and production (Cassandra) databases.
 
-The process starts with a Data Scientist writing some SQL, as they usually do. They tag it as a query that builds a feature table. These tables are automaticaly scheduled and generated alongside all of our other analytics tables, at varying frequencies (daily, hourly, etc.), usng Airflow. We use [dbt](https://www.getdbt.com/), and so each query will be written with [tests](https://docs.getdbt.com/docs/building-a-dbt-project/tests/).
+The process starts with a Data Scientist writing some SQL, as they usually do. They tag it as a query that builds a feature table. These tables are automaticaly scheduled and generated alongside all of our other analytics tables, at varying frequencies (daily, hourly, etc.), using Airflow. We use [dbt](https://www.getdbt.com/), and so each query will be written with [tests](https://docs.getdbt.com/docs/building-a-dbt-project/tests/).
 
 By design, feature tables must specificy a `subject_type` column. This defines the entity that the feature described, such as a "user" feature or a "sort code" feature. The table must also have a corresponding `subject_id`, which is the actual ID of the user for that row. The schema of this table is replicated in the feature store Go service, because we do not want it to "blindly" ingest data.
 
