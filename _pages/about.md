@@ -6,7 +6,7 @@ permalink: /about/
 
 👋 Hi, I'm Neal - I'm currently Director of Machine Learning at [Monzo](https://monzo.com/) in London, where we're focusing on [building machine learning systems](http://nlathia.github.io/2020/10/Monzo-ML.html) to help _make money work for everyone_.
 
-✈️ Before joining Monzo, I was a Data Scientist at [Skyscanner](http://skyscanner.net/), where I built recommender and ranking systems to [improve travel information in the app](https://medium.com/@neal_lathia/five-lessons-from-building-machine-learning-systems-d703162846ad). 
+✈️ Before joining Monzo, I was a Senior Data Scientist at [Skyscanner](http://skyscanner.net/), where I built recommender and ranking systems to [improve travel information in the app](https://medium.com/@neal_lathia/five-lessons-from-building-machine-learning-systems-d703162846ad). 
 
 🏫 Before Skyscanner, I was a Senior Research Associate in the [Computer Lab](https://www.cl.cam.ac.uk/research/srg/netos/people/) at the [University of Cambridge](https://www.cam.ac.uk/), working on healthcare mobile apps that use smartphone sensors. I spun out this research into a startup that was part of [Accelerate Cambridge](https://www.jbs.cam.ac.uk/entrepreneurship/programmes/accelerate-cambridge/) in the Judge Business School.
 
