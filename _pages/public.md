@@ -6,7 +6,10 @@ permalink: /public/
 
 For presentations prior to 2018, please see an archive list [here](../archive/public) or have a look at [my slide share page](http://www.slideshare.net/neal.lathia).
 
-# 📣 Recent talks
+# 📣 Recent presentations & interviews
+
+MLOps Community Case Study - Monzo Bank
+<br />December 7, 2020. Available on [YouTube](https://www.youtube.com/watch?v=EyLGKmPAZLY) and [Spotify](https://open.spotify.com/episode/6WHkhgmBwsNS3pYDC1rKPs?si=Z0v1aPtOQrWWjzlWOdCzmQ).
 
 Machine learning in Industry - Invited Seminar
 <br />November 3, 2020, University College London
