@@ -37,7 +37,8 @@ Data @ Monzo
 <br />February 2019, Lloyd's Bank Data Team Offsite (Invited). London.
 
 Building a Bank with Data
-<br />June 2018, [EGG Conference: Towards Data Science at Scale](https://pages.dataiku.com/egg-uk-2018). London [YouTube](https://www.youtube.com/watch?v=hbNRxVR8LHA).
+<br />June 2018, [EGG Conference: Towards Data Science at Scale](https://pages.dataiku.com/egg-uk-2018). London.
+<br />Available on [YouTube](https://www.youtube.com/watch?v=hbNRxVR8LHA).
 
 # 📰 Press
 
