@@ -10,6 +10,7 @@ For presentations prior to 2018, please see an archive list [here](../archive/pu
 
 Using machine learning for customer service
 <br />January 26, 2021. [Data Talks Club](https://datatalks.club/)
+<br />Available on [YouTube](https://www.youtube.com/watch?v=ohjSvKdUumY)
 
 MLOps Community Case Study - Monzo Bank
 <br />December 7, 2020. [MLOps Community](https://mlops.community/)
