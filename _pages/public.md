@@ -8,6 +8,9 @@ For presentations prior to 2018, please see an archive list [here](../archive/pu
 
 # 📣 Recent presentations & interviews
 
+[London.AI](https://www.getrevue.co/profile/londonai/issues/london-ai-is-back-signup-now-for-thursday-25th-event-6pm-gmt-240599) 
+<br />February 25th, 2021. 
+
 Using machine learning for customer service
 <br />January 26, 2021. [Data Talks Club](https://datatalks.club/)
 <br />Available on [YouTube](https://www.youtube.com/watch?v=ohjSvKdUumY)
