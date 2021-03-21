@@ -7,6 +7,7 @@ permalink: /archive/reviewing
 ## 2021
 
 * [14th ACM Conference on Web Search and Data Mining](http://www.wsdm-conference.org/2021/)
+* [14th ACM Conference on Recommender Systems](https://recsys.acm.org/recsys20/committees/#content-tab-1-1-tab) (Senior Program Committee)
 
 
 ## 2020
@@ -28,7 +29,7 @@ permalink: /archive/reviewing
 * [ACM Conference on Research and Development in Information Retrieval](http://sigir.org/sigir2018/)
 * [Conference on User Modeling, Adaptation and Personalization](http://www.um.org/umap2018/)
 * [World Wide Web Conference](https://www2018.thewebconf.org/) (Posters)
-* [Workshop on Online Recommender Systems and User Modeling: continuous learning from web data](http://webesitix.inesctec.pt/orsum2018/index.php)
+* [Workshop on Online Recommender Systems and User Modeling](http://webesitix.inesctec.pt/orsum2018/index.php)
 
 
 ## 2017
