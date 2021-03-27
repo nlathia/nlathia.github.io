@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Embedding stores"
-description: Training models on sensitive data by splitting up the problem
+description: Protecting customer data while training neural networks
 categories: [machine-learning]
 ---
 
