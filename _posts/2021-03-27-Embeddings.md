@@ -74,7 +74,7 @@ The goal of this work was to enable us to keep customer data protections at thei
 
 Solving for this specific ML problem, given the constraints we were working with, involved splitting up what is generally viewed as an ML-only problem (fine-tune a model) into a system design problem. That's the biggest lesson we're taking forward, and we regularly ask this question today: how can we break up a big ML problem into smaller, more manageable components?
 
-The main trend I see from this system is that embeddings are an increasingly valuable part of our ML stack -- we see them everywhere these days. As we continue adopting this approach, we're now seeing a bit more complexity. For example, we have now started experiment with different encoders, and so need to keep track of _which_ encoder is suitable for what problem, and which encoder each downstream model is expecting embeddings from.
+The main trend I see from this system is that embeddings are an increasingly valuable part of our ML stack -- we see them everywhere these days. As we continue adopting this approach, we're now seeing a bit more complexity. For example, we have now started experimenting with different encoders, and so need to keep track of _which_ encoder is suitable for what problem, and which encoder each downstream model is expecting embeddings from.
 
 Much more to come in this space 🚀
 
