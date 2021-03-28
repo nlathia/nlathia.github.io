@@ -25,6 +25,8 @@ There’s more to come!
 
 ## 2️⃣ the operator CLI: cookiecutter on steroids
 
+⚠️ Update `operator` has now been renamed to `kettle-cli`. 
+
 I built the hosted storage & API for the modelstore library using a combination of Lambda functions, S3, and DynamoDB. At least, that is what I intended: in practice, I needed to get my head around API gateways, IAM roles, and more. Why is this so hard, and so manual?
 
 To make my own journey faster, I built the operator CLI tool, which is [now open source on Github](https://github.com/operatorai/operator) and can be installed via brew.
