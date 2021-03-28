@@ -5,8 +5,7 @@ description: Protecting customer data while training neural networks
 categories: [machine-learning]
 ---
 
-If you look online at any tutorial for training models with unstructured data (primarily: text or images) they usually start by describing data loaders that can read the raw data itself. For example, a Keras image classifier [example](https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html) starts 
-by suggesting that the pictures of cats and dogs be stored in different folders on your machine.
+If you look online at any tutorial for training models with unstructured data (primarily: text or images) they usually start by describing data loaders that can read the raw data itself. For example, a Keras image classifier [example](https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html) starts by suggesting that the pictures of cats and dogs be stored in different folders on your machine.
 
 When training these kinds of models in a company setting, there are two big challenges that arise which make this approach infeasible:
 1. *Protecting customer data* -- any kind of unstructured data needs to be stored securely and protected; that includes ensuring that the data cannot be accessed by all company employees. 
