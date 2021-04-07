@@ -8,6 +8,10 @@ For presentations prior to 2018, please see an archive list [here](../archive/pu
 
 # 📣 Recent presentations & interviews
 
+[FinML Meetup](https://finml.substack.com/p/finml-model-testing-and-monitoring)
+<br />April 7, 2021.
+<br />Round table on machine learning model monitoring and testing
+
 [London.AI](https://www.getrevue.co/profile/londonai/issues/london-ai-is-back-signup-now-for-thursday-25th-event-6pm-gmt-240599) 
 <br />February 25th, 2021. 
 <br />Available on [YouTube](https://www.youtube.com/watch?v=Ts887FBSu6A)
