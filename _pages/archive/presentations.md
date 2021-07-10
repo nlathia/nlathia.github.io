@@ -20,7 +20,7 @@ Panel Discussion: Machine Vs. Man: Is the Data Future in Tech or People?
 Bootstrapping a Destination Recommender System
 <br />August 2017. [ACM RecSyS 2017 (Industry Track)](https://recsys.acm.org/recsys17/), Como.
 <br />June 2017. [4th Global Machine Intelligence Summit](https://www.re-work.co/events/machine-intelligence-summit-amsterdam-2017), Amsterdam. [Video](https://www.pscp.tv/teamrework/1rmGPPgjgMgGN)
-<br />April 2017. [Data Science Festival](https://www.meetup.com/Data-Science-Festival-London/events/238489850/), London. 
+<br />April 2017. [Data Science Festival](https://www.meetup.com/Data-Science-Festival-London/events/238489850/), London. [YouTube](https://www.youtube.com/watch?v=6kGPxSB7ELg)
 
 Mining Smartphone Sensor Data with Python
 <br />May, 2016. [PyData London 2016](http://pydata.org/london2016/schedule/presentation/40/). London. [Slides & Code](https://github.com/nlathia/pydata_2016), [YouTube](https://www.youtube.com/watch?v=BidI8_1ikiQ).
