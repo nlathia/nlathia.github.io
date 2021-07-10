@@ -8,20 +8,24 @@ For presentations prior to 2018, please see an archive list [here](../archive/pu
 
 # 📣 Recent presentations & interviews
 
+[Data Talk Club Mini](https://datatalks.club/): Model Store
+<br />July 6, 2021.
+<br />Available on [YouTube](https://www.youtube.com/watch?v=85BWnKmOZl8)
+
 [FinML Meetup](https://finml.substack.com/p/finml-model-testing-and-monitoring) Round table on model monitoring and testing
 <br />April 7, 2021.
 <br />Available on [YouTube](https://www.youtube.com/watch?v=fZuHrjS4nhM)
 
-[London.AI](https://www.getrevue.co/profile/londonai/issues/london-ai-is-back-signup-now-for-thursday-25th-event-6pm-gmt-240599) 
+[London.AI](https://www.getrevue.co/profile/londonai/issues/london-ai-is-back-signup-now-for-thursday-25th-event-6pm-gmt-240599) Everything around the NLP
 <br />February 25th, 2021. 
 <br />Available on [YouTube](https://www.youtube.com/watch?v=Ts887FBSu6A)
 
-Using machine learning for customer service
-<br />January 26, 2021. [Data Talks Club](https://datatalks.club/)
+[Data Talks Club](https://datatalks.club/) Using machine learning for customer service
+<br />January 26, 2021. 
 <br />Available on [YouTube](https://www.youtube.com/watch?v=ohjSvKdUumY)
 
-MLOps Community Case Study - Monzo Bank
-<br />December 7, 2020. [MLOps Community](https://mlops.community/)
+[MLOps Community](https://mlops.community/) Case Study - Monzo Bank
+<br />December 7, 2020. 
 <br />Available on [YouTube](https://www.youtube.com/watch?v=EyLGKmPAZLY) and [Spotify](https://open.spotify.com/episode/6WHkhgmBwsNS3pYDC1rKPs?si=Z0v1aPtOQrWWjzlWOdCzmQ).
 
 Machine learning in Industry - Invited Seminar
