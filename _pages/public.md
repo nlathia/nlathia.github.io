@@ -8,6 +8,9 @@ For presentations prior to 2018, please see an archive list [here](../archive/pu
 
 # 📣 Recent presentations & interviews
 
+[Applying ML](https://applyingml.com/mentors/neal-lathia/) Mentor interview
+<br />July, 2021
+
 [Data Talk Club Mini](https://datatalks.club/): Model Store
 <br />July 6, 2021.
 <br />Available on [YouTube](https://www.youtube.com/watch?v=85BWnKmOZl8)
