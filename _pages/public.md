@@ -8,6 +8,9 @@ For presentations prior to 2018, please see an archive list [here](../archive/pu
 
 # 📣 Recent presentations & interviews
 
+[apply() Conference](https://www.applyconf.com/agenda/panel-building-high-performance-ml-teams/) Panel: Building High-Performance ML Teams
+<br />August 11, 2021.
+
 [Applying ML](https://applyingml.com/mentors/neal-lathia/) Mentor interview
 <br />July, 2021
 
