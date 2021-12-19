@@ -4,7 +4,7 @@ title: Presentations & Press
 permalink: /public/
 ---
 
-For presentations prior to 2018, please see an archive list [here](../archive/public) or have a look at [my slide share page](http://www.slideshare.net/neal.lathia).
+For presentations prior to 2020, please see an archive list [here](../archive/public) or have a look at [my slide share page](http://www.slideshare.net/neal.lathia).
 
 # 📣 Recent presentations & interviews
 
@@ -40,27 +40,6 @@ For presentations prior to 2018, please see an archive list [here](../archive/pu
 
 Machine learning in Industry - Invited Seminar
 <br />November 3, 2020, University College London
-
-Deploying machine learning to improve customer support
-<br />November 5 2019, [PyTorch London](https://www.meetup.com/London-PyTorch-Meetup/events/265564747/) Meetup. [Slides](https://www.slideshare.net/neal.lathia/using-language-models-to-supercharge-monzos-customer-support).
-<br />October 8 2019, Imperial College. London.
-
-Enabling Better Decisions, Faster
-<br />April 9 2019, [Looker: Join the Tour](https://looker.com/events/join-the-tour/london). London. [Slides](https://www.slideshare.net/neal.lathia/making-better-decisions-faster-141562897) [YouTube](https://youtu.be/k7a3SHkMblI).
-
-Speeding up Machine Learning Development
-<br />April 4 2019, Xcede Data Science Networking Event. London. [Slides](https://www.slideshare.net/neal.lathia/machine-learning-faster).
-
-Using Deep Learning to Support Customer Operations
-<br />March 30 2019, [ReWork Deep Learning in Finance Summit](https://www.re-work.co/events/deep-learning-in-finance-summit-london-2019). London. [Online here](https://videos.re-work.co/videos/1440-using-deep-learning-to-support-customer-operations).
-<br />Listed under this [30 Influential AI Presentations from 2019](https://blog.re-work.co/30-pieces-of-influential-ai-research-in-2019/) list.
-
-Data @ Monzo
-<br />February 2019, Lloyd's Bank Data Team Offsite (Invited). London.
-
-Building a Bank with Data
-<br />June 2018, [EGG Conference: Towards Data Science at Scale](https://pages.dataiku.com/egg-uk-2018). London.
-<br />Available on [YouTube](https://www.youtube.com/watch?v=hbNRxVR8LHA).
 
 # 📰 Press
 
