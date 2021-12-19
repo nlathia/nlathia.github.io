@@ -8,6 +8,10 @@ For presentations prior to 2018, please see an archive list [here](../archive/pu
 
 # 📣 Recent presentations & interviews
 
+[MLOps Community](https://mlops.community/) Coffee Session with [Chris Albon](https://chrisalbon.com/)
+<br />December 7, 2020. 
+<br />Available on [YouTube](https://www.youtube.com/watch?v=TKVR5RYkqnc) and [Spotify](https://open.spotify.com/episode/3GSw9rTqNqDBPYviFK9p33?si=9eaf3d55b5fe4949).
+
 [apply() Conference](https://www.applyconf.com/agenda/panel-building-high-performance-ml-teams/) Panel: Building High-Performance ML Teams
 <br />August 11, 2021.
 
