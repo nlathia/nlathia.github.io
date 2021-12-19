@@ -4,7 +4,7 @@ title: Presentations & Press
 permalink: /public/
 ---
 
-For presentations prior to 2018, please see an archive list [here](../archive/public) or have a look at [my slide share page](http://www.slideshare.net/neal.lathia).
+For presentations prior to 2020, please see an archive list [here](../archive/public) or have a look at [my slide share page](http://www.slideshare.net/neal.lathia).
 
 # 📣 Recent presentations & interviews
 
