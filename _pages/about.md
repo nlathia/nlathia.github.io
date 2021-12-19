@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-👋 Hi, I'm Neal - I'm currently Director of Machine Learning at [Monzo](https://monzo.com/) Bank in London, where we're focusing on [building machine learning systems](http://nlathia.github.io/2020/10/Monzo-ML.html) to help _make money work for everyone_. I am also developing machine learning productivity tools at [Operator AI](https://www.operator-ai.com/).
+👋 Hi, I'm Neal - I'm currently Director of Machine Learning at [Monzo](https://monzo.com/) Bank in London, where we're focusing on [building machine learning systems](http://nlathia.github.io/2020/10/Monzo-ML.html) to help _make money work for everyone_. I am also building open source machine learning tools at [github.com/operatorai](https://github.com/operatorai/).
 
 ✈️ Before joining Monzo, I was a Senior Data Scientist at [Skyscanner](http://skyscanner.net/), where I built recommender and ranking systems to [improve travel information in the app](https://medium.com/@neal_lathia/five-lessons-from-building-machine-learning-systems-d703162846ad). 
 
