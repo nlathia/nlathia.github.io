@@ -4,15 +4,7 @@ title: Research
 permalink: /research/
 ---
 
-## 🔍 Program Committees
-
-[15th ACM Conference on Recommender Systems](https://recsys.acm.org/recsys21/), Senior Program Committee. 2021.
-
-[14th ACM Conference on Web Search and Data Mining](http://www.wsdm-conference.org/2021/), Program Committee. 2021.
-
-[14th ACM Conference on Recommender Systems](https://recsys.acm.org/recsys20/committees/#content-tab-1-1-tab), Senior Program Committee. 2020.
-
-A full list is on [this archive page](../archive/reviewing.html).
+ℹ️ I left academia around 2016. I sometimes still participate in peer review/conference program committees. A full list is on [this archive page](../archive/reviewing.html).
 
 
 ## 🎓 PhD Research
