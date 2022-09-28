@@ -2,7 +2,7 @@
 layout: post
 title: How to over engineer a sound classifier
 description: Detecting a trivial sound in a quiet environment using deep learning.
-categories: [machine-learning]
+categories: [machine-learning, hacking]
 ---
 
 ### 🏡 Hack day idea

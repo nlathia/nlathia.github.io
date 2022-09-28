@@ -2,7 +2,7 @@
 layout: post
 title: "Data Science Hackathon"
 description: Originally published on urbanmining.wordpress.com
-categories: [data-science]
+categories: [data-science, hacking]
 ---
 
 Last weekend I attended the <a href="http://datasciencehackathon.com/" target="_blank">Data Science Hackathon</a>. It was a pretty simple idea: given a dataset from a city's air-sensor stations the goal was to create a model that could predict the city's air quality. The competition took place over 24 hours across a number of cities around the world and was run using the <a href="http://www.kaggle.com/" target="_blank">Kaggle</a> platform.
