@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-👋 Hi, I'm Neal - I'm currently Director of Machine Learning at [Monzo](https://monzo.com/) Bank in London, where we're focusing on [building machine learning systems](http://nlathia.github.io/2020/10/Monzo-ML.html) to help _make money work for everyone_. I am also building open source machine learning tools at [github.com/operatorai](https://github.com/operatorai/).
+👋 Hi, I'm Neal - I'm currently Director of Machine Learning at [Monzo](https://monzo.com/) Bank in London, where I focus on building machine learning systems to help _make money work for everyone_ (reviewed in [2020](http://nlathia.github.io/2020/10/Monzo-ML.html), [2021](https://nlathia.github.io/2021/10/Monzo-ML.html) and Monzo's [machine learning platform](https://nlathia.github.io/2022/04/Monzo-ML-stack.html).
 
 ✈️ Before joining Monzo, I was a Senior Data Scientist at [Skyscanner](http://skyscanner.net/), where I built recommender and ranking systems to [improve travel information in the app](https://medium.com/@neal_lathia/five-lessons-from-building-machine-learning-systems-d703162846ad). 
 
@@ -14,5 +14,5 @@ permalink: /about/
 
 My PhD focussed on methods for evaluating collaborative filtering algorithms over time. While at UCL, I also spent time as a visiting researcher at [Telefonica Research](http://www.tid.es/), Barcelona and worked as a Data Science consultant.
 
-My work has always focused on applications that use machine learning - this has taken me from recommender systems to urban computing and travel information systems, digital health monitoring, smartphone sensors, and banking. You can read more about my work and research in the [Press & Speaking](../public/) and [Research](../research/) sections. 
+My work has always focused on applications that use machine learning - this has taken me from recommender systems to urban computing and travel information systems, digital health monitoring, smartphone sensors, and banking. You can read more about my work and research in the [Press & Speaking](../public/) and [Research](../research/) sections. I also build and open source machine learning tools, like [modelstore](https://github.com/operatorai/modelstore).
 
