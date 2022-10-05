@@ -14,5 +14,5 @@ permalink: /about/
 
 My PhD focussed on methods for evaluating collaborative filtering algorithms over time. While at UCL, I also spent time as a visiting researcher at [Telefonica Research](http://www.tid.es/), Barcelona and worked as a Data Science consultant.
 
-My work has always focused on applications that use machine learning - this has taken me from recommender systems to urban computing and travel information systems, digital health monitoring, smartphone sensors, and banking. You can read more about my work and research in the [Press & Speaking](../public/) and [Research](../research/) sections. I also build and open source machine learning tools, like [modelstore](https://github.com/operatorai/modelstore).
+My work has always focused on applications that use machine learning - this has taken me from recommender systems to urban computing and travel information systems, digital health monitoring, smartphone sensors, banking, and open source machine learning tools (like [modelstore](https://github.com/operatorai/modelstore)). You can read more about my work and research in the [Press & Speaking](../public/) and [Research](../research/) sections. 
 
