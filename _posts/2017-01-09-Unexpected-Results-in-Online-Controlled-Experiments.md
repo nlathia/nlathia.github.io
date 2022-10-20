@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Unexpected results in online controlled experiments
+title: Unexpected results in online controlled experiments (paper review)
 description: “Getting numbers is easy, getting numbers you can trust is quite difficult.”
 categories: [paper]
 ---

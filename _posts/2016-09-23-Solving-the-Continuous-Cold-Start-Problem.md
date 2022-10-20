@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Solving the continuous cold start problem
+title: Solving the continuous cold start problem (paper review)
 description: A review of a paper from booking.com folks.
 categories: [recsys, paper]
 ---

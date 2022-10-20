@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Neural approaches to conversational AI
+title: Neural Approaches to Conversational AI (paper review)
 description: Live notes from a six chapter review.
 categories: [paper]
 ---
