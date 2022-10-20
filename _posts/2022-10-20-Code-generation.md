@@ -7,9 +7,9 @@ categories: [paper]
 
 I recently read [Evaluating Large Language Models Trained on Code](https://arxiv.org/pdf/2107.03374.pdf), a paper that describes the research that lead to Open AI's [Codex](https://openai.com/blog/openai-codex/), which powers [Github Copilot](https://github.com/features/copilot).
 
-The paper covers a lot of the classical things that go into the end-to-end process of training a model, ranging from collecting a dataset through to designings ways to understand how well the model performs.
+The paper covers a lot of the classical things that go into the end-to-end process of building an AI-powered system--ranging from collecting a dataset through to designings ways to understand how well the model performs--with a focus on generating code from a user's prompt.
 
-This post is a collection of the notes I took while reading it, with a few reflections interspersed throughout.
+This post is a collection of the notes I took while reading it, with a few reflections (💭) interspersed throughout.
 
 ## 📑 The training dataset is from Github
 
@@ -17,19 +17,19 @@ The dataset was sourced in May 2020. In their own words, it came from:
 
 > ... 54 million public software repositories hosted on GitHub, containing 179 GB of unique Python files under 1 MB.
 
-Open source code is a natural way starting point to train this type of model, but the data is not _perfect_; nobody would intuitively assume that all code on Github is top-notch or free of malware (the paper points to [other research](https://www.usenix.org/conference/raid2020/presentation/omar) that identifies malware using binary classification).
+Open source code is a natural starting point to train this type of model, but the data is not _perfect_; nobody would intuitively assume that all Python code on Github is top-notch or free of malware (the paper points to [other research](https://www.usenix.org/conference/raid2020/presentation/omar) that identifies malware using binary classification).
 
-The dataset was filtered using an interesting set of heuristics. Files that had a long average or maximum line length were thrown out, as were files with a "small percentage" of alphanumeric characters. Finally, files "which were likely auto-generated" were discarded too, although they don't describe how they determine whether a file was likely auto-generated. This removed 20 GB of data from the initial 179 GB.
+The dataset was filtered using an interesting set of heuristics. Files that had a long average or maximum line length were thrown out, as were files with a "small percentage" of alphanumeric characters. Finally, files "which were likely auto-generated" were discarded too, although they don't describe how they determine this. The filtering step removed 20 GB of data from the initial 179 GB.
 
 💭 There is no mention of whether they considered additional signals that could be sourced from Github. For example, Github has social network-like signals (users have followers, repositories have dependency graphs) and engagement-like signals (repositories have contributors, stars, watchers, and forks). Outside of Github, there are datasets that capture usage of open-source libraries. And finally, the code itself could be inspected further: there are static analysis tools that can be used to asses indicators of code quality, scan for vulnerabilities, or perhaps even detect whether some code is Python 2 or Python 3. Some of these _might_ be useful to further assess whether code is "good enough" to be included, but I also imagine that being very harsh here could severely limit the size of the data and discard a number of common functions that everyone writes--which is what models like Codex implicitly aim to do.  
 
 ## 🤖 Codex is a fine tuned GPT model
 
-This paper is not about fabricating neural nets that have a specific novel design for the problem at hand:
+This paper is not about designing neural nets that have a specific, novel design for the problem at hand:
 
 > We fine-tune GPT models containing up to 12B parameters on code to produce Codex
 
-There's an interesting angle to this that gets mentioned: since the problem is that of generating code from _free text_ prompts, they hypothesized that starting from GPT-3 (which has already been trained on free text) would work better. It did not "possibly because the fine-tuning dataset is so large." But those models did converge more quickly and so they still use them.
+There's an interesting angle to this that gets mentioned: since the problem is that of generating code from _free text_ prompts, they hypothesized that starting from GPT-3 (which has already been trained on free text) would work better. It did not, "possibly because the fine-tuning dataset is so large." But those models did converge more quickly and so they still use them.
 
 ## 📈 Understanding performance is the trickiest part
 
