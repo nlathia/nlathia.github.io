@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Mining large streams of user data for personalized recommendations
+title: Mining large streams of user data for personalized recommendations (paper review)
 description: Lessons from Investing $1M in Machine Learning for Recommendation.
 categories: [recsys, paper]
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: The machine learning behind farecast
+title: The machine learning behind farecast (paper review)
 description: Predicting the black box of flight prices.
 categories: [recsys, paper]
 ---
