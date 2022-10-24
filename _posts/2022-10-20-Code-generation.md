@@ -5,7 +5,7 @@ description: "Notes from reading the paper behind Github Copilot"
 categories: [paper]
 ---
 
-I recently read [Evaluating Large Language Models Trained on Code](https://arxiv.org/pdf/2107.03374.pdf), a paper that describes the research that lead to Open AI's [Codex](https://openai.com/blog/openai-codex/), which powers [Github Copilot](https://github.com/features/copilot).
+I recently read [Evaluating Large Language Models Trained on Code](https://arxiv.org/pdf/2107.03374.pdf), a paper that describes the research that led to Open AI's [Codex](https://openai.com/blog/openai-codex/), which powers [Github Copilot](https://github.com/features/copilot).
 
  Codex's overarching goal is to be a system that can generate code from a user's prompt. To get there, the paper covers a lot of the classical things that go into the end-to-end process of building an AI-powered system--ranging from collecting a dataset through to designing ways to understand how well the model performs.
 
