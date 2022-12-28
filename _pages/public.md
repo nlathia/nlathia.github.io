@@ -20,7 +20,10 @@ AI Stories Podcast Interview by [Neil Leiser](https://twitter.com/LeiserNeil)
 <br />August 11, 2021.
 
 [Applying ML](https://applyingml.com/mentors/neal-lathia/) Mentor interview
-<br />July, 2021
+<br />July 2021
+
+[Monzo Community](https://community.monzo.com/t/monzonaut-ama-neal-director-of-machine-learning/119465) AMA Session
+<br />June 28, 2021
 
 [Data Talk Club Mini](https://datatalks.club/): Model Store
 <br />July 6, 2021.
