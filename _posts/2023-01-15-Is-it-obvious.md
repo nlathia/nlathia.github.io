@@ -78,7 +78,7 @@ The final class of companies where AI is a no-brainer are those that are buildin
 
 _Adopting_ AI inside of a company does not mean doing so without being mindful about it. It doesn't mean that people should no longer think deeply about how AI works, whether it is amplifying bias, or leading to worse outcomes. 
 
-This post is just about whether AI is in the _default_ toolbox<sup>[4](#footnote4)</sup> that a team or company has when thinking about how to solve a problem, sitting there alongside all of the other obvious things that we use to build systems. If it's in there, great! If it's not, then there road ahead is as long as a digital transformation.
+This post is just about whether AI is in the _default_ toolbox<sup>[4](#footnote4)</sup> that a team or company has when thinking about how to solve a problem, sitting there alongside all of the other obvious things that we use to build systems. If it's in there, great! But for many, a long AI transformation still awaits.
 
 
 ## 🔢 Footnotes
