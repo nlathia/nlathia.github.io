@@ -7,7 +7,7 @@ categories: [machine-learning]
 
 Regardless what you think about [chatGPT](https://chat.openai.com/chat), its release last year heralded yet another hype wave for artificial intelligence. This release probably did more to market the value of machine learning to non-experts than anything I've ever seen come before it--chatGPT [seized people's imagination](https://www.nytimes.com/2023/01/07/technology/generative-ai-chatgpt-investments.html).
 
-I couldn't escape having conversations about it. People _suddenly_ wanted to talk about chatGPT (and other models like like GPT-3 and stable diffusion) without having ever heard words like language model, self-supervision, or attention layers. Even outside of work, suddenly the potential of an [intelligence explosion](https://en.wikipedia.org/wiki/Technological_singularity#Intelligence_explosion) would come up in chats at birthday parties.
+I couldn't escape having conversations about it. People _suddenly_ wanted to talk about chatGPT (and other models like like GPT-3 and stable diffusion) without having ever heard words like language model, self-supervision, or attention layers. Even outside of work, the potential of an intelligence [explosion](https://en.wikipedia.org/wiki/Technological_singularity#Intelligence_explosion) would come up in chats at birthday parties.
 
 Returning to a more pragmatic reality: one topic of conversations that I'm sure is happening in many companies around the world is something along the lines of:
 
