@@ -10,6 +10,7 @@ For presentations prior to 2020, please see an archive list [here](../archive/pu
 
 [Evidently Community](https://www.evidentlyai.com/community) AMA Session
 <br />January 26, 2023
+<br />[Blog post recap](https://www.evidentlyai.com/blog/ama-neal-lathia)
 
 AI Stories Podcast Interview by [Neil Leiser](https://twitter.com/LeiserNeil)
 <br />January 2022
