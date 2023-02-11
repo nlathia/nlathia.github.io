@@ -8,6 +8,13 @@ I've omitted a number of academic conference presentations. You can find all of 
 
 # 📣 Presentations
 
+[MLOps Community](https://mlops.community/) Case Study - Monzo Bank
+<br />December 7, 2020. 
+<br />Available on [YouTube](https://www.youtube.com/watch?v=EyLGKmPAZLY) and [Spotify](https://open.spotify.com/episode/6WHkhgmBwsNS3pYDC1rKPs?si=Z0v1aPtOQrWWjzlWOdCzmQ).
+
+Machine learning in Industry - Invited Seminar
+<br />November 3, 2020, University College London
+
 Deploying machine learning to improve customer support
 <br />November 5 2019, [PyTorch London](https://www.meetup.com/London-PyTorch-Meetup/events/265564747/) Meetup. [Slides](https://www.slideshare.net/neal.lathia/using-language-models-to-supercharge-monzos-customer-support).
 <br />October 8 2019, Imperial College. London.

@@ -4,7 +4,7 @@ title: Presentations & Press
 permalink: /public/
 ---
 
-For presentations prior to 2020, please see an archive list [here](../archive/public) or have a look at [my slide share page](http://www.slideshare.net/neal.lathia).
+For presentations prior to 2021, please see an archive list [here](../archive/public) or have a look at [my slide share page](http://www.slideshare.net/neal.lathia).
 
 # 📣 Recent presentations & interviews
 
@@ -45,12 +45,6 @@ AI Stories Podcast Interview by [Neil Leiser](https://twitter.com/LeiserNeil)
 <br />January 26, 2021. 
 <br />Available on [YouTube](https://www.youtube.com/watch?v=ohjSvKdUumY)
 
-[MLOps Community](https://mlops.community/) Case Study - Monzo Bank
-<br />December 7, 2020. 
-<br />Available on [YouTube](https://www.youtube.com/watch?v=EyLGKmPAZLY) and [Spotify](https://open.spotify.com/episode/6WHkhgmBwsNS3pYDC1rKPs?si=Z0v1aPtOQrWWjzlWOdCzmQ).
-
-Machine learning in Industry - Invited Seminar
-<br />November 3, 2020, University College London
 
 # 📰 Press
 
