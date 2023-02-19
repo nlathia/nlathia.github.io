@@ -5,8 +5,6 @@ description: Originally published on substack.
 categories: [machine-learning]
 ---
 
-> Note: this post is part of a new project called Operator.ai. You can read my posts about that [on substack](https://operatorai.substack.com/).
-
 In this post, I’m going to zero in on the one of the smallest first steps:
 
 # What do you do with your model artifacts?

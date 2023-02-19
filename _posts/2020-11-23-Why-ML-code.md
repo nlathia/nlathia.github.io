@@ -5,8 +5,6 @@ description: The line between "data science" and "production" code doesn't cut i
 categories: [machine-learning]
 ---
 
-> Note: this post is part of a new project called Operator.ai. You can read my posts about that [on substack](https://operatorai.substack.com/).
-
 In the last few weeks, my team at Monzo has been tackling the “classical” flavour of machine learning problems: training supervised models on tabular (and highly imbalanced) data. After a win earlier in the year with a model that detects the likelihood of a customer being a victim to [impersonation fraud](https://monzo.com/blog/police-impersonation-scam-phone-call), we’ve been exploring our ability to train models that can detect other types of payment fraud 🚔 .
 
 Unlike problems with a pre-defined dataset — the kind you will find on Kaggle — majority of the work my team is iterating on entails analysing data, defining and understanding features, and training models on different slices of data. Most of the things we were trying were not working, until we hit a promising break-through last week — we’re now digging into it, to make sure that it is not a red herring.
@@ -39,14 +37,13 @@ Both of these types of code-writing (to explore and to ship) are, therefore, rad
 
 ## Updates to modelstore
 
-The last time [I wrote about modelstore](https://operatorai.substack.com/p/releasing-modelstore-v001b-two-opinions), I had just released version 0.0.1. It has been about two months! As this pandemic continues to rage on, I’ve been trying to do one thing with it each night — no matter how insignificantly small that one thing is. I can’t say that I’ve always been able to.
+The last time I wrote about modelstore, I had just released version 0.0.1. It has been about two months! As this pandemic continues to rage on, I’ve been trying to do one thing with it each night — no matter how insignificantly small that one thing is. I can’t say that I’ve always been able to.
 
 The library is now at [version 0.0.3](https://pypi.org/project/modelstore/); here are some brief updates!
 
 * It now supports transformers and tensorflow;
 * The main two lines (create & upload an archive) have been reduced to one line (upload a model — thanks for the feedback, [Julien](https://twitter.com/julien_c)).
 * The library has been tested across Python 3.6, 3.7, and 3.8.
-* It now has [a shiny new website](https://www.operator-ai.com/) which will become a future home for more information about models.
 
 There are a number of parts that I’m thinking about next — specifically around [model cards](https://modelcards.withgoogle.com/about), adding insight to models, and making them all [searchable, sort-able and discoverable](https://discuss.huggingface.co/t/announcement-model-versioning-upcoming-changes-to-the-model-hub/1914/12?u=nlathia).
 
