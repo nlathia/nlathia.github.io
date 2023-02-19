@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Automate the boring parts"
-description: We're hiring! Here's an FAQ post with all the typical questions that I receive.
-categories: [monzo, tech-lead, machine-learning]
+description: Hacking on a CLI tool for ML deployments
+categories: [mlops, machine-learning]
 ---
 
 About a week ago, I posted this question on the [MLOps community Slack](https://mlops.community/):
