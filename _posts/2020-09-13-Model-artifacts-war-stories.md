@@ -5,9 +5,7 @@ description: Originally published on substack.
 categories: [machine-learning]
 ---
 
-> Note: this post is part of a new project called Operator.ai. You can read my posts about that [on substack](https://operatorai.substack.com/).
-
-If you were around for <a href="https://operatorai.substack.com/p/youve-trained-a-model-whats-next">my previous post</a>, I started out by asking about what you do with your model artifacts after you’ve trained a model — when starting the journey to production. A day later, [I asked the same question on twitter](https://twitter.com/neal_lathia/status/1301927567730057217):
+If you were around for <a href="https://nlathia.github.io/2020/09/Model-artifacts.html">my previous post</a>, I started out by asking about what you do with your model artifacts after you’ve trained a model — when starting the journey to production. A day later, [I asked the same question on twitter](https://twitter.com/neal_lathia/status/1301927567730057217):
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">❔Folks who are training models at work: how do you manage your model artifacts? </p>&mdash; Neal Lathia (@neal_lathia) <a href="https://twitter.com/neal_lathia/status/1301927567730057217">September 4, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
