@@ -5,8 +5,6 @@ description: Originally published on substack.
 categories: [machine-learning]
 ---
 
-> Note: this post is part of a new project called Operator.ai. You can read my posts about that [on substack](https://operatorai.substack.com/).
-
 👋 Hello, subscriber! It has been decades (well, months) since I last wrote an update here on Substack. So here is a post with two quick updates!
 
 ## 1️⃣ modelstore 0.0.5 is out: want a free API key?
