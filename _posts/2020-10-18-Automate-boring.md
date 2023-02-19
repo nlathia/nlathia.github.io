@@ -5,15 +5,15 @@ description: We're hiring! Here's an FAQ post with all the typical questions tha
 categories: [monzo, tech-lead, machine-learning]
 ---
 
-About a week ago, I posted this question on the MLOps community Slack:
+About a week ago, I posted this question on the [MLOps community Slack](https://mlops.community/):
 
 ![](https://nlathia.github.io/assets/posts/2020-10-18-Automate-boring/slack-screenshot.png "MLOps Community Slack post")
 
 
-The thread had some interesting answers — the common, and unsurprising, theme being Python microservices deployed in different types of infrastructure (kubernetes seems to be the most popular choice).
+[The thread](https://mlops-community.slack.com/archives/C015J2Y9RLM/p1602192198267500) had some interesting answers — the common, and unsurprising, theme being Python microservices deployed in different types of infrastructure (kubernetes seems to be [the most popular choice](https://mlops-community.slack.com/archives/C7DR1E5NC/p1602868762405100)).
 
 ## A microservice is 90% boilerplate
-Monzo is a bit infamous for its microservices: we have over 1,500 of them, and my team owns (or co-owns) 37. Our microservice network isolation data makes for pretty graphs 😍 and a lot of tweets —
+Monzo is a bit infamous for its microservices: we have over 1,500 of them, and my team owns (or co-owns) 37. Our microservice [network isolation data](https://monzo.com/blog/we-built-network-isolation-for-1-500-services) makes for pretty graphs 😍 and [a lot of tweets](https://twitter.com/JackKleeman/status/1190354757308862468) —
 
 ![](https://nlathia.github.io/assets/posts/2020-10-18-Automate-boring/monzo-graph.png "Monzo microservices graph")
 
@@ -31,7 +31,7 @@ This is a great starting point, if you’ve learning or have never done this bef
 ## Templating brings speed and uniformity
 At Monzo, we have tools that generate boilerplate code for our Go services and protobuf schemas. For Python, we’ve taken the somewhat classical approach of creating a cookiecutter-based template. Not only does that speed up our development process (creating a new Python service ~ cloning a template), but it makes all of our code uniform.
 
-I cannot overstate how impactful these simple templates and tools are. Being able to jump into someone else’s code and have a high-level intuition about what goes where without having to read any documentation lies at the heart of a productive team — and developers who have a great experience give you a competitive advantage.
+I cannot overstate how impactful these simple templates and tools are. Being able to jump into someone else’s code and have a high-level intuition about what goes where without having to read any documentation lies at the heart of a productive team — and developers who have a great experience give you a [competitive advantage](https://erikbern.com/2020/10/06/developer-experience-as-a-competitive-advantage.html).
 
 ## Early release: a CLI tool
 Over the last few weeks, I’ve been working on a new command line interface (CLI) tool that tailors these concepts specifically for machine learning.
@@ -42,7 +42,7 @@ Deploying a machine learning model for live inference entails:
 * Writing code that: (a) loads model, (b) receives requests via an HTTP handler, and (c) makes predictions using the model, and finally
 * Shipping that code to the platform of your choice.
 
-To make this exercise simpler, I decided to use pyenv and pyenv-virtualenv for virtual environments (because that’s what I use), use Flask as a webserver (because it is popular), and to look into Google Cloud Functions and Cloud Run containerized applications as ‘platforms’ (we can have a separate discussion about whether companies of the future will even need to run their own kuber-nets, given how commoditized the as-a-service versions of these are becoming).
+To make this exercise simpler, I decided to use pyenv and pyenv-virtualenv for virtual environments (because that’s what I use), use Flask as a webserver (because it is popular), and to look into Google Cloud Functions and Cloud Run containerized applications as ‘platforms’ (we can have a separate discussion about whether companies of the future will even need to run their own [kuber-nets](https://www.youtube.com/watch?v=QxvmO-QlxJQ), given how commoditized the as-a-service versions of these are becoming).
 
 The parts that I left unfinished are those “best” bits — the function that loads the model, and the function that returns a prediction from it. The rest of the boilerplate is all there by default.
 
@@ -87,8 +87,9 @@ Use the arrow keys to navigate: ↓ ↑ → ←
 
 With this setup, I’ve been able to deploy a Cloud Run containerized application in minutes. In fact, majority of the time it takes boils down to installing requirements and building containers!
 
-I would love for you to try out this tool
-A good place to start is the tool’s README file. The entire tool is open sourced here.
+## Try it out
 
-Let me know what works or what is broken. Let me know what else you would like to see it do. Let me know why you (wouldn’t) use it. Ask me what I think about “no code” model deployments (hint: 🙄) or let’s chat about Hashicorp’s Waypoint, which looks similar in spirit.
+A good place to start is the tool’s [README file](https://github.com/nlathia/kettle-cli/blob/main/README.md). The entire tool is [open sourced here](https://github.com/nlathia/kettle-cli).
+
+Let me know what works or what is broken. Let me know what else you would like to see it do. Let me know why you (wouldn’t) use it.
 
