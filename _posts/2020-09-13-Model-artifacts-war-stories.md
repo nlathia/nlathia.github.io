@@ -2,7 +2,7 @@
 layout: post
 title: "Model artifacts: the war stories"
 description: Originally published on substack.
-categories: [machine-learning]
+categories: [mlops, machine-learning]
 ---
 
 If you were around for <a href="https://nlathia.github.io/2020/09/Model-artifacts.html">my previous post</a>, I started out by asking about what you do with your model artifacts after you’ve trained a model — when starting the journey to production. A day later, [I asked the same question on twitter](https://twitter.com/neal_lathia/status/1301927567730057217):
@@ -41,7 +41,7 @@ Based on what I’ve seen — and what I’ve experienced — I’m finishing up
 
 Here’s a sneak peak of what it currently looks like:
 
-![](https://nlathia.github.io/assets/operatorai/modelstore-screenshot.png "A screen shot of modelstore's code")
+![](https://nlathia.github.io/assets/posts/2020-09-13-Model-artifacts-war-stories/modelstore-screenshot.png "A screen shot of modelstore's code")
 
 Hidden, under the hood, is:
 

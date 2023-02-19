@@ -2,7 +2,7 @@
 layout: post
 title: "You've trained a model. What's next?"
 description: Originally published on substack.
-categories: [machine-learning]
+categories: [mlops, machine-learning]
 ---
 
 In this post, I’m going to zero in on the one of the smallest first steps:

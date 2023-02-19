@@ -23,7 +23,8 @@ ML today is broadly pitched as a **sequential** process, covering steps that do 
 
 This sequential workflow is also echoed in common job titles: Data Engineer (the ETL steps), Data Analyst (discovery & insight), Data / Machine Learning Scientist (model training and validation), and Machine Learning Engineer (model deployment). Even the Google Cloud Platform's [website](https://cloud.google.com/ai-platform) depicts the process as a line:
 
-<img src="{{ "/assets/gcp-ml-workflow.png" | prepend: site.baseurl }}" alt="Screen shot from the Google AI Platform website showing the ML workflow."/>
+
+![](https://nlathia.github.io/assets/posts/2020-08-01-ML-Collaboration/gcp-ml-workflow.png "Screen shot from the Google AI Platform website showing the ML workflow.")
 
 In doing so, _machine learning_ methods are running amock from the established practices that enable teams to work, in parallel, on building systems.
 
