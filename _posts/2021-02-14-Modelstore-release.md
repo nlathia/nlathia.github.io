@@ -2,10 +2,9 @@
 layout: post
 title: "Releasing modelstore 0.0.5 and the operator CLI"
 description: Originally published on substack.
-categories: [machine-learning]
+categories: [mlops, machine-learning]
 ---
 
-👋 Hello, subscriber! It has been decades (well, months) since I last wrote an update here on Substack. So here is a post with two quick updates!
 
 ## 1️⃣ modelstore 0.0.5 is out: want a free API key?
 

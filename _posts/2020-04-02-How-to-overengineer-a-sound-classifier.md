@@ -147,7 +147,7 @@ def convert_to_mp3(file_path):
 
 All of this means that I now take my super old laptop and fire up the pipeline after I've started the machine. I then go and hang out, anxiously waiting for a message. Here's how [I tweeted](https://twitter.com/neal_lathia/status/1231322746593988611) when it started working! 
 
-![](https://nlathia.github.io/assets/beep-net.jpg "BeepNet in action")
+![](https://nlathia.github.io/assets/posts/2020-04-02-How-to-overengineer-a-sound-classifier/beep-net.jpg "BeepNet in action")
 
 The first time it worked, I was overloaded with messages. I had forgotten to add a way for it to _not_ send me a message every time it detected a beep (which was happening in multiple 3-second interval successions), so I had to add in a way for it to be rate-limited to one message every X minutes.
 
