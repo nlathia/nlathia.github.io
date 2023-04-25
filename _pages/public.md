@@ -8,6 +8,10 @@ For presentations prior to 2021, please see an archive list [here](../archive/pu
 
 # 📣 Recent presentations & interviews
 
+[Bristol MLOps Meetup](https://mlops.community/meetups/) Monzo's machine learning stack
+<br />April 13, 2023
+<br />Available on [YouTube](https://www.youtube.com/watch?v=nCxdmBz9DkU)
+
 [Evidently Community](https://www.evidentlyai.com/community) AMA Session
 <br />January 26, 2023
 <br />[Blog post recap](https://www.evidentlyai.com/blog/ama-neal-lathia)
