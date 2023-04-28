@@ -17,7 +17,7 @@ permalink: /about/
 ## 👨🏽‍💻  Open source projects
 
 * An open source model registry: [modelstore](https://github.com/operatorai/modelstore)
-* Audit AI APIs: [ai-auditor-cron](https://github.com/nlathia/ai-auditor-cron) and [ai-auditor-web](https://github.com/nlathia/ai-auditor-web)
+* Audit AI APIs: [ai-auditor-cron](https://github.com/nlathia/ai-auditor-cron) and [ai-auditor-web](https://github.com/nlathia/ai-auditor-web) - one of four winning entries of the [Stanford AI Audit Challenge](https://hai.stanford.edu/policy/ai-audit-challenge)
 * A CLI tool for creating & deploying containers: [kettle](https://github.com/nlathia/kettle-cli)
 * A cron job to destroy unpopular tweets: [tweet-destroyer](https://github.com/nlathia/tweet-destroyer)
 * Send a telegram message when a classifier detects sound: [BeepNet](https://github.com/nlathia/sound-detection) 
