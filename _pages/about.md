@@ -6,7 +6,7 @@ permalink: /about/
 
 🚀 I'm currently a co-founder and CTO at [Gradient Labs](https://gradient-labs.ai/); we're redefining the future of customer support with LLM agents.
 
-🏦 I previously spend five+ years building the machine learning discipline, platform, and use cases at [Monzo Bank](https://monzo.com/) in London. I held various titles along the way, from Data Scientist through to Director of Machine Learning and Staff Machine Learning Engineer; I reviewed this journey in [2020](http://nlathia.github.io/2020/10/Monzo-ML.html), [2021](https://nlathia.github.io/2021/10/Monzo-ML.html), [2022](https://monzo.com/blog/2022/12/19/machine-learning-at-monzo-in-2022)) and wrote about Monzo's [machine learning platform](https://nlathia.github.io/2022/04/Monzo-ML-stack.html).
+🏦 I previously spend five+ years building the machine learning discipline, platform, and use cases at [Monzo Bank](https://monzo.com/) in London. I held various titles along the way, from Data Scientist through to Director of Machine Learning and Staff Machine Learning Engineer; I reviewed this journey in [2020](http://nlathia.github.io/2020/10/Monzo-ML.html), [2021](https://nlathia.github.io/2021/10/Monzo-ML.html), [2022](https://monzo.com/blog/2022/12/19/machine-learning-at-monzo-in-2022) and also wrote about Monzo's [machine learning platform](https://nlathia.github.io/2022/04/Monzo-ML-stack.html).
 
 ✈️ Before joining Monzo, I was a Senior Data Scientist at [Skyscanner](http://skyscanner.net/), where I built recommender and ranking systems to [improve travel information in the app](https://medium.com/@neal_lathia/five-lessons-from-building-machine-learning-systems-d703162846ad). 
 
