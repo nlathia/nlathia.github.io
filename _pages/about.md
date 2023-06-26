@@ -10,7 +10,7 @@ permalink: /about/
 
 ✈️ Before joining Monzo, I was a Senior Data Scientist at [Skyscanner](http://skyscanner.net/), where I built recommender and ranking systems to [improve travel information in the app](https://medium.com/@neal_lathia/five-lessons-from-building-machine-learning-systems-d703162846ad). 
 
-🏫 / 📲 Before Skyscanner, I was a Senior Research Associate in the [Computer Lab](https://www.cl.cam.ac.uk/research/srg/netos/people/) at the [University of Cambridge](https://www.cam.ac.uk/), working on healthcare mobile apps that use smartphone sensors. I spun out this research into a startup that was part of [Accelerate Cambridge](https://www.jbs.cam.ac.uk/entrepreneurship/programmes/accelerate-cambridge/) in the Judge Business School.
+🏫 Before Skyscanner, I was a Senior Research Associate in the [Computer Lab](https://www.cl.cam.ac.uk/research/srg/netos/people/) at the [University of Cambridge](https://www.cam.ac.uk/), working on healthcare mobile apps that use smartphone sensors. I spun out this research into a startup that was part of [Accelerate Cambridge](https://www.jbs.cam.ac.uk/entrepreneurship/programmes/accelerate-cambridge/) in the Judge Business School.
 
 🎓 I did an MSci in Computer Science, PhD on recommmender systems, and first postdoctoral research position on _urban data science_ in the Department of [Computer Science](http://www.cs.ucl.ac.uk/home/) at [University College London](https://www.ucl.ac.uk/), where I am still an Honorary Research Associate. While at UCL, I also spent time as a visiting researcher at [Telefonica Research](http://www.tid.es/), Barcelona and worked as a Data Science consultant.
 
