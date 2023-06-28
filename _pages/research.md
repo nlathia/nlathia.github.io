@@ -4,7 +4,9 @@ title: Research
 permalink: /research/
 ---
 
-ℹ️ I left academia around 2016. I sometimes still participate in peer review/conference program committees. A full list is on [this archive page](../archive/reviewing.html).
+👋 I left academia around 2016. You can find an up-to-date list of my publications on my [Google Scholar profile](https://scholar.google.co.uk/citations?user=LFDxKoQAAAAJ&hl=en).
+
+ℹ️ I sometimes (increasingly rarely) still participate in peer review/conference program committees - [this page](../archive/reviewing.html) tries to log that.
 
 
 ## 🎓 PhD Research
