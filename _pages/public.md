@@ -24,7 +24,7 @@ AI Stories Podcast Interview by [Neil Leiser](https://twitter.com/LeiserNeil)
 <br />December 7, 2021. 
 <br />Available on [YouTube](https://www.youtube.com/watch?v=TKVR5RYkqnc) and [Spotify](https://open.spotify.com/episode/3GSw9rTqNqDBPYviFK9p33?si=9eaf3d55b5fe4949).
 
-[apply() Conference](https://www.applyconf.com/agenda/panel-building-high-performance-ml-teams/) Panel: Building High-Performance ML Teams
+[apply() Conference](https://www.tecton.ai/apply/session-video-archive/panel-building-high-performance-ml-teams/) Panel: Building High-Performance ML Teams
 <br />August 11, 2021.
 
 [Applying ML](https://applyingml.com/mentors/neal-lathia/) Mentor interview
