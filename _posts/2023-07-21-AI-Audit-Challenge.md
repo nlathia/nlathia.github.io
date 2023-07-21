@@ -48,7 +48,7 @@ For my challenge submission, I married two ideas together:
 
 Putting those two ideas together, I built and open sourced a [cron job](https://github.com/nlathia/ai-auditor-cron) that polls the Google Sentiment detection API with all of the test set entries of an open dataset once a week, and then publishes its results in a timeline on a website, [which has also been open sourced](https://github.com/nlathia/ai-auditor-web), and was deployed on heroku:
 
-![](https://nlathia.github.io/assets/posts/2023-07-19-ai-audit-challenge/timeline.png "The Audit Bot timeline")
+![](https://nlathia.github.io/assets/posts/2023-07-21-ai-audit-challenge/timeline.png "The Audit Bot timeline")
 
 The idea was that this sort of mechanism could be used to automatically identify regressions in a model's performance and bring transparency to when it improves. Over the course of several months, I monitored the Google sentiment detection API. Unfortunately, nothing spectacularly interesting seemed to happen in this time 😅--but I didn't go too deep into the data.
 
