@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "jekyll", "3.9.0"
+gem "jekyll", "3.9.3"
 gem "html-proofer"
 gem "rb-fsevent", "0.9.8"
 gem "activesupport", ">= 5.2.4.3"
