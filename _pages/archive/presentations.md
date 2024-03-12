@@ -8,6 +8,35 @@ I've omitted a number of academic conference presentations. You can find all of 
 
 # 📣 Presentations
 
+[MLOps Community](https://mlops.community/) Coffee Session with [Chris Albon](https://chrisalbon.com/)
+<br />December 7, 2021. 
+<br />Available on [YouTube](https://www.youtube.com/watch?v=TKVR5RYkqnc) and [Spotify](https://open.spotify.com/episode/3GSw9rTqNqDBPYviFK9p33?si=9eaf3d55b5fe4949).
+
+[apply() Conference](https://www.tecton.ai/apply/session-video-archive/panel-building-high-performance-ml-teams/) Panel: Building High-Performance ML Teams
+<br />August 11, 2021.
+
+[Applying ML](https://applyingml.com/mentors/neal-lathia/) Mentor interview
+<br />July 2021
+
+[Monzo Community](https://community.monzo.com/t/monzonaut-ama-neal-director-of-machine-learning/119465) AMA Session
+<br />June 28, 2021
+
+[Data Talk Club Mini](https://datatalks.club/): Model Store
+<br />July 6, 2021.
+<br />Available on [YouTube](https://www.youtube.com/watch?v=85BWnKmOZl8)
+
+[FinML Meetup](https://finml.substack.com/p/finml-model-testing-and-monitoring) Round table on model monitoring and testing
+<br />April 7, 2021.
+<br />Available on [YouTube](https://www.youtube.com/watch?v=fZuHrjS4nhM)
+
+[London.AI](https://www.getrevue.co/profile/londonai/issues/london-ai-is-back-signup-now-for-thursday-25th-event-6pm-gmt-240599) Everything around the NLP
+<br />February 25th, 2021. 
+<br />Available on [YouTube](https://www.youtube.com/watch?v=Ts887FBSu6A)
+
+[Data Talks Club](https://datatalks.club/) Using machine learning for customer service
+<br />January 26, 2021. 
+<br />Available on [YouTube](https://www.youtube.com/watch?v=ohjSvKdUumY)
+
 [MLOps Community](https://mlops.community/) Case Study - Monzo Bank
 <br />December 7, 2020. 
 <br />Available on [YouTube](https://www.youtube.com/watch?v=EyLGKmPAZLY) and [Spotify](https://open.spotify.com/episode/6WHkhgmBwsNS3pYDC1rKPs?si=Z0v1aPtOQrWWjzlWOdCzmQ).
