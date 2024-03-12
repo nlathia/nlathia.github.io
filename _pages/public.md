@@ -20,35 +20,6 @@ AI Stories Podcast Interview by [Neil Leiser](https://twitter.com/LeiserNeil)
 <br />January 2022
 <br />Available on [Apple Podcasts](https://podcasts.apple.com/gb/podcast/neal-lathia-associate-director-of-machine-learning/id1588432358?i=1000547574631), [Spotify](https://open.spotify.com/episode/5Caj92Njm8TU6XkrMlIYBQ?si=MptFkEwcRLmO1bEO_VV5dQ), and [Google Podcasts](https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5idXp6c3Byb3V0LmNvbS8xODYxOTA3LnJzcw/episode/QnV6enNwcm91dC05Nzc2Nzk5?sa=X&ved=0CAUQkfYCahcKEwiQu7SUrsP1AhUAAAAAHQAAAAAQAQ).
 
-[MLOps Community](https://mlops.community/) Coffee Session with [Chris Albon](https://chrisalbon.com/)
-<br />December 7, 2021. 
-<br />Available on [YouTube](https://www.youtube.com/watch?v=TKVR5RYkqnc) and [Spotify](https://open.spotify.com/episode/3GSw9rTqNqDBPYviFK9p33?si=9eaf3d55b5fe4949).
-
-[apply() Conference](https://www.tecton.ai/apply/session-video-archive/panel-building-high-performance-ml-teams/) Panel: Building High-Performance ML Teams
-<br />August 11, 2021.
-
-[Applying ML](https://applyingml.com/mentors/neal-lathia/) Mentor interview
-<br />July 2021
-
-[Monzo Community](https://community.monzo.com/t/monzonaut-ama-neal-director-of-machine-learning/119465) AMA Session
-<br />June 28, 2021
-
-[Data Talk Club Mini](https://datatalks.club/): Model Store
-<br />July 6, 2021.
-<br />Available on [YouTube](https://www.youtube.com/watch?v=85BWnKmOZl8)
-
-[FinML Meetup](https://finml.substack.com/p/finml-model-testing-and-monitoring) Round table on model monitoring and testing
-<br />April 7, 2021.
-<br />Available on [YouTube](https://www.youtube.com/watch?v=fZuHrjS4nhM)
-
-[London.AI](https://www.getrevue.co/profile/londonai/issues/london-ai-is-back-signup-now-for-thursday-25th-event-6pm-gmt-240599) Everything around the NLP
-<br />February 25th, 2021. 
-<br />Available on [YouTube](https://www.youtube.com/watch?v=Ts887FBSu6A)
-
-[Data Talks Club](https://datatalks.club/) Using machine learning for customer service
-<br />January 26, 2021. 
-<br />Available on [YouTube](https://www.youtube.com/watch?v=ohjSvKdUumY)
-
 
 # 📰 Press
 
