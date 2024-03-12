@@ -52,13 +52,16 @@ AI Stories Podcast Interview by [Neil Leiser](https://twitter.com/LeiserNeil)
 
 # 📰 Press
 
+[Meet the 15 startups founded by former Monzo employees](https://sifted.eu/articles/monzo-startup-fintech-founders)
+<br />Sifted. March 2024.
+
 [Practical Skills for The AI Product Manager](https://www.oreilly.com/radar/practical-skills-for-the-ai-product-manager/)
 <br />O'Reilly. May 2020.
 
 [The tipping point of AI FOMO](https://www.finextra.com/the-long-read/17/the-tipping-point-of-ai-fomo)
 <br />Finextra. February 2020.
 
-[Alinea Meets: Neal Lathia - Machine Learning Lead at Monzo ](https://www.linkedin.com/pulse/alinea-meets-neal-lathia-machine-learning-lead-monzo-harry-butcher)
+[Alinea Meets: Neal Lathia - Machine Learning Lead at Monzo](https://www.linkedin.com/pulse/alinea-meets-neal-lathia-machine-learning-lead-monzo-harry-butcher)
 <br />Alinea Interview. December 2019.
 
 [Monzo: how the bank of the future uses AI](https://tbtech.co/monzo-how-the-bank-of-the-future-uses-ai/)
