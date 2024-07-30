@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Audit Bot: a prototype for automated AI audits"
-description: Stanford's AI Audit Challenge
+description: Winning Stanford's AI Audit Challenge
 categories: [machine-learning]
 ---
 
