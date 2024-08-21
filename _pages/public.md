@@ -23,7 +23,13 @@ AI Stories Podcast Interview by [Neil Leiser](https://twitter.com/LeiserNeil)
 
 # 📰 Press
 
-[Meet the 15 startups founded by former Monzo employees](https://sifted.eu/articles/monzo-startup-fintech-founders)
+[Monzo alumni raise £2.8m led by LocalGlobe for AI customer service agents that 'act like humans'](https://sifted.eu/articles/monzo-alumni-raise-ai-news)
+<br />Sifted. August 2024.
+
+[Ex-Monzo staff’s AI startup Gradient Labs secures £2.8m in seed funding](https://www.uktech.news/ai/ex-monzo-gradient-labs-seed-20240821)
+<br />UKTN. August 2024.
+
+[Meet the 17 startups founded by former Monzo employees](https://sifted.eu/articles/monzo-startup-fintech-founders)
 <br />Sifted. March 2024.
 
 [Practical Skills for The AI Product Manager](https://www.oreilly.com/radar/practical-skills-for-the-ai-product-manager/)
