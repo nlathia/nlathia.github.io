@@ -8,6 +8,10 @@ For presentations prior to 2021, please see an archive list [here](../archive/pu
 
 # 📣 Recent presentations & interviews
 
+[AI Agents in Production](https://mlops.community/meetups/) LLMs and the rest of the owl
+<br />November 13, 2024
+<br />Available on [YouTube](https://home.mlops.community/home/videos/llms-and-the-rest-of-the-owl-neal-lathia-agents-in-production)
+
 [Bristol MLOps Meetup](https://mlops.community/meetups/) Monzo's machine learning stack
 <br />April 13, 2023
 <br />Available on [YouTube](https://www.youtube.com/watch?v=nCxdmBz9DkU)
