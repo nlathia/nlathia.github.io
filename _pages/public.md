@@ -8,6 +8,9 @@ For presentations prior to 2021, please see an archive list [here](../archive/pu
 
 # 📣 Recent presentations & interviews
 
+[AI Agents in Financial Advice](https://www.eventbrite.com/e/ai-agents-in-financial-advice-tickets-1056936829509?aff=oddtdtcreator) Safe automation with AI agents
+<br />December 10, 2024
+
 [AI Agents in Production](https://mlops.community/meetups/) LLMs and the rest of the owl
 <br />November 13, 2024
 <br />Available on [YouTube](https://home.mlops.community/home/videos/llms-and-the-rest-of-the-owl-neal-lathia-agents-in-production)
