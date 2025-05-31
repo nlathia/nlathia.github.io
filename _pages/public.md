@@ -8,6 +8,10 @@ For presentations prior to 2021, please see an archive list [here](../archive/pu
 
 # 📣 Recent presentations & interviews
 
+[Between Data & Risk](https://www.bdr.show/) Podcast
+<br />May 26, 2025
+<br />Available on [YouTube](https://www.youtube.com/watch?v=xMJ06jC51VY)
+
 [AI Agents in Financial Advice](https://www.eventbrite.com/e/ai-agents-in-financial-advice-tickets-1056936829509?aff=oddtdtcreator) Safe automation with AI agents
 <br />December 10, 2024
 <br />Available on [YouTube](https://www.youtube.com/watch?v=nLP358r2Ryc)
