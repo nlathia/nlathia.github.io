@@ -50,11 +50,10 @@ AI Stories Podcast Interview by [Neil Leiser](https://twitter.com/LeiserNeil)
 <br />[Startup Hub](https://www.startuphub.ai/ai-news/funding-round/2025/londons-gradient-labs-raises-e11m-for-ai-customer-service/)
 <br />... and many more.
 
-[Monzo alumni raise £2.8m led by LocalGlobe for AI customer service agents that 'act like humans'](https://sifted.eu/articles/monzo-alumni-raise-ai-news)
-<br />Sifted. August 2024.
-
-[Ex-Monzo staff’s AI startup Gradient Labs secures £2.8m in seed funding](https://www.uktech.news/ai/ex-monzo-gradient-labs-seed-20240821)
-<br />UKTN. August 2024.
+[Gradient Labs](https://gradient-labs.ai/) Seed announcement, August 2024
+[Monzo alumni raise £2.8m led by LocalGlobe for AI customer service agents that 'act like humans']
+<br />[Sifted](https://sifted.eu/articles/monzo-alumni-raise-ai-news)
+<br />[UK Tech.News](https://www.uktech.news/ai/ex-monzo-gradient-labs-seed-20240821)
 
 [Meet the 17 startups founded by former Monzo employees](https://sifted.eu/articles/monzo-startup-fintech-founders)
 <br />Sifted. March 2024.
