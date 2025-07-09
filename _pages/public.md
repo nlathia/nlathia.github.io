@@ -35,11 +35,25 @@ AI Stories Podcast Interview by [Neil Leiser](https://twitter.com/LeiserNeil)
 
 # 📰 Press
 
-[Monzo alumni raise £2.8m led by LocalGlobe for AI customer service agents that 'act like humans'](https://sifted.eu/articles/monzo-alumni-raise-ai-news)
-<br />Sifted. August 2024.
+[Gradient Labs](https://gradient-labs.ai/) Series A announcement, July 2025
+<br />[Tech.eu](https://tech.eu/2025/07/08/ex-monzo-founders-raise-13m-for-gradient-labs-to-rebuild-customer-support-in-regulated-markets/)
+<br />[Sifted](https://sifted.eu/articles/monzo-alumni-ai-agents)
+<br />[UK Tech.News](https://www.uktech.news/fintech/ai-startup-from-ex-monzo-staff-secures-9-5m-round-20250708)
+<br />[Silicon Canals](https://siliconcanals.com/uks-gradient-labs-raises-11-08m/)
+<br />[Finextra](https://www.finextra.com/newsarticle/46260/former-monzo-alumni-raise-13-million-for-ai-chatbot-startup)
+<br />[Tech in Asia](https://www.techinasia.com/news/uk-fintech-firm-gradient-labs-nets-13m-series)
+<br />[Unite.ai](https://www.unite.ai/gradient-labs-raises-13m-to-bring-safe-ai-automation-to-regulated-industries/)
+<br />[EU Startups](https://www.eu-startups.com/2025/07/london-based-gradient-labs-raises-over-e11-million-for-its-ai-customer-service-agent/)
+<br />[City Biz](https://www.citybiz.co/article/715314/gradient-labs-raises-13m-series-a-led-by-redpoint-ventures/)
+<br />[Fintech Global](https://fintech.global/2025/07/08/fintech-gradient-labs-raises-13m-to-expand-ai-platform/)
+<br />[Startup Rise](https://startuprise.co.uk/uks-gradient-labs-secures-e11-08m-to-transform-ai-customer-support-in-regulated-industries/)
+<br />[Startup Hub](https://www.startuphub.ai/ai-news/funding-round/2025/londons-gradient-labs-raises-e11m-for-ai-customer-service/)
+<br />... and many more.
 
-[Ex-Monzo staff’s AI startup Gradient Labs secures £2.8m in seed funding](https://www.uktech.news/ai/ex-monzo-gradient-labs-seed-20240821)
-<br />UKTN. August 2024.
+[Gradient Labs](https://gradient-labs.ai/) Seed announcement, August 2024
+[Monzo alumni raise £2.8m led by LocalGlobe for AI customer service agents that 'act like humans']
+<br />[Sifted](https://sifted.eu/articles/monzo-alumni-raise-ai-news)
+<br />[UK Tech.News](https://www.uktech.news/ai/ex-monzo-gradient-labs-seed-20240821)
 
 [Meet the 17 startups founded by former Monzo employees](https://sifted.eu/articles/monzo-startup-fintech-founders)
 <br />Sifted. March 2024.
@@ -121,5 +135,3 @@ Feature on Mobile Medicine ([PDF](http://mrc.io/networkwinter1415))
 
 [Predicting movie reviews bags team $1m prize](https://www.newscientist.com/article/dn17393-predicting-movie-reviews-bags-team-1m-prize/)
 <br />New Scientist. June 2009.
-
-
