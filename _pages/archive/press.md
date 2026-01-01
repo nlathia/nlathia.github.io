@@ -1,43 +1,8 @@
 ---
 layout: content
-title: Presentations & Press
-permalink: /public/
+title: Press
+permalink: /archive/press
 ---
-
-For presentations prior to 2021, please see an archive list [here](../archive/public) or have a look at [my slide share page](http://www.slideshare.net/neal.lathia).
-
-# 📣 Recent presentations & interviews
-
-[The c-suite Podcast](https://www.csuitepodcast.com/) 10 years of Fintech Connect
-<br />December 13, 2025
-<br />Available on [YouTube](https://www.youtube.com/watch?v=2D9uiB6cIAs)
-
-[Between Data & Risk](https://www.bdr.show/) Podcast
-<br />May 26, 2025
-<br />Available on [YouTube](https://www.youtube.com/watch?v=xMJ06jC51VY)
-
-[AI Agents in Financial Advice](https://www.eventbrite.com/e/ai-agents-in-financial-advice-tickets-1056936829509?aff=oddtdtcreator) Safe automation with AI agents
-<br />December 10, 2024
-<br />Available on [YouTube](https://www.youtube.com/watch?v=nLP358r2Ryc)
-
-[AI Agents in Production](https://mlops.community/meetups/) LLMs and the rest of the owl
-<br />November 13, 2024
-<br />Available on [YouTube](https://home.mlops.community/home/videos/llms-and-the-rest-of-the-owl-neal-lathia-agents-in-production)
-
-[Bristol MLOps Meetup](https://mlops.community/meetups/) Monzo's machine learning stack
-<br />April 13, 2023
-<br />Available on [YouTube](https://www.youtube.com/watch?v=nCxdmBz9DkU)
-
-[Evidently Community](https://www.evidentlyai.com/community) AMA Session
-<br />January 26, 2023
-<br />[Blog post recap](https://www.evidentlyai.com/blog/ama-neal-lathia)
-
-AI Stories Podcast Interview by [Neil Leiser](https://twitter.com/LeiserNeil)
-<br />January 2022
-<br />Available on [Apple Podcasts](https://podcasts.apple.com/gb/podcast/neal-lathia-associate-director-of-machine-learning/id1588432358?i=1000547574631), [Spotify](https://open.spotify.com/episode/5Caj92Njm8TU6XkrMlIYBQ?si=MptFkEwcRLmO1bEO_VV5dQ), and [Google Podcasts](https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5idXp6c3Byb3V0LmNvbS8xODYxOTA3LnJzcw/episode/QnV6enNwcm91dC05Nzc2Nzk5?sa=X&ved=0CAUQkfYCahcKEwiQu7SUrsP1AhUAAAAAHQAAAAAQAQ).
-
-
-# 📰 Press
 
 [Gradient Labs](https://gradient-labs.ai/) Series A announcement, July 2025
 <br />[Tech.eu](https://tech.eu/2025/07/08/ex-monzo-founders-raise-13m-for-gradient-labs-to-rebuild-customer-support-in-regulated-markets/)

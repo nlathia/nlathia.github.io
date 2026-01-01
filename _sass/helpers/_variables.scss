@@ -1,22 +1,40 @@
 /* ==========================================================================
-   Variabeles
+   Variables
    ========================================================================== */
 
-$c-base__03: #0D2B35;
-$c-base__02: #163541;
-$c-base__01: #5C6E74;
-$c-base__00: #697B82;
-$c-base__0: #869395;
-$c-base__1: #96A0A0;
-$c-base__2: #EDE7D6;
-$c-base__3: #FCF5E4;
+// Colors - Near-monochrome palette
+$c-text-primary: #1a1a1a;      // Near-black for headings
+$c-text-secondary: #4a4a4a;    // Dark gray for body text
+$c-text-tertiary: #767676;     // Medium gray for metadata
+$c-background: #ffffff;         // Pure white
+$c-background-alt: #f8f8f8;    // Light gray for code blocks
 
-$c-accent__blue: #0067FB;
-$c-accent__darkblue: #0029F9;
-$c-accent__green: #8BE367;
+// Interactive colors
+$c-link: #0066cc;              // Blue links (WCAG AAA compliant)
+$c-link-hover: #004499;        // Darker blue on hover
+$c-border: #e0e0e0;            // Light gray borders
+$c-focus: #0066cc;             // Focus outline
+
+// Legacy color mappings (for compatibility during transition)
+$c-base__03: $c-text-primary;
+$c-base__02: $c-text-primary;
+$c-base__01: $c-text-secondary;
+$c-base__00: $c-text-secondary;
+$c-base__0: $c-text-tertiary;
+$c-base__1: $c-text-tertiary;
+$c-base__2: $c-border;
+$c-base__3: $c-background;
+
+// Spacing scale (8px grid)
+$space-xs: 0.5rem;    // 8px
+$space-sm: 1rem;      // 16px
+$space-md: 2rem;      // 32px
+$space-lg: 3rem;      // 48px
+$space-xl: 4rem;      // 64px
+$space-xxl: 6rem;     // 96px
 
 // Breakpoints
 $bp__sm: 45rem; // 450px
 
 // Misc
-$m-border: 1px solid $c-base__2;
+$m-border: 1px solid $c-border;

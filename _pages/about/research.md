@@ -1,7 +1,7 @@
 ---
 layout: content
 title: Research
-permalink: /research/
+permalink: /about/research/
 ---
 
 👋 I left academia around 2016. You can find an up-to-date list of my publications on my [Google Scholar profile](https://scholar.google.co.uk/citations?user=LFDxKoQAAAAJ&hl=en).

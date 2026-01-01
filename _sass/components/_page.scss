@@ -7,39 +7,30 @@
 }
 
 .c-page__header {
-    margin-bottom: 10rem; // 100px
+    margin-bottom: $space-xxl; // 96px
 
     h1 {
-        margin-bottom: 2.5rem; // 25px
+        margin-bottom: $space-md; // 32px
         @include fs--heading-2;
-        color: $c-base__02;
+        color: $c-text-primary;
     }
 
     p {
         @include fs--meta;
+        color: $c-text-secondary;
     }
 }
 
 .c-page__footer {
-    margin-bottom: 10rem;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
+    margin-bottom: $space-xxl; // 96px
     display: flex;
-    -webkit-flex-wrap: wrap;
-        -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-        -ms-flex-align: center;
-            align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
     p {
         @include fs--body;
-        color: $c-base__01;
+        color: $c-text-tertiary;
     }
 }
 
