@@ -8,6 +8,10 @@ For presentations prior to 2021, please see an archive list [here](../archive/pu
 
 # 📣 Recent presentations & interviews
 
+[The c-suite Podcast](https://www.csuitepodcast.com/) 10 years of Fintech Connect
+<br />December 13, 2025
+<br />Available on [YouTube](https://www.youtube.com/watch?v=2D9uiB6cIAs)
+
 [Between Data & Risk](https://www.bdr.show/) Podcast
 <br />May 26, 2025
 <br />Available on [YouTube](https://www.youtube.com/watch?v=xMJ06jC51VY)
