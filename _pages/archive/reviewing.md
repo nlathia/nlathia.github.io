@@ -1,6 +1,6 @@
 ---
 layout: content
-title: Reviewing
+title:
 permalink: /archive/reviewing
 ---
 

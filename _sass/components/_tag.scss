@@ -1,72 +1,33 @@
 /* ==========================================================================
-   Tip
+   Tags
    ========================================================================== */
 
 .c-tags {
   list-style: none;
-  margin: 0;
-  overflow: hidden; 
+  margin: 0 0 2rem 0;
   padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .c-tags li {
-  float: left; 
+  display: inline-block;
 }
 
 .c-tag {
-  background: #eee;
-  border-radius: 3px 0 0 3px;
-  color: #999;
   display: inline-block;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 20px 0 23px;
-  position: relative;
-  margin: 0 10px 50px 0;
+  padding: 0.25rem 0.75rem;
+  background: $c-background-alt;
+  color: $c-text-secondary;
+  font-size: 0.875rem;
+  border-radius: 3px;
   text-decoration: none;
-  -webkit-transition: color 0.2s;
-}
+  transition: background 0.15s ease;
 
-.c-tag::before {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
-  content: '';
-  height: 6px;
-  left: 10px;
-  position: absolute;
-  width: 6px;
-  top: 10px;
-}
-
-.c-tag::after {
-  background: #fff;
-  border-bottom: 13px solid transparent;
-  border-left: 10px solid #eee;
-  border-top: 13px solid transparent;
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.c-tag:hover {
-  background-color: $c-accent__blue;
-  color: white;
-}
-
-.c-tag:hover::after {
-   border-left-color: $c-accent__blue;
-}
-
-.c-c-tag {
-    margin-right: 1rem;
-    position: relative;
-    white-space: nowrap;
-    @include fs--body;
-    &:before {
-        color: $c-base__0;
-        content: '#\2009';
-    }
+  &:hover {
+    background: $c-border;
+    color: $c-text-primary;
+  }
 }
 
