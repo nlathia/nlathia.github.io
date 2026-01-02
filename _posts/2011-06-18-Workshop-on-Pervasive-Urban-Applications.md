@@ -58,6 +58,6 @@ Data from taxis sounds like buckets of fun. Not only can you use it to explore h
 
 ## Wordle
 
-Below is a wordle (made by <a href="http://twitter.com/#!/wirzm" target="_blank">Martin Wirz</a>) of the workshop proceedings. Click on the thumbnail for the large version:
+Below is a wordle (made by <a href="http://twitter.com/#!/wirzm" target="_blank">Martin Wirz</a>) of the workshop proceedings:
 
-<a title="Wordle: PURBA Workshop Proceedings Wordle" href="http://www.wordle.net/show/wrdl/3757869/PURBA_Workshop_Proceedings_Wordle"><img class="aligncenter" style="border:1px solid #dddddd;padding:4px;" src="http://www.wordle.net/thumb/wrdl/3757869/PURBA_Workshop_Proceedings_Wordle" alt="Wordle: PURBA Workshop Proceedings Wordle" /></a>
+<img class="aligncenter" style="border:1px solid #dddddd;padding:4px;" src="https://nlathia.github.io/assets/urbanmining/PURBA_Workshop_Proceedings_Wordle.jpg" alt="Wordle: PURBA Workshop Proceedings Wordle" />
