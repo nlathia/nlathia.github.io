@@ -4,7 +4,7 @@ title: Home
 ---
 <section class="c-archives">
   <link rel="shortcut icon" href="">
-  {% for post in site.posts  %}
+  {% for post in paginator.posts  %}
   {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
   {% capture next_year %}{{ post.previous.date | date: "%Y" }}{% endcapture %}
   {% if forloop.first %}
@@ -30,3 +30,26 @@ title: Home
   {% endif %}
   {% endfor %}
 </section>
+
+{% if paginator.total_pages > 1 %}
+<div class="pagination" style="text-align: center; margin: 2em 0;">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}">&laquo; Next {{ paginator.per_page }}</a>
+  {% else %}
+    <span style="color: #999;">&laquo; Next {{ paginator.per_page }}</span>
+  {% endif %}
+
+  {% assign start_post = paginator.page | minus: 1 | times: paginator.per_page | plus: 1 %}
+  {% assign end_post = paginator.page | times: paginator.per_page %}
+  {% if end_post > paginator.total_posts %}{% assign end_post = paginator.total_posts %}{% endif %}
+  <span class="page_number" style="margin: 0 1em;">
+    Showing {{ start_post }}-{{ end_post }} of {{ paginator.total_posts }} posts
+  </span>
+
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl }}">Previous {{ paginator.per_page }} &raquo;</a>
+  {% else %}
+    <span style="color: #999;">Previous {{ paginator.per_page }} &raquo;</span>
+  {% endif %}
+</div>
+{% endif %}
