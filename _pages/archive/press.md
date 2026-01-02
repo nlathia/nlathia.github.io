@@ -1,6 +1,6 @@
 ---
 layout: content
-title: Press
+title:
 permalink: /archive/press
 ---
 
