@@ -4,6 +4,10 @@ title: Spotlight
 permalink: /spotlight/
 ---
 
+[Fintech Focus TV](https://www.harringtonstarr.com/resources/category/fintech-focus-tv/): How to Win the War for Fintech's Best AI Talent
+<br />February, 2026
+<br />[YouTube](https://www.youtube.com/watch?v=h0DcJa8tMLc&t=638s)
+
 [The c-suite Podcast](https://www.csuitepodcast.com/): 10 years of Fintech Connect
 <br />December 13, 2025
 <br />[YouTube](https://www.youtube.com/watch?v=2D9uiB6cIAs)
